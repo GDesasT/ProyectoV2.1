@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var hours = now.getHours();
     var text = document.getElementById('desayunos');
 
-    if (12 >= 12) {
+    if (hours >= 12) {
         text.textContent = 'Comidas';
     } else {
         text.textContent = 'Desayunos';
