@@ -7,7 +7,7 @@
     @vite('resources/css/app.css')
     <title>Comedor S.A de C.V</title>
 </head>
-<body>
+<body class="bg-amber-50">
     @include('layouts.nav')
 
     @yield('content')
