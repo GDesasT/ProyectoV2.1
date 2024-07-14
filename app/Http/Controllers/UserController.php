@@ -2,22 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function login()
+    public function showLoginForm()
     {
         return view('login');
     }
 
-    public function authenticate(Request $request)
+    public function login(Request $request) : RedirectResponse
     {
         $credentials = $request->only('user', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/inventory'); // Redirige al área de inventario
+
+            $request->session()->regenerate();
+
+            return redirect()->intended('inventory');
         }
 
         return back()->withErrors([
@@ -25,9 +29,11 @@ class UserController extends Controller
         ]);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect('login');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
     }
 }
