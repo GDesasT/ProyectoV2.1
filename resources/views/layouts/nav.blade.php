@@ -1,7 +1,11 @@
 <nav class="bg-blue-300 border-gray-200" x-data="{ open: false }">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <div class="relative bg-red-700 w-4 h-4 rounded-full">
+                <div class="absoluto bg-red-700 w-4 h-4 rounded-full animate-ping"></div>
+            </div>
             <img src="{{ asset('img/logo.jpeg') }}" class="h-12 rounded-full" alt="Comedor Logo" />
+
             <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Comedores De la Fuente</span>
         </a>
         <button @click="open = !open" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
