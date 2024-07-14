@@ -20,4 +20,12 @@ class HomeController extends Controller
     {
         return view('feedback');
     }
+
+    public function inventory(){
+        return view('inventory');
+    }
+
+    public function pointofsale(){
+        return view('PointOfSale');
+    }
 }

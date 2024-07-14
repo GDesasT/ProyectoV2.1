@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="bg-cover bg-center" style="background-image: url('../img/comedorbueno.png');">
-    <div class="container mx-auto py-20">
+    <div class="container mx-auto py-20 px-20">
         <div class="flex flex-col md:flex-row md:space-x-8 items-center">
             <div class="md:w-1/2 flex justify-center">
                 <img src="{{ asset('img/logo.jpeg') }}" class="h-64 rounded-full" alt="Logo Comedor Industrial">

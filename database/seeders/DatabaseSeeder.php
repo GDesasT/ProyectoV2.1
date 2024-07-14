@@ -2,22 +2,32 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use App\Models\user;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
+     *
+     * @return void
      */
-    public function run(): void
+    public function run()
     {
-        // User::factory(10)->create();
+        // Crear roles
+        DB::table('roles')->insert([
+            ['type' => 'Desarrollador'],
+            ['type' => 'Administrador'],
+            ['type' => 'Trabajador'],
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Crear el usuario administrador
+        user::create([
+            'user' => 'admin',
+            'password' => Hash::make('admin'),
+            'role_id' => 2, // Asignar el role_id adecuado para Administrador (en este caso, 2)
         ]);
     }
 }
