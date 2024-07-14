@@ -17,13 +17,13 @@
         <div :class="{ 'block': open, 'hidden': !open }" class="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-700 rounded-lg bg-blue-300 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
                 <li>
-                    <a href="{{ route('home') }}" class="block py-2 px-3 rounded {{ request()->routeIs('home') ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}" aria-current="{{ request()->routeIs('home') ? 'page' : '' }}">Home</a>
+                    <a href="{{ route('home') }}" class="block py-2 px-3 rounded {{ request()->routeIs('home') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}" aria-current="{{ request()->routeIs('home') ? 'page' : '' }}">Home</a>
                 </li>
                 <li>
-                    <a href="{{ route('menu') }}" class="block py-2 px-3 rounded {{ request()->routeIs('menu') ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Menu</a>
+                    <a href="{{ route('menu') }}" class="block py-2 px-3 rounded {{ request()->routeIs('menu') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Menu</a>
                 </li>
                 <li>
-                    <a href="{{ route('login') }}" class="block py-2 px-3 rounded {{ request()->routeIs('login') ? 'text-white bg-blue-700 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-700 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Login</a>
+                    <a href="{{ route('login') }}" class="block py-2 px-3 rounded {{ request()->routeIs('login') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Login</a>
                 </li>
             </ul>
         </div>
