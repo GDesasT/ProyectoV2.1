@@ -21,7 +21,7 @@ class UserController extends Controller
 
             $request->session()->regenerate();
 
-            return redirect()->intended('inventory');
+            return redirect()->intended('/inventory');
         }
 
         return back()->withErrors([

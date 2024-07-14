@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         user::create([
             'user' => 'admin',
             'password' => Hash::make('admin'),
-            'role_id' => 2, // Asignar el role_id adecuado para Administrador (en este caso, 2)
+            'role_id' => 2,
         ]);
     }
 }

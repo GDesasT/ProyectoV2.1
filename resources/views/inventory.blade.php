@@ -7,6 +7,6 @@
 @endauth
 
 @guest
-    <div class="text-center">No tienes acceso a esta página</div>
+    <div class="text-center text-red-600">No tienes acceso a esta página</div>
 @endguest
 @endsection
