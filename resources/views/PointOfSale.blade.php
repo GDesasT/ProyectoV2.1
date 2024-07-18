@@ -1,3 +1,12 @@
-<div>
-    <!-- Act only according to that maxim whereby you can, at the same time, will that it should become a universal law. - Immanuel Kant -->
-</div>
+@extends('layouts.login_app')
+
+@section('content')
+@auth
+    <div class="text-center">Acceso correcto - Point Of Sale</div>
+    <a type="submit" class="w-full py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" href="/logout">Logout</a>
+@endauth
+
+@guest
+    <div class="text-center text-red-600">No tienes acceso a esta página</div>
+@endguest
+@endsection

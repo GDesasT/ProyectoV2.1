@@ -15,4 +15,5 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('/inventory', [HomeController::class, 'inventory'])->name('inventory');
+    Route::get('PointOfSale', [HomeController::class, 'PointOfSale'])->name('PointOfSale');
 });
