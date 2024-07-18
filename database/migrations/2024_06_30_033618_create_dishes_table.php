@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 45);
             $table->enum('weekday', ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'])->default('Lunes');
+            $table->enum('schedule', ['Desayuno','Comida'])->default('Desayuno');
             $table->text('description');
             $table->double('price', 10, 2);
             $table->foreignId('recipe_id')->constrained('recipes')->onDelete('cascade');

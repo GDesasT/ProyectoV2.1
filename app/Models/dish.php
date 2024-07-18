@@ -12,6 +12,7 @@ class dish extends Model
         'name',
         'price',
         'weekday',
+        'schedule',
         'description',
         
     ];
