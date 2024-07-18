@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    *{
+        font-family: 'Montserrat';
+    }
+</style>
 
 <div class="bg-cover bg-center" style="background-image: url('../img/comedorbueno.png');">
     <div class="container mx-auto py-20 px-20">
