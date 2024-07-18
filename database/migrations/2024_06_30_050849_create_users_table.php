@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->string('user', 45)->primary();
+            $table->id();
+            $table->string('user', 45)->unique();
             $table->string('password', 60);
             $table->foreignId('role_id')->constrained('roles')->onDelete('cascade');
             $table->timestamps();
