@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    *{
+        font-family: 'Montserrat';
+    }
+</style>
 
 <div class="container mx-auto mt-5">
     <div class="container-heading">

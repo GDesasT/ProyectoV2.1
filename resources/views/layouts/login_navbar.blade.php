@@ -1,4 +1,4 @@
-<nav class="bg-blue-300 border-gray-200" x-data="{ open: false }">
+<nav class="bg-blue-300 rounded-b-2xl border-gray-200" x-data="{ open: false }">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
             <div class="relative bg-red-700 w-4 h-4 rounded-full">
