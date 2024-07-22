@@ -3,66 +3,49 @@
 @section('content')
 @auth
 
+<div class="mx-20">
+    <input type="text" name="idtrabajador" placeholder="Ingrese el id">
+
+<select id="platillo" name="platillo" class="ml-10 mb-5">
+    <option value="">Seleccione un Platillo</option>
+    <option value="1">Platillo Normal</option>
+    <option value="2">Platillo Ligero</option>
+</select>
+
+</div>
+
 
 <div class="relative overflow-x-auto">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3">
-                    Product name
+                    Id
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Color
+                    Nombre
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Category
+                    Apellido
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    Price
+                    Fecha/Hora
                 </th>
             </tr>
         </thead>
         <tbody>
             <tr class="bg-white border-b">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                    Apple MacBook Pro 17"
+                    170061
                 </th>
                 <td class="px-6 py-4">
-                    Silver
+                    Gerardo
                 </td>
                 <td class="px-6 py-4">
-                    Laptop
+                    Alcantar
                 </td>
                 <td class="px-6 py-4">
-                    $2999
-                </td>
-            </tr>
-            <tr class="bg-white border-b">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                    Microsoft Surface Pro
-                </th>
-                <td class="px-6 py-4">
-                    White
-                </td>
-                <td class="px-6 py-4">
-                    Laptop PC
-                </td>
-                <td class="px-6 py-4">
-                    $1999
-                </td>
-            </tr>
-            <tr class="bg-white">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                    Magic Mouse 2
-                </th>
-                <td class="px-6 py-4">
-                    Black
-                </td>
-                <td class="px-6 py-4">
-                    Accessories
-                </td>
-                <td class="px-6 py-4">
-                    $99
+                    18-07-2024 12:15
                 </td>
             </tr>
         </tbody>
