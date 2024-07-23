@@ -22,7 +22,8 @@
                                         <h5 class="mb-3 text-2xl font-medium">{{ $recipe->name }}</h5>
                                         <p class="mb-2 text-lg">Complejidad: Media</p>
                                         <p class="mb-2 text-lg">Tiempo: {{ $recipe->timeset }}</p>
-                                        <p class="text-lg">Una breve explicación de la receta...</p>
+                                        <p class="text-lg">{{ $recipe->shortdesc }}</p>
+
                                         {{-- ACORDARME DE AÑADIR ALGO EN BD QUE DIGA EXPLICACION BREVE --}}
                                     </div>
                                 </div>
@@ -39,75 +40,53 @@
         </div>
     </div>
 
-    {{-- Lista de Recipes --}}
-    <h2>Lista de Recipes</h2>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Ingredientes</th>
-                <th>Descripción</th>
-                <th>Imagen</th>
-                <th>Tiempo de elaboración</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
+
             @foreach ($recipes as $recipe)
-            <tr>
-                <td>{{ $recipe->name }}</td>
-                <td>{{ $recipe->ingredient }}</td>
-                <td>{{ $recipe->description }}</td>
-                <td><img src="{{ $recipe->image }}" alt="{{ $recipe->name }}" width="50"></td>
-                <td>{{ $recipe->timeset }}</td>
-                <td>
-                    <a href="{{ route('recipes.edit', $recipe->id) }}" class="btn btn-primary btn-sm">Editar</a>
-                    <form action="{{ route('recipes.destroy', $recipe->id) }}" method="POST" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
+
             @endforeach
-        </tbody>
-    </table>
+
 
     {{-- Botón para abrir el modal de agregar receta --}}
-    <h2>Agregar Recipe</h2>
-    <button id="openAddRecipeModal" class="mb-3 btn btn-primary">Agregar Nueva Recipe</button>
+    <button id="openAddRecipeModal" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Agregar Nueva Receta</button>
 
-    {{-- Modal para agregar receta --}}
-    <div id="addRecipeModal" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black opacity-0 bg-opacity-70">
-        <div class="bg-white w-[600px] h-auto p-8 rounded-lg relative transform scale-90 transition-transform duration-300">
-            <button class="absolute text-2xl text-black cursor-pointer top-4 right-4" id="closeAddRecipeModal">&times;</button>
-            <h2 class="mb-4 text-3xl font-bold">Agregar Nueva Recipe</h2>
-            <form action="{{ route('recipes.store') }}" method="POST">
-                @csrf
-                <div class="mb-3">
-                    <label for="name" class="form-label">Nombre:</label>
-                    <input type="text" name="name" id="name" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="ingredient" class="form-label">Ingredientes:</label>
-                    <input type="text" name="ingredient" id="ingredient" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="description" class="form-label">Descripción:</label>
-                    <input type="text" name="description" id="description" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="image" class="form-label">Imagen (URL):</label>
-                    <input type="text" name="image" id="image" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label for="timeset" class="form-label">Tiempo de elaboración:</label>
-                    <input type="text" name="timeset" id="timeset" class="form-control" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Agregar</button>
-            </form>
-        </div>
+
+ {{-- Modal para agregar receta --}}
+<div id="addRecipeModal" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-70">
+    <div class="relative w-full h-auto max-w-2xl p-8 transition-transform duration-300 transform scale-90 bg-white rounded-lg">
+        <button class="absolute text-2xl text-gray-600 cursor-pointer top-4 right-4" id="closeAddRecipeModal">&times;</button>
+        <h2 class="mb-6 text-3xl font-bold text-center text-gray-800">Agregar Nueva Receta</h2>
+        <form action="{{ route('recipes.store') }}" method="POST">
+            @csrf
+            <div class="mb-4">
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-600">Nombre:</label>
+                <input type="text" name="name" id="name" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
+            </div>
+            <div class="mb-4">
+                <label for="ingredient" class="block mb-2 text-sm font-medium text-gray-600">Ingredientes:</label>
+                <input type="text" name="ingredient" id="ingredient" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
+            </div>
+
+            <div class="mb-4">
+                <label for="image" class="block mb-2 text-sm font-medium text-gray-600">Imagen (URL):</label>
+                <input type="text" name="image" id="image" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
+            </div>
+            <div class="mb-6">
+                <label for="timeset" class="block mb-2 text-sm font-medium text-gray-600">Tiempo de elaboración:</label>
+                <input type="text" name="timeset" id="timeset" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
+            </div>
+            <div class="mb-3">
+                <label for="timeset" class="block mb-2 text-sm font-medium text-gray-600">Añade una Descripcion Breve</label>
+                <input type="text" name="shortdesc" id="shortdesc" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
+            </div>
+            <div class="mb-4">
+                <label for="description" class="block mb-2 text-sm font-medium text-gray-600">Procedimiento de la Receta:</label>
+                <textarea name="description" rows="8" cols="30" id="description" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required></textarea>
+
+            </div>
+            <button type="submit" class="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring focus:ring-blue-300 focus:outline-none">Agregar</button>
+        </form>
     </div>
+</div>
 
     {{-- Modal de Información de Receta --}}
     <div id="modal1" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black opacity-0 bg-opacity-70">

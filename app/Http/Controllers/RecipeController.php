@@ -31,6 +31,7 @@ class RecipeController extends Controller
             'description' => 'required',
             'image' => 'required|url',
             'timeset' => 'required',
+            'shortdesc' => 'required',
         ]);
 
         Recipe::create($request->all());
@@ -47,6 +48,7 @@ class RecipeController extends Controller
             'description' => 'required',
             'image' => 'required|url',
             'timeset' => 'required',
+            'shortdesc' => 'required',
         ]);
 
         $recipe->update($request->all());

@@ -10,6 +10,6 @@ class Recipe extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name', 'ingredient', 'description', 'image', 'timeset'
+        'name','shortdesc', 'ingredient', 'description', 'image', 'timeset'
     ];
 }

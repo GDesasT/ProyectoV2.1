@@ -32,6 +32,10 @@
             <label for="timeset" class="form-label">Tiempo de elaboración:</label>
             <input type="text" name="timeset" id="timeset" class="form-control" value="{{ isset($recipe) ? $recipe->timeset : '' }}" required>
         </div>
+        <div class="mb-3">
+            <label for="shortdesc" class="form-label">Descripción breve:</label>
+            <input type="text" name="shortdesc" id="shortdesc" class="form-control" value="{{ isset($recipe) ? $recipe->shortdesc : '' }}" required>
+        </div>
         <button type="submit" class="btn btn-primary">{{ isset($recipe) ? 'Actualizar' : 'Agregar' }}</button>
     </form>
 </div>
