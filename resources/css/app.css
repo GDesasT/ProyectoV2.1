@@ -1,3 +1,50 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*Estilos Recetario*/
+.carousel-wrapper {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 385px; /* Ajusta la altura según sea necesario */
+}
+
+.carousel-slide {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+
+.tarjetas {
+    flex: 0 0 auto;
+    width: 300px; /* Ajusta el ancho según sea necesario */
+    height: 500px; /* Ajusta la altura según sea necesario */
+}
+.carousel-slide > div {
+    flex: 0 0 auto;
+    width: 300px; /* Ajusta el ancho según sea necesario */
+    height: 500px; /* Ajusta la altura según sea necesario */
+}
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.carousel-slide {
+    display: flex;
+    transition: transform 1s ease-in-out;
+}
+
+.carousel-item {
+    flex: 0 0 auto;
+    width: 100%; /* Ajusta esto si las tarjetas no llenan el contenedor */
+    margin-right: 5px; /* Espaciado entre tarjetas */
+}
+
+/* Opcional: Ocultar el overflow para que no se vea el contenido duplicado */
+.carousel-wrapper::after {
+    content: "";
+    display: block;
+    width: 100%;
+}
