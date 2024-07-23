@@ -1,6 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.login_app')
 
 @section('content')
+@auth
 <div class="container">
     <h1>Gestión de Recipes</h1>
 
@@ -12,9 +13,8 @@
             <div class="relative overflow-hidden">
                 <div class="overflow-hidden carousel-wrapper">
                     <div class="flex gap-6 carousel-slide">
-                        <!-- Tarjetas del Carrusel -->
                         @foreach ($recipes as $index => $recipe)
-                        <div class="block transition-transform duration-300 transform bg-white rounded-lg cursor-pointer carousel-item group shadow-secondary-1 dark:bg-surface-dark hover:scale-105" data-modal="modal1" data-content="{{ $recipe->description }}">
+                        <div class="block transition-transform duration-300 transform bg-white rounded-lg cursor-pointer carousel-item group shadow-secondary-1 dark:bg-surface-dark hover:scale-105" data-modal="modal1" data-content="<strong style='font-size: 1.2em;'>Ingredientes:</strong><br><span class='recipe-ingredients'>{{ nl2br(e($recipe->ingredient)) }}</span><br><strong style='font-size: 1.2em;'>Preparación:</strong><br>{{ $recipe->description }}">
                             <a href="#!" class="relative block overflow-hidden rounded-lg">
                                 <img class="object-cover w-full transition-transform duration-300 rounded-t-lg h-96 group-hover:scale-110" src="{{ $recipe->image }}" alt="{{ $recipe->name }}" />
                                 <div class="absolute inset-0 flex items-center justify-center p-6 transition-opacity duration-300 bg-black opacity-0 bg-opacity-60 group-hover:opacity-100">
@@ -23,13 +23,14 @@
                                         <p class="mb-2 text-lg">Complejidad: Media</p>
                                         <p class="mb-2 text-lg">Tiempo: {{ $recipe->timeset }}</p>
                                         <p class="text-lg">{{ $recipe->shortdesc }}</p>
-
-                                        {{-- ACORDARME DE AÑADIR ALGO EN BD QUE DIGA EXPLICACION BREVE --}}
                                     </div>
                                 </div>
                             </a>
                         </div>
                         @endforeach
+
+
+
                     </div>
 
                     <!-- Navegación del Carrusel -->
@@ -47,10 +48,11 @@
 
 
     {{-- Botón para abrir el modal de agregar receta --}}
+    <a href="{{ route('recipes.edit', $recipe->id) }}" class="btn btn-primary btn-sm">Editar</a>
     <button id="openAddRecipeModal" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Agregar Nueva Receta</button>
 
 
- {{-- Modal para agregar receta --}}
+{{-- Modal para agregar receta --}}
 <div id="addRecipeModal" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-70">
     <div class="relative w-full h-auto max-w-2xl p-8 transition-transform duration-300 transform scale-90 bg-white rounded-lg">
         <button class="absolute text-2xl text-gray-600 cursor-pointer top-4 right-4" id="closeAddRecipeModal">&times;</button>
@@ -61,33 +63,41 @@
                 <label for="name" class="block mb-2 text-sm font-medium text-gray-600">Nombre:</label>
                 <input type="text" name="name" id="name" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
             </div>
-            <div class="mb-4">
-                <label for="ingredient" class="block mb-2 text-sm font-medium text-gray-600">Ingredientes:</label>
-                <input type="text" name="ingredient" id="ingredient" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
-            </div>
 
             <div class="mb-4">
                 <label for="image" class="block mb-2 text-sm font-medium text-gray-600">Imagen (URL):</label>
                 <input type="text" name="image" id="image" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
             </div>
+
             <div class="mb-6">
                 <label for="timeset" class="block mb-2 text-sm font-medium text-gray-600">Tiempo de elaboración:</label>
                 <input type="text" name="timeset" id="timeset" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
             </div>
+
             <div class="mb-3">
-                <label for="timeset" class="block mb-2 text-sm font-medium text-gray-600">Añade una Descripcion Breve</label>
+                <label for="shortdesc" class="block mb-2 text-sm font-medium text-gray-600">Añade una Descripción Breve:</label>
                 <input type="text" name="shortdesc" id="shortdesc" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
             </div>
+
+            <div class="mb-4">
+                <label for="ingredient" class="block mb-2 text-sm font-medium text-gray-600">Ingredientes:</label>
+                <textarea name="ingredient" rows="4" cols="30" id="ingredient" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required></textarea>
+            </div>
+
             <div class="mb-4">
                 <label for="description" class="block mb-2 text-sm font-medium text-gray-600">Procedimiento de la Receta:</label>
-                <textarea name="description" rows="8" cols="30" id="description" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required></textarea>
-
+                <textarea name="description" rows="7" cols="30" id="description" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required></textarea>
             </div>
+
             <button type="submit" class="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring focus:ring-blue-300 focus:outline-none">Agregar</button>
         </form>
     </div>
 </div>
-
+<style>
+    .recipe-ingredients {
+        white-space: pre-line;
+    }
+</style>
     {{-- Modal de Información de Receta --}}
     <div id="modal1" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black opacity-0 bg-opacity-70">
         <div class="bg-white w-[1200px] h-[900px] p-8 rounded-lg relative transform scale-90 transition-transform duration-300">
@@ -196,4 +206,9 @@
         });
     </script>
 </div>
+@endauth
+
+@guest
+    <div class="text-center text-red-600">No tienes acceso a esta página</div>
+@endguest
 @endsection
