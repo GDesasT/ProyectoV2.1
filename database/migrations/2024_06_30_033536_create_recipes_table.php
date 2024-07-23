@@ -4,28 +4,23 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateRecipesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('recipes', function (Blueprint $table) {
-            $table->id()->autoIncrement();
+            $table->id();
+            $table->string('name');
             $table->text('ingredient');
-            $table->string('name', 45);
             $table->text('description');
-            $table->foreignId('inventory_id')->constrained('inventories')->onDelete('cascade');
-            $table->timestamps();
+            $table->string('image'); // URL de la imagen
+            $table->string('timeset');
+            $table->timestamps(); // Esto agregará created_at y updated_at
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('recipes');
     }
-};
+}
