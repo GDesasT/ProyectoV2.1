@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CarouselImage;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,7 +14,8 @@ class HomeController extends Controller
 
     public function menu()
     {
-        return view('menu');
+        $images = CarouselImage::where('is_active', true)->get();
+        return view('menu', compact('images'));
     }
     
     public function feedback()
