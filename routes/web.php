@@ -24,7 +24,7 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 Route::middleware('auth')->group(function () {
     Route::get('/inventory', [HomeController::class, 'inventory'])->name('inventory');
     Route::get('/PointOfSale', [HomeController::class, 'PointOfSale'])->name('PointOfSale');
-    Route::get('/carousel', [CarouselImageController::class, 'index'])->name('carousel');
+    Route::get('/carousel', [CarouselImageController::class, 'index'])->name('carousel.index');
     Route::get('/carousel/create', [CarouselImageController::class, 'create'])->name('carousel.create');
     Route::post('/carousel', [CarouselImageController::class, 'store'])->name('carousel.store');
     Route::get('/carousel/toggle/{id}', [CarouselImageController::class, 'toggleActive'])->name('carousel.toggle');

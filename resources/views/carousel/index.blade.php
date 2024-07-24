@@ -9,7 +9,7 @@
             <div class="flex items-center justify-between mt-2">
                 <img src="{{ Storage::url($image->path) }}" alt="{{ $image->description }}" class="h-20">
                 <a href="{{ route('carousel.toggle', $image->id) }}" class="text-blue-500">
-                    {{ $image->active ? 'Desactivar' : 'Activar' }}
+                    {{ $image->is_active ? 'Desactivar' : 'Activar' }}
                 </a>
                 <form action="{{ route('carousel.destroy', $image->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar esta imagen?');">
                     @csrf
