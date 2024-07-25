@@ -26,15 +26,17 @@
             <div class="sm:flex sm:items-start">
                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
                     <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                        Añadir Platillo
+                        Añadir Venta
                     </h3>
                     <div class="mt-2">
-                        <input type="text" name="trabajador" placeholder="Ingrese el id" class="form-control mb-3 border border-gray-300 p-2 rounded-md w-full">
+                        <input type="number" name="trabajador" placeholder="Ingrese el id del trabajador" class="form-control mb-3 border border-gray-300 p-2 rounded-md w-full">
                         <select id="platillo" name="platillo" class="form-control mb-3 border border-gray-300 p-2 rounded-md w-full">
                             <option value="">Seleccione un Platillo</option>
                             <option value="1">Platillo Normal</option>
                             <option value="2">Platillo Ligero</option>
                         </select>
+                        <input type="datetime-local" name="date" placeholder="Fecha y hora" class="form-control mb-3 border border-gray-300 p-2 rounded-md w-full">
+                        <input type="number" step="0.01" name="total" placeholder="Total" class="form-control mb-3 border border-gray-300 p-2 rounded-md w-full">
                     </div>
                 </div>
             </div>
@@ -70,12 +72,29 @@
                     Platillo
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Total
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Acción
                 </th>
             </tr>
         </thead>
         <tbody>
+            @foreach($sales as $sale)
             <tr class="bg-white border-b">
+                <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{{ $sale->id }}</td>
+                <td class="px-6 py-4">{{ $sale->customer->name }}</td>
+                <td class="px-6 py-4">{{ $sale->customer->surname }}</td>
+                <td class="px-6 py-4">{{ $sale->date }}</td>
+                <td class="px-6 py-4">{{ $sale->dish->name }}</td>
+                <td class="px-6 py-4">{{ $sale->total }}</td>
+                <td class="px-6 py-4">
+                    <button class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900" onclick="deleteSale({{ $sale->id }})">
+                        Borrar
+                    </button>
+                </td>
+            </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
@@ -84,45 +103,114 @@
     document.getElementById('saveButton').addEventListener('click', function() {
         const trabajador = document.querySelector('input[name="trabajador"]').value;
         const platillo = document.querySelector('select[name="platillo"]').value;
+        const date = document.querySelector('input[name="date"]').value;
+        const total = document.querySelector('input[name="total"]').value;
 
-        if(trabajador && platillo) {
-            const table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
-            const newRow = table.insertRow();
+        if(trabajador && platillo && date && total) {
+            fetch('/sales', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({
+                    trabajador: trabajador,
+                    platillo: platillo,
+                    date: date,
+                    total: total
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if(data.success) {
+                    const table = document.getElementById('dataTable').getElementsByTagName('tbody')[0];
+                    const newRow = table.insertRow();
 
-            const idCell = newRow.insertCell(0);
-            const nombreCell = newRow.insertCell(1);
-            const apellidoCell = newRow.insertCell(2);
-            const fechaHoraCell = newRow.insertCell(3);
-            const platilloCell = newRow.insertCell(4);
-            const accionCell = newRow.insertCell(5);
+                    const idCell = newRow.insertCell(0);
+                    const nombreCell = newRow.insertCell(1);
+                    const apellidoCell = newRow.insertCell(2);
+                    const fechaHoraCell = newRow.insertCell(3);
+                    const platilloCell = newRow.insertCell(4);
+                    const totalCell = newRow.insertCell(5);
+                    const accionCell = newRow.insertCell(6);
 
-            idCell.classList.add('px-6', 'py-4', 'font-medium', 'text-gray-900', 'whitespace-nowrap');
-            idCell.textContent = trabajador;
-            
-            nombreCell.classList.add('px-6', 'py-4');
-            nombreCell.textContent = 'Nombre'; // Puedes reemplazar con el nombre correcto
-            
-            apellidoCell.classList.add('px-6', 'py-4');
-            apellidoCell.textContent = 'Apellido'; // Puedes reemplazar con el apellido correcto
-            
-            fechaHoraCell.classList.add('px-6', 'py-4');
-            fechaHoraCell.textContent = new Date().toLocaleString();
-            
-            platilloCell.classList.add('px-6', 'py-4');
-            platilloCell.textContent = platillo == 1 ? 'Platillo Normal' : 'Platillo Ligero';
-            
-            accionCell.classList.add('px-6', 'py-4');
-            accionCell.innerHTML = '<button class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Borrar</button>';
-            accionCell.querySelector('button').addEventListener('click', function() {
-                table.deleteRow(newRow.rowIndex - 1);
+                    idCell.classList.add('px-6', 'py-4', 'font-medium', 'text-gray-900', 'whitespace-nowrap');
+                    idCell.textContent = data.sale.id;
+                    
+                    nombreCell.classList.add('px-6', 'py-4');
+                    nombreCell.textContent = data.sale.customer.name;
+                    
+                    apellidoCell.classList.add('px-6', 'py-4');
+                    apellidoCell.textContent = data.sale.customer.surname;
+                    
+                    fechaHoraCell.classList.add('px-6', 'py-4');
+                    fechaHoraCell.textContent = new Date(data.sale.date).toLocaleString();
+                    
+                    platilloCell.classList.add('px-6', 'py-4');
+                    platilloCell.textContent = data.sale.dish.name;
+                    
+                    totalCell.classList.add('px-6', 'py-4');
+                    totalCell.textContent = data.sale.total;
+                    
+                    accionCell.classList.add('px-6', 'py-4');
+                    accionCell.innerHTML = '<button class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Borrar</button>';
+                    accionCell.querySelector('button').addEventListener('click', function() {
+                        fetch(`/sales/${data.sale.id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if(data.success) {
+                                table.deleteRow(newRow.rowIndex);
+                            } else {
+                                alert('Hubo un error al eliminar la venta.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Hubo un error al eliminar la venta.');
+                        });
+                    });
+
+                    const modalElement = document.getElementById('addModal');
+                    modalElement.classList.add('hidden');
+                } else {
+                    alert('Hubo un error al guardar la venta.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un error al guardar la venta.');
             });
-
-            const modalElement = document.getElementById('addModal');
-            modalElement.classList.add('hidden');
         } else {
             alert('Por favor, complete todos los campos.');
         }
     });
+
+    function deleteSale(id) {
+        fetch(`/sales/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                const row = document.querySelector(`#dataTable tbody tr[data-id="${id}"]`);
+                row.remove();
+            } else {
+                alert('Hubo un error al eliminar la venta.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un error al eliminar la venta.');
+        });
+    }
 
     document.querySelectorAll('[data-modal-hide]').forEach(button => {
         button.addEventListener('click', function() {

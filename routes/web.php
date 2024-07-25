@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CarouselImageController;
+use App\Http\Controllers\SaleController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
@@ -32,3 +33,12 @@ Route::middleware('auth')->group(function () {
     Route::put('/recipes/{recipe}', [RecipeController::class, 'update'])->name('recipes.update');
     Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy');
 });
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
+    Route::post('/sales', [SaleController::class, 'store'])->name('sales.store');
+    Route::delete('/sales/{sale}', [SaleController::class, 'destroy'])->name('sales.destroy');
+    Route::get('/PointOfSale', [SaleController::class, 'PointOfSale'])->name('PointOfSale');
+});
+
