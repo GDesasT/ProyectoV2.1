@@ -27,6 +27,7 @@ class RecipeController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'difficult' => 'required',
             'ingredient' => 'required',
             'description' => 'required',
             'image' => 'required|url',
@@ -44,6 +45,7 @@ class RecipeController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'difficult' => 'required',
             'ingredient' => 'required',
             'description' => 'required',
             'image' => 'required|url',
