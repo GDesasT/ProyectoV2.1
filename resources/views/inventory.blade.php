@@ -47,7 +47,7 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <form id="product-form" class="p-4 md:p-5" onsubmit="addProduct(event)">
+                    <form id="product-form" class="p-4 md:p-5"  action="{{ route('inventory.store') }}" onsubmit="addProduct(event)">
                         <div class="grid gap-4 mb-4 grid-cols-2">
                             <div class="col-span-2">
                                 <label for="nombre"

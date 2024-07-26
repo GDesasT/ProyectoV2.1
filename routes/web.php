@@ -6,6 +6,8 @@ use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CarouselImageController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\InventoryController;
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
@@ -17,8 +19,14 @@ Route::post('/login', [UserController::class, 'login'])->name('login.submit');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/inventory', [HomeController::class, 'inventory'])->name('inventory');
+    // Route::get('/inventory', [HomeController::class, 'inventory'])->name('inventory');
     Route::get('/PointOfSale', [HomeController::class, 'PointOfSale'])->name('PointOfSale');
+
+    Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
+    Route::get('/inventory/inventory', [InventoryController::class, 'inventory'])->name('inventory.inventory');
+    Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
+    
+
     
     Route::get('/carousel', [CarouselImageController::class, 'index'])->name('carousel.index');
     Route::get('/carousel/create', [CarouselImageController::class, 'create'])->name('carousel.create');
