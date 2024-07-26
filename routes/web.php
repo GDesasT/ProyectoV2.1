@@ -23,17 +23,19 @@ Route::middleware('auth')->group(function () {
     Route::get('/PointOfSale', [HomeController::class, 'PointOfSale'])->name('PointOfSale');
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
-    Route::get('/inventory/inventory', [InventoryController::class, 'inventory'])->name('inventory.inventory');
     Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
-    
+    Route::get('/inventory/{id}/edit', [InventoryController::class, 'edit'])->name('inventory.edit');
+    Route::put('/inventory/{id}', [InventoryController::class, 'update'])->name('inventory.update');
+    Route::delete('/inventory/{id}', [InventoryController::class, 'destroy'])->name('inventory.destroy');
 
-    
+
+
     Route::get('/carousel', [CarouselImageController::class, 'index'])->name('carousel.index');
     Route::get('/carousel/create', [CarouselImageController::class, 'create'])->name('carousel.create');
     Route::post('/carousel', [CarouselImageController::class, 'store'])->name('carousel.store');
     Route::get('/carousel/toggle/{id}', [CarouselImageController::class, 'toggleActive'])->name('carousel.toggle');
     Route::delete('/carousel/{id}', [CarouselImageController::class, 'destroy'])->name('carousel.destroy');
-    
+
     Route::get('/recipes', [RecipeController::class, 'index'])->name('recipes.index');
     Route::post('/recipes', [RecipeController::class, 'store'])->name('recipes.store');
     Route::get('/recipes/create', [RecipeController::class, 'create'])->name('recipes.create');
@@ -49,4 +51,3 @@ Route::middleware('auth')->group(function () {
     Route::delete('/sales/{sale}', [SaleController::class, 'destroy'])->name('sales.destroy');
     Route::get('/PointOfSale', [SaleController::class, 'PointOfSale'])->name('PointOfSale');
 });
-

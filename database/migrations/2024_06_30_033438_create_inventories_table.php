@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
             $table->string('name', 45);
-            $table->double('amount', 10, 2);
+            $table->double('amount');
             $table->enum('type', ['Verdura', 'Fruta', 'Proteina', 'Cereales y Legumbres'])->default('Verdura');
             $table->timestamps();
         });
