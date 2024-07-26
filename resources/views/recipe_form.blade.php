@@ -16,6 +16,12 @@
             <label for="name" class="form-label">Nombre:</label>
             <input type="text" name="name" id="name" class="form-control" value="{{ isset($recipe) ? $recipe->name : '' }}" required>
         </div>
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Dificultad:</label>
+            <input type="text" name="difficult" id="difficult" class="form-control" value="{{ isset($recipe) ? $recipe->difficult : '' }}" required>
+        </div>
+
         <div class="mb-3">
             <label for="ingredient" class="form-label">Ingredientes:</label>
             <input type="text" name="ingredient" id="ingredient" class="form-control" value="{{ isset($recipe) ? $recipe->ingredient : '' }}" required>
