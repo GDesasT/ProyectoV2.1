@@ -16,9 +16,9 @@
             <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
                 <template x-for="(slide, index) in slides" :key="index">
                     <div x-show="activeSlide === (index + 1)" class="absolute inset-0 transition-all transform duration-700"
-                         x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95"
-                         x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="ease-in duration-300"
-                         x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-95">
+                        x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0 transform scale-95"
+                        x-transition:enter-end="opacity-100 transform scale-100" x-transition:leave="ease-in duration-300"
+                        x-transition:leave-start="opacity-100 transform scale-100" x-transition:leave-end="opacity-0 transform scale-95">
                         <img :src="'{{ Storage::url('') }}' + slide.path" class="absolute block w-full h-full object-cover" alt="">
                         <div class="absolute bottom-5 left-5 text-white bg-black bg-opacity-50 p-2 rounded">
                             <h5 class="text-lg font-semibold" x-text="'Slide ' + (index + 1)"></h5>
