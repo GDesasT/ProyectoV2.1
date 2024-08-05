@@ -20,7 +20,7 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     // Route::get('/inventory', [HomeController::class, 'inventory'])->name('inventory');
-    Route::get('/PointOfSale', [HomeController::class, 'PointOfSale'])->name('PointOfSale');
+    Route::get('/PointOfSale', [HomeController::class, 'pointofsale'])->name('PointOfSale');
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
     Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
