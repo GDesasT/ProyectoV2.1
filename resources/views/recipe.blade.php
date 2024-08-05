@@ -43,7 +43,7 @@
 
     {{-- Modal para agregar receta --}}
     <div id="addRecipeModal" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-70">
-        <div class="relative w-full h-auto max-w-2xl p-8 transition-transform duration-300 transform scale-90 bg-white rounded-lg">
+        <div class="relative w-full h-auto max-h-screen overflow-auto max-w-2xl p-8 transition-transform duration-300 transform scale-90 bg-white rounded-lg">
             <button class="absolute text-2xl text-gray-600 cursor-pointer top-4 right-4" id="closeAddRecipeModal">&times;</button>
             <h2 class="mb-6 text-3xl font-bold text-center text-gray-800">Agregar Nueva Receta</h2>
             <form action="{{ route('recipes.store') }}" method="POST">
@@ -96,7 +96,7 @@
 
 {{-- Modal de Información de Receta --}}
 <div id="modal1" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black opacity-0 bg-opacity-70">
-    <div class="bg-white w-[1200px] h-[900px] p-8 rounded-lg relative transform scale-90 transition-transform duration-300">
+    <div class="bg-white w-[1200px] h-[900px] max-h-screen p-8 rounded-lg relative transform scale-90 transition-transform duration-300">
         <button class="absolute text-2xl text-black cursor-pointer top-4 right-4" id="closeModal">&times;</button>
         <h2 class="mb-4 text-3xl font-bold">Información de la Receta</h2>
         <div id="modalContent">
