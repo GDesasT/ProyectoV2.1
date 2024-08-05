@@ -3,54 +3,55 @@
 @section('content')
 @auth
 
-<style>
-    input[name="trabajador"],
-    select[name="platillo"] {
-        border: 2px solid black;
-        padding: 5px;
-        border-radius: 4px;
-    }
-</style>
-
 <div class="mx-20">
-    <button type="button" class="ml-15 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700" data-modal-target="addModal" data-modal-toggle="addModal">
+    <button type="button" class="ml-15 text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2" data-modal-target="addModal" data-modal-toggle="addModal">
         Añadir
     </button>
 </div>
 
-<div id="addModal" class="fixed inset-0 z-50 hidden overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-        <div class="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
-            <div class="sm:flex sm:items-start">
-                <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
-                        Añadir Venta
-                    </h3>
-                    <div class="mt-2">
-                        <input type="number" name="trabajador" placeholder="Ingrese el id del trabajador" class="form-control mb-3 border border-gray-300 p-2 rounded-md w-full">
-                        <select id="platillo" name="platillo" class="form-control mb-3 border border-gray-300 p-2 rounded-md w-full">
-                            <option value="">Seleccione un Platillo</option>
-                            <option value="1">Platillo Normal</option>
-                            <option value="2">Platillo Ligero</option>
-                        </select>
-                        <input type="datetime-local" name="date" placeholder="Fecha y hora" class="form-control mb-3 border border-gray-300 p-2 rounded-md w-full">
-                        <input type="number" step="0.01" name="total" placeholder="Total" class="form-control mb-3 border border-gray-300 p-2 rounded-md w-full">
-                    </div>
-                </div>
+<div id="addModal" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-75 z-50" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="relative w-full h-auto max-w-2xl p-8 transition-transform duration-300 transform scale-90 bg-white rounded-lg">
+        <button class="absolute text-2xl text-gray-600 cursor-pointer top-4 right-4" data-modal-hide="addModal">&times;</button>
+        
+        <h2 class="mb-6 text-3xl font-bold text-center text-gray-800" id="modal-title">Añadir Venta</h2>
+        
+        <form action="#" method="POST">
+            <div class="mb-4">
+                <label for="trabajador" class="block mb-2 text-sm font-medium text-gray-600">ID del Trabajador:</label>
+                <input type="number" name="trabajador" id="trabajador" placeholder="Ingrese el id del trabajador" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
             </div>
-            <div class="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">
-                <button type="button" id="saveButton" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+
+            <div class="mb-4">
+                <label for="platillo" class="block mb-2 text-sm font-medium text-gray-600">Platillo:</label>
+                <select id="platillo" name="platillo" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
+                    <option value="">Seleccione un Platillo</option>
+                    <option value="1">Platillo Normal</option>
+                    <option value="2">Platillo Ligero</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="date" class="block mb-2 text-sm font-medium text-gray-600">Fecha y Hora:</label>
+                <input type="datetime-local" name="date" id="date" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
+            </div>
+
+            <div class="mb-6">
+                <label for="total" class="block mb-2 text-sm font-medium text-gray-600">Total:</label>
+                <input type="number" step="0.01" name="total" id="total" placeholder="Total" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
+            </div>
+
+            <div class="flex justify-end">
+                <button type="button" id="saveButton" class="px-4 py-2 mr-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring focus:ring-blue-300 focus:outline-none">
                     Guardar
                 </button>
-                <button type="button" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm" data-modal-hide="addModal">
+                <button type="button" class="px-4 py-2 text-gray-700 bg-white border rounded-lg hover:bg-gray-50 focus:ring focus:ring-indigo-500 focus:outline-none" data-modal-hide="addModal">
                     Cerrar
                 </button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
+
 
 <div class="relative overflow-x-auto">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500" id="dataTable">
