@@ -21,7 +21,7 @@
             </div>
 
             <button onclick="openModal()" crud-modal data-modal-toggle="crud-modal" type="button"
-                class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2">Agregar producto</button>
+                class="px-4 py-2  text-white bg-blue-500  hover:bg-blue-700 font-medium rounded ">Agregar producto</button>
         </div>
 
         <div id="crud-modal" tabindex="-1" aria-hidden="true"
