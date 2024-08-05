@@ -96,7 +96,7 @@
 
 {{-- Modal de Información de Receta --}}
 <div id="modal1" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black opacity-0 bg-opacity-70">
-    <div class="bg-white w-[1200px] h-[900px] max-h-screen p-8 rounded-lg relative transform scale-90 transition-transform duration-300">
+    <div class="bg-white w-xl h-xl p-8 rounded-lg relative transform scale-90 transition-transform duration-300">
         <button class="absolute text-2xl text-black cursor-pointer top-4 right-4" id="closeModal">&times;</button>
         <h2 class="mb-4 text-3xl font-bold">Información de la Receta</h2>
         <div id="modalContent">
