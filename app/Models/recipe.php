@@ -7,9 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Recipe extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'name','difficult','shortdesc', 'ingredient', 'description', 'image', 'timeset'
+        'name', 'difficult', 'ingredient', 'description', 'image', 'timeset', 'shortdesc'
+    ];
+
+    protected $casts = [
+        'ingredients' => 'array', // Indicar que se tratará como un array
     ];
 }

@@ -18,6 +18,7 @@ class CreateRecipesTable extends Migration
             $table->string('image'); // URL de la imagen
             $table->string('timeset');
             $table->timestamps(); // Esto agregará created_at y updated_at
+            $table->json('ingredients')->nullable();
         });
     }
 

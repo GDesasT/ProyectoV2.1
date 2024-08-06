@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Recipe;
+use App\Models\Inventory;
 
 class RecipeController extends Controller
 {
     public function index()
     {
         $recipes = Recipe::all();
-        return view('recipe', compact('recipes'));
+        $inventories = Inventory::all(); // Obtener todos los productos del inventario
+        return view('recipe', compact('recipes', 'inventories'));
     }
 
     public function create()

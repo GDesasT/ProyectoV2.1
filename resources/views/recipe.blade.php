@@ -14,7 +14,7 @@
                 <div class="overflow-hidden carousel-wrapper">
                     <div class="flex gap-6 carousel-slide">
                         @foreach ($recipes as $index => $recipe)
-                        <div class="block transition-transform duration-300 transform bg-white rounded-lg cursor-pointer carousel-item group shadow-secondary-1 dark:bg-surface-dark hover:scale-105" data-modal="modal1" data-content="<strong style='font-size: 1.2em;'>Ingredientes:</strong><br><span class='recipe-ingredients'>{!! nl2br(e($recipe->ingredient)) !!}</span><br><strong style='font-size: 1.2em;'>Preparación:</strong><br>{!! nl2br(e($recipe->description)) !!}">
+                        <div class="block transition-transform duration-300 transform bg-white rounded-lg cursor-pointer carousel-item group shadow-secondary-1 dark:bg-surface-dark hover:scale-105" data-modal="modal1" data-index="{{ $index }}">
                             <a href="#!" class="relative block overflow-hidden rounded-lg">
                                 <img class="object-cover w-full transition-transform duration-300 rounded-t-lg h-96 group-hover:scale-110" src="{{ $recipe->image }}" alt="{{ $recipe->name }}" />
                                 <div class="absolute inset-0 flex items-center justify-center p-6 transition-opacity duration-300 bg-black opacity-0 bg-opacity-60 group-hover:opacity-100">
@@ -43,7 +43,7 @@
 
     {{-- Modal para agregar receta --}}
     <div id="addRecipeModal" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-70">
-        <div class="relative w-full h-auto max-h-screen overflow-auto max-w-2xl p-8 transition-transform duration-300 transform scale-90 bg-white rounded-lg">
+        <div class="relative w-full h-auto max-w-2xl max-h-screen p-8 overflow-auto transition-transform duration-300 transform scale-90 bg-white rounded-lg">
             <button class="absolute text-2xl text-gray-600 cursor-pointer top-4 right-4" id="closeAddRecipeModal">&times;</button>
             <h2 class="mb-6 text-3xl font-bold text-center text-gray-800">Agregar Nueva Receta</h2>
             <form action="{{ route('recipes.store') }}" method="POST">
@@ -54,7 +54,12 @@
                 </div>
                 <div class="mb-4">
                     <label for="difficult" class="block mb-2 text-sm font-medium text-gray-600">Dificultad:</label>
-                    <input type="text" name="difficult" id="difficult" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
+                    <select name="difficult" id="difficult" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required>
+                        <option value="">Selecciona la dificultad</option>
+                        <option value="Fácil">Fácil</option>
+                        <option value="Media">Media</option>
+                        <option value="Difícil">Difícil</option>
+                    </select>
                 </div>
 
                 <div class="mb-4">
@@ -74,7 +79,23 @@
 
                 <div class="mb-4">
                     <label for="ingredient" class="block mb-2 text-sm font-medium text-gray-600">Ingredientes:</label>
-                    <textarea name="ingredient" rows="3" cols="30" id="ingredient" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" required></textarea>
+                    <div id="ingredients-wrapper">
+                        <div class="mb-2 ingredient-group">
+                            <div class="flex items-center space-x-2">
+                                <input type="text" name="ingredient_name[]" placeholder="Nombre del Ingrediente" class="form-control" required>
+                                <input type="number" name="ingredient_quantity[]" placeholder="Cantidad" class="form-control" step="0.01" required>
+                                <select name="ingredient_unit[]" class="form-control">
+                                    <option value="kg">Kg</option>
+                                    <option value="g">g</option>
+                                    <option value="l">L</option>
+                                    <option value="unidad">Unidad</option>
+                                </select>
+                                <button type="button" class="text-red-500 remove-ingredient">&times;</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="add-ingredient" class="mt-2 btn btn-success">Añadir Ingrediente</button>
+                    <small class="form-text text-muted">Especifica los ingredientes necesarios para la receta. Puedes añadir más con el botón.</small>
                 </div>
 
                 <div class="mb-4">
@@ -96,11 +117,23 @@
 
 {{-- Modal de Información de Receta --}}
 <div id="modal1" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black opacity-0 bg-opacity-70">
-    <div class="bg-white w-xl h-xl p-8 rounded-lg relative transform scale-90 transition-transform duration-300">
+    <div class="relative p-8 transition-transform duration-300 transform scale-90 bg-white rounded-lg w-xl h-xl">
         <button class="absolute text-2xl text-black cursor-pointer top-4 right-4" id="closeModal">&times;</button>
-        <h2 class="mb-4 text-3xl font-bold">Información de la Receta</h2>
+        <h2 class="mb-4 text-3xl font-bold" id="modalRecipeName">Información de la Receta</h2>
         <div id="modalContent">
-            <!-- El contenido específico de cada receta se insertará aquí -->
+            <p class="text-lg"><strong>Ingredientes:</strong></p>
+            <ul id="modalIngredients">
+                <!-- Los ingredientes se insertarán aquí -->
+            </ul>
+            <p class="mt-4"><strong>Preparación:</strong><br><span id="modalPreparation"></span></p>
+        </div>
+        {{-- Botón de eliminación --}}
+        <div class="flex justify-end mt-4">
+            <form id="deleteRecipeForm" method="POST" action="">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700">Eliminar Receta</button>
+            </form>
         </div>
     </div>
 </div>
@@ -160,21 +193,44 @@
         setInterval(nextSlide, 3000); // Cambiar cada 3 segundos
 
         // Mostrar modal con contenido específico al hacer clic en una tarjeta
-        document.querySelectorAll('.carousel-item').forEach(item => {
+        document.querySelectorAll('.carousel-item').forEach((item, index) => {
             item.addEventListener('click', function() {
-                const modalId = this.getAttribute('data-modal');
-                const modalContent = this.getAttribute('data-content');
-                const modal = document.getElementById(modalId);
-                const modalContentContainer = document.getElementById('modalContent');
+                const recipe = @json($recipes)[index];
+                const ingredients = JSON.parse(recipe.ingredient);
 
+                // Llenar el contenido del modal
+                document.getElementById('modalRecipeName').innerText = recipe.name;
+                const modalIngredients = document.getElementById('modalIngredients');
+                modalIngredients.innerHTML = '';
+
+                ingredients.forEach(ingredient => {
+                    const inventoryItem = @json($inventories).find(i => i.name === ingredient.name);
+                    const available = inventoryItem ? inventoryItem.amount : 0;
+                    const required = ingredient.quantity;
+                    const unit = ingredient.unit;
+
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `${ingredient.name}: ${available}${unit} / ${required}${unit}`;
+                    if (available < required) {
+                        listItem.innerHTML += ` <span style="color: red;">(Faltan ${required - available}${unit})</span>`;
+                    }
+                    modalIngredients.appendChild(listItem);
+                });
+
+                document.getElementById('modalPreparation').innerHTML = recipe.description;
+
+                // Configurar la acción del formulario de eliminación
+                const deleteForm = document.getElementById('deleteRecipeForm');
+                deleteForm.action = `/recipes/${recipe.id}`;
+
+                // Mostrar el modal
+                const modal = document.getElementById('modal1');
                 modal.classList.remove('hidden');
                 setTimeout(() => {
                     modal.classList.remove('opacity-0');
                     modal.classList.add('opacity-100');
                     modal.querySelector('div').classList.remove('scale-90');
                 }, 10);
-
-                modalContentContainer.innerHTML = modalContent;
             });
         });
 
@@ -207,6 +263,38 @@
             setTimeout(() => {
                 modal.classList.add('hidden');
             }, 300); // Duración de la transición de opacidad
+        });
+
+        // Añadir nuevo ingrediente
+        document.getElementById('add-ingredient').addEventListener('click', function() {
+            const newIngredientGroup = document.createElement('div');
+            newIngredientGroup.classList.add('ingredient-group', 'mb-2');
+            newIngredientGroup.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <input type="text" name="ingredient_name[]" placeholder="Nombre del Ingrediente" class="form-control" required>
+                    <input type="number" name="ingredient_quantity[]" placeholder="Cantidad" class="form-control" step="0.01" required>
+                    <select name="ingredient_unit[]" class="form-control">
+                        <option value="kg">Kg</option>
+                        <option value="g">g</option>
+                        <option value="l">L</option>
+                        <option value="unidad">Unidad</option>
+                    </select>
+                    <button type="button" class="text-red-500 remove-ingredient">&times;</button>
+                </div>
+            `;
+            document.getElementById('ingredients-wrapper').appendChild(newIngredientGroup);
+
+            // Añadir evento para eliminar el ingrediente
+            newIngredientGroup.querySelector('.remove-ingredient').addEventListener('click', function() {
+                newIngredientGroup.remove();
+            });
+        });
+
+        // Añadir evento para eliminar ingredientes
+        document.querySelectorAll('.remove-ingredient').forEach(button => {
+            button.addEventListener('click', function() {
+                button.closest('.ingredient-group').remove();
+            });
         });
     });
 </script>
