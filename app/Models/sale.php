@@ -10,10 +10,11 @@ class Sale extends Model
     use HasFactory;
 
     protected $fillable = [
-        'date',
-        'total',
         'customer_id',
-        'dish_id',
+        'name',
+        'lastName',
+        'total',
+        'dish_type',
     ];
 
     // Relación con el modelo Customer
