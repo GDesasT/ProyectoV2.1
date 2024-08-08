@@ -4,7 +4,7 @@
 
 @section('content')
     @auth
-    <div class="mb-8 text-3xl  text-center font-bold">Inventario</div>
+        <div class="text-center"><strong>INVENTARIO</strong></div>
 
         <div class="flex justify-between items-center mt-1">
             <div class="relative">
@@ -15,9 +15,9 @@
                             d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
                 </div>
-                    <input type="text" id="table-search"asd
-                        class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Buscar elemento">
+                <input type="text" id="table-search"
+                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Buscar elemento">
             </div>
 
             <button onclick="openModal()" crud-modal data-modal-toggle="crud-modal" type="button"
@@ -47,19 +47,19 @@
                         @csrf
                         <div class="grid gap-4 mb-4 grid-cols-2">
                             <div class="col-span-2">
-                                <label for="name" class="block mb-2 text-sm text-center font-medium text-gray-900 dark:text-white">Nombre</label>
+                                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
                                 <input type="text" name="name" id="name"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Nombre del producto" required>
                             </div>
                             <div class="col-span-2 sm:col-span-1">
-                                <label for="amount" class="block mb-2 text-sm text-center font-medium text-gray-900 dark:text-white">Cantidad</label>
+                                <label for="amount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cantidad</label>
                                 <input type="number" name="amount" id="amount"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Kg" required>
                             </div>
                             <div class="col-span-2 sm:col-span-1">
-                                <label for="type" class="block mb-2 text-sm text-center font-medium text-gray-900 dark:text-white">Categoria</label>
+                                <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
                                 <select id="type" name="type"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                     <option selected>Seleccionar Categoria</option>
