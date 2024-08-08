@@ -1,5 +1,3 @@
-
-
 @extends('layouts.login_app')
 
 @section('content')
