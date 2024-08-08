@@ -5,14 +5,14 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CarouselImageController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\InventoryController;
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
-Route::get('/feedback', [HomeController::class, 'feedback'])->name('feedback');
-
+Route::post('/menu', [FeedbackController::class, 'store'])->name('menu.store');
 
 Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserController::class, 'login'])->name('login.submit');
@@ -47,4 +47,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/recipes/{recipe}/edit', [RecipeController::class, 'edit'])->name('recipes.edit');
     Route::put('/recipes/{recipe}', [RecipeController::class, 'update'])->name('recipes.update');
     Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy');
+
+    Route::resource('feedback', FeedbackController::class)->only(['index', 'store', 'destroy']);
 });
