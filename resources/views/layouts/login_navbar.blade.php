@@ -28,9 +28,6 @@
                     <a href="{{ route('carousel.index') }}" class="block py-2 px-3 rounded {{ request()->routeIs('carousel') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Carrusel</a>
                 </li>
                 <li>
-                    <a href="{{ route('feedback.index') }}" class="block py-2 px-3 rounded {{ request()->routeIs('feedback') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Comentarios</a>
-                </li>
-                <li>
                     <a href="{{ route('logout') }}" class="block py-2 px-3 rounded {{ request()->routeIs('logout') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Logout</a>
                 </li>
             </ul>

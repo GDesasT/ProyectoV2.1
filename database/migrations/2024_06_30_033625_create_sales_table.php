@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->dateTime('date');
-            $table->double('total', 10, 2);
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
-            $table->foreignId('dish_id')->constrained('dishes')->onDelete('cascade');
+            $table->string('name',45);
+            $table->string('lastName',45);
+            $table->double('total')->default(20);
+            $table->enum('dish_type', ['platillo normal', 'platillo ligero']);
             $table->timestamps();
         });
     }
