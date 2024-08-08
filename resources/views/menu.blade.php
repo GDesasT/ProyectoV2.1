@@ -1,16 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-    * {
-        font-family: 'Montserrat';
-    }
-</style>
-
 <div class="container mx-auto mt-5">
     <div class="container-heading">
         <h1 id="desayunos" class="text-3xl text-center font-bold mb-4">Desayunos</h1>
     </div>
+    
+    @if(session('success'))
+        <div class="bg-green-500 text-white p-4 rounded mb-4 text-center">
+            {{ session('success') }}
+        </div>
+    @endif
+
     @if($images->count() > 0)
         <div x-data="carouselData()" class="relative w-full">
             <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
@@ -57,7 +58,7 @@
         <div class="relative w-full max-w-md p-8 bg-white rounded-lg">
             <button class="absolute top-4 right-4 text-2xl text-gray-600 cursor-pointer" id="closeCommentModal">&times;</button>
             <h2 class="mb-6 text-2xl font-bold text-center text-gray-800">Deja tu Comentario</h2>
-            <form action="{{ route('menu') }}" method="POST">
+            <form action="{{ route('menu.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
                     <label for="comment" class="block mb-2 text-sm font-medium text-gray-600">Comentario:</label>
@@ -76,18 +77,10 @@
             activeSlide: 1,
             slides: @json($images),
             nextSlide() {
-                if (this.activeSlide === this.slides.length) {
-                    this.activeSlide = 1;
-                } else {
-                    this.activeSlide++;
-                }
+                this.activeSlide = this.activeSlide === this.slides.length ? 1 : this.activeSlide + 1;
             },
             prevSlide() {
-                if (this.activeSlide === 1) {
-                    this.activeSlide = this.slides.length;
-                } else {
-                    this.activeSlide--;
-                }
+                this.activeSlide = this.activeSlide === 1 ? this.slides.length : this.activeSlide - 1;
             }
         }
     }
