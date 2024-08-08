@@ -27,7 +27,7 @@ class HomeController extends Controller
         return view('inventory');
     }
 
-    public function pointofsale(){
-        return view('PointOfSale');
-    }
+    // public function pointofsale(){
+    //     return view('PointOfSale');
+    // }
 }

@@ -16,56 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('enterprises')->insert([
-            [
-                'name' => 'Aurrera',
-                'address' => '123 First Street',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Alsuper',
-                'address' => '456 Second Avenue',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Soriana',
-                'address' => '789 Third Boulevard',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
-
-
-
-
-        DB::table('customers')->insert([
-            [
-                'name' => 'Ricardo',
-                'lastname' => 'Villarreal',
-                'enterprise_id' => 1, // ID de una enterprise existente
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Dan',
-                'lastname' => 'Cabrera',
-                'enterprise_id' => 2, // ID de una enterprise existente
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Kevin',
-                'lastname' => 'Gonzales',
-                'enterprise_id' => 3, // ID de una enterprise existente
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
-
-
-
         // Crear roles
         DB::table('roles')->insert([
             ['type' => 'Desarrollador'],
