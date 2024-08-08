@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('feedback', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->longText('coment');
+            $table->longText('comment');
             $table->timestamps();
         });
     }
