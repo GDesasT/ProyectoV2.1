@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -20,14 +21,20 @@ class SaleController extends Controller
         // Validar los datos del formulario
         $request->validate([
             'customer_id' => 'required|exists:customers,id',
-            'name' => 'required|string|max:45',
-            'lastName' => 'required|string|max:45',
-            'total' => 'required|numeric|min:0',
             'dish_type' => 'required|in:platillo normal,platillo ligero'
         ]);
 
+        // Obtener el nombre y apellido del cliente basado en su ID
+        $customer = Customer::findOrFail($request->customer_id);
+
         // Crear un nuevo registro en la base de datos
-        Sale::create($request->all());
+        Sale::create([
+            'customer_id' => $customer->id,
+            'name' => $customer->name,
+            'lastName' => $customer->lastname,
+            'total' => 20, // Valor fijo para el total
+            'dish_type' => $request->dish_type
+        ]);
 
         // Redirigir y mostrar mensaje de éxito
         return redirect()->route('PointOfSale')->with('success', 'Venta agregada exitosamente.');
