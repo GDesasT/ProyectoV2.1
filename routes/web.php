@@ -9,6 +9,8 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\InventoryController;
 
+//bola de pendejos, le mueven y no saben a que le movieron hijos de su puta madre
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
