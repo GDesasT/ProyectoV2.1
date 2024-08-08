@@ -42,7 +42,7 @@ public function update(Request $request, $id)
     $request->validate([
         'name' => 'required',
         'amount' => 'required|numeric',
-        'type' => 'required',
+        'type' => 'required'
     ]);
 
     $inventory = Inventory::findOrFail($id);

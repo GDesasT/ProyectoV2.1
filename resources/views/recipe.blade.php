@@ -8,7 +8,7 @@
     {{-- Carrusel de Recetas Recomendadas --}}
     <div class="bg-white-100">
         <div class="container p-4 mx-auto">
-            <h1 class="mb-8 text-2xl font-semibold">Recetas Recomendadas</h1>
+            <h1 class="mb-8 text-3xl font-bold">Recetas Recomendadas</h1>
 
             <div class="relative overflow-hidden">
                 <div class="overflow-hidden carousel-wrapper">
