@@ -39,7 +39,7 @@
     </div>
 
     {{-- Botón para abrir el modal de agregar receta --}}
-    <button id="openAddRecipeModal" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">Agregar Nueva Receta</button>
+    <button id="openAddRecipeModal" class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-700">Agregar Nueva Receta</button>
 
     {{-- Modal para agregar receta --}}
     <div id="addRecipeModal" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-70">

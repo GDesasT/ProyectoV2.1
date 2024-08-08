@@ -2,6 +2,12 @@
 
 @section('content')
 
+<style>
+    body{
+        overflow: hidden;
+    }
+</style>
+
 <div class="min-h-screen flex items-center justify-center bg-amber-50">
     <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         <form method="POST" action="{{ route('login.submit') }}" class="space-y-6">
