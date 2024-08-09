@@ -1,27 +1,47 @@
-
-
 @extends('layouts.login_app')
 
 @section('content')
     @auth
-    <div class="mb-8 text-3xl  text-center font-bold">Punto de venta</div>
+    <div class="mb-8 text-3xl text-center font-bold">Punto de venta y Kevin está bien estúpido</div>
 
         <div class="flex justify-between items-center mt-1">
             <div class="relative">
-                <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                    </svg>
-                </div>
-                    <input type="text" id="table-search"asd
-                        class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Buscar elemento">
+                <form method="GET" action="{{ route('PointOfSale') }}" class="flex items-center space-x-4">
+                    <input type="text" name="customer_id" id="customer_id"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Buscar por ID de trabajador" value="{{ request('customer_id') }}">
+                    
+                    <input type="text" name="name" id="name"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Buscar por nombre" value="{{ request('name') }}">
+                    
+                    <input type="text" name="lastName" id="lastName"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        placeholder="Buscar por apellido" value="{{ request('lastName') }}">
+
+                    <input type="date" name="date" id="date"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        value="{{ request('date') }}">
+
+                    <select name="dish_type" id="dish_type"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                        <option value="" disabled selected>Filtrar por tipo de platillo</option>
+                        <option value="platillo normal" {{ request('dish_type') == 'platillo normal' ? 'selected' : '' }}>Platillo Normal</option>
+                        <option value="platillo ligero" {{ request('dish_type') == 'platillo ligero' ? 'selected' : '' }}>Platillo Ligero</option>
+                    </select>
+                    
+                    <button type="submit"
+                        class="ml-2 px-4 py-2 text-white bg-blue-500 hover:bg-blue-700 font-medium rounded">Buscar</button>
+                </form>
             </div>
 
-            <button onclick="openModal()" crud-modal data-modal-toggle="crud-modal" type="button"
-                class="px-4 py-2  text-white bg-blue-500  hover:bg-blue-700 font-medium rounded ">Agregar Venta </button>
+            <div class="flex items-center space-x-4">
+                <button onclick="filterTodaySales()" type="button"
+                    class="px-4 py-2 text-white bg-green-500 hover:bg-green-700 font-medium rounded">Ventas de Hoy</button>
+
+                <button onclick="openModal()" crud-modal data-modal-toggle="crud-modal" type="button"
+                    class="px-4 py-2 text-white bg-blue-500 hover:bg-blue-700 font-medium rounded">Agregar Venta</button>
+            </div>
         </div>
 
         <div id="crud-modal" tabindex="-1" aria-hidden="true"
@@ -47,17 +67,11 @@
                         @csrf
                         <div class="grid gap-4 mb-4 grid-cols-2">
                             <div class="col-span-2">
-                                <label for="name" class="block mb-2 text-center text-sm font-medium text-gray-900 dark:text-white">ID usuario</label>
+                                <label for="customer_id" class="block mb-2 text-center text-sm font-medium text-gray-900 dark:text-white">ID usuario</label>
                                 <input type="text" name="customer_id" id="customer_id"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="ID del usuario " required>
                             </div>         
-                            {{-- <div class="col-span-2">
-                                <label for="name" class="block mb-2 text-sm text-center font-medium text-gray-900 dark:text-white">Total</label>
-                                <input type="number" name="total" id="total"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Monto total de la venta " required>
-                            </div> --}}
                             <div class="col-span-2 sm:col-span-1">
                                 <label for="dish_type" class="block mb-2 text-sm text-center font-medium text-gray-900 dark:text-white">Tipo de platillo</label>
                                 
@@ -69,7 +83,6 @@
                                     <option value="platillo ligero">Platillo Ligero</option>
                                 </select>
                             </div>
-                            
                         </div>
                         <button type="submit"
                             class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -108,15 +121,8 @@
                         <td class="px-6 py-4">{{ $sale->dish_type }}</td>
                         <td class="px-6 py-4">{{ $sale->total }}</td>
                         <td class="px-6 py-4">{{ $sale->updated_at }}</td>
-                        {{-- <td class="px-6 py-4 flex space-x-2">
-                            <form action="{{ route('sales.destroy', $sale->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('¿Estás seguro de que quieres eliminar esta venta?');">Eliminar</button>
-                            </form>
-                        </td> --}}
                     </tr>
-                @endforeach
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -124,7 +130,7 @@
     @endauth
 
     @guest
-        <div class="text-center text-red-600">No tienes acceso a esta página</div>
+        <div class="text-center text-red-600">No tienes acceso a esta página y Kevin está bien estúpido</div>
     @endguest
 @endsection
 
@@ -135,5 +141,10 @@
 
     function closeModal() {
         document.getElementById("crud-modal").style.display = 'none';
+    }
+
+    function filterTodaySales() {
+        const today = new Date().toISOString().split('T')[0];
+        window.location.href = `{{ route('PointOfSale') }}?date=${today}`;
     }
 </script>

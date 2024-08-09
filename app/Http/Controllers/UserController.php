@@ -10,6 +10,10 @@ class UserController extends Controller
 {
     public function showLoginForm()
     {
+        if (Auth::check()) {
+            return redirect('/inventory'); // Redirige a la ruta que desees si ya está autenticado
+        }
+    
         return view('login');
     }
 
@@ -36,4 +40,5 @@ class UserController extends Controller
         $request->session()->regenerateToken();
         return redirect('/login');
     }
+    
 }

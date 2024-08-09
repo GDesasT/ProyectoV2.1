@@ -9,9 +9,42 @@ use Illuminate\Http\Request;
 class SaleController extends Controller
 {
     // Muestra la lista de ventas
-    public function index()
+    public function index(Request $request)
     {
-        $sales = Sale::all();
+        // Obtener los parámetros de búsqueda
+        $customer_id = $request->input('customer_id');
+        $name = $request->input('name');
+        $lastName = $request->input('lastName');
+        $date = $request->input('date');
+        $dish_type = $request->input('dish_type');
+
+        // Crear una consulta base
+        $query = Sale::query();
+
+        // Aplicar los filtros si existen
+        if ($customer_id) {
+            $query->where('customer_id', $customer_id);
+        }
+
+        if ($name) {
+            $query->where('name', 'like', '%' . $name . '%');
+        }
+
+        if ($lastName) {
+            $query->where('lastName', 'like', '%' . $lastName . '%');
+        }
+
+        if ($date) {
+            $query->whereDate('updated_at', $date);
+        }
+
+        if ($dish_type) {
+            $query->where('dish_type', $dish_type);
+        }
+
+        // Obtener las ventas filtradas
+        $sales = $query->get();
+
         return view('PointOfSale', compact('sales'));
     }
 
