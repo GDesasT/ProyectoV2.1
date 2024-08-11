@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sale;
+use App\Models\sale;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -19,7 +19,7 @@ class SaleController extends Controller
         $dish_type = $request->input('dish_type');
 
         // Crear una consulta base
-        $query = Sale::query();
+        $query = sale::query();
 
         // Aplicar los filtros si existen
         if ($customer_id) {
@@ -61,7 +61,7 @@ class SaleController extends Controller
         $customer = Customer::findOrFail($request->customer_id);
 
         // Crear un nuevo registro en la base de datos
-        Sale::create([
+        sale::create([
             'customer_id' => $customer->id,
             'name' => $customer->name,
             'lastName' => $customer->lastname,
@@ -70,13 +70,13 @@ class SaleController extends Controller
         ]);
 
         // Redirigir y mostrar mensaje de éxito
-        return redirect()->route('PointOfSale')->with('success', 'Venta agregada exitosamente.');
+        return redirect()->route('PointOfsale')->with('success', 'Venta agregada exitosamente.');
     }
 
     // Muestra el formulario para editar una venta existente
     public function edit($id)
     {
-        $sale = Sale::findOrFail($id);
+        $sale = sale::findOrFail($id);
         return view('sales.edit', compact('sale'));
     }
 
@@ -91,7 +91,7 @@ class SaleController extends Controller
             'dish_type' => 'required|in:platillo normal,platillo ligero',
         ]);
 
-        $sale = Sale::findOrFail($id);
+        $sale = sale::findOrFail($id);
         $sale->update($request->all());
 
         return redirect()->route('sales.index')->with('success', 'Venta actualizada correctamente.');
@@ -100,7 +100,7 @@ class SaleController extends Controller
     // Elimina una venta existente
     public function destroy($id)
     {
-        $sale = Sale::findOrFail($id);
+        $sale = sale::findOrFail($id);
         $sale->delete();
 
         return redirect()->route('sales.index')->with('success', 'Venta eliminada correctamente.');

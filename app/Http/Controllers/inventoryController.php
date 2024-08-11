@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Inventory;
+use App\Models\inventory;
 use Illuminate\Http\Request;
 
-class InventoryController extends Controller
+class inventoryController extends Controller
 {
     // Muestra la lista de inventario
     public function index()
     {
-        $inventories = Inventory::all();
+        $inventories = inventory::all();
         return view('inventory', compact('inventories'));
     }
 
@@ -25,7 +25,7 @@ class InventoryController extends Controller
         ]);
 
         // Crear un nuevo registro en la base de datos
-        Inventory::create($request->all());
+        inventory::create($request->all());
 
         // Redirigir y mostrar mensaje de éxito
         return redirect()->route('inventory')->with('success', 'Producto agregado exitosamente.');
@@ -33,7 +33,7 @@ class InventoryController extends Controller
 
     public function edit($id)
 {
-    $inventory = Inventory::findOrFail($id);
+    $inventory = inventory::findOrFail($id);
     return view('inventory', compact('inventory'));
 }
 
@@ -45,7 +45,7 @@ public function update(Request $request, $id)
         'type' => 'required'
     ]);
 
-    $inventory = Inventory::findOrFail($id);
+    $inventory = inventory::findOrFail($id);
     $inventory->update($request->all());
 
     return redirect()->route('inventory')->with('success', 'Producto actualizado correctamente.');
@@ -53,7 +53,7 @@ public function update(Request $request, $id)
 
 public function destroy($id)
 {
-    $inventory = Inventory::findOrFail($id);
+    $inventory = inventory::findOrFail($id);
     $inventory->delete();
 
     return redirect()->route('inventory')->with('success', 'Producto eliminado correctamente.');

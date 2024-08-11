@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Recipe;
-use App\Models\Inventory;
+use App\Models\recipe;
+use App\Models\inventory;
 
 class RecipeController extends Controller
 {
     public function index()
     {
-        $recipes = Recipe::all();
-        $inventories = Inventory::all(); // Obtener todos los productos del inventario
+        $recipes = recipe::all();
+        $inventories = inventory::all(); // Obtener todos los productos del inventario
         return view('recipe', compact('recipes', 'inventories'));
     }
 
@@ -20,7 +20,7 @@ class RecipeController extends Controller
         return view('recipe_form');
     }
 
-    public function edit(Recipe $recipe)
+    public function edit(recipe $recipe)
     {
         return view('recipe_form', compact('recipe'));
     }
@@ -37,13 +37,13 @@ class RecipeController extends Controller
             'shortdesc' => 'required',
         ]);
 
-        Recipe::create($request->all());
+        recipe::create($request->all());
 
         return redirect()->route('recipes.index')
-                         ->with('success', 'Recipe creado exitosamente.');
+                         ->with('success', 'recipe creado exitosamente.');
     }
 
-    public function update(Request $request, Recipe $recipe)
+    public function update(Request $request, recipe $recipe)
     {
         $request->validate([
             'name' => 'required',
@@ -58,14 +58,14 @@ class RecipeController extends Controller
         $recipe->update($request->all());
 
         return redirect()->route('recipes.index')
-                         ->with('success', 'Recipe actualizado exitosamente.');
+                         ->with('success', 'recipe actualizado exitosamente.');
     }
 
-    public function destroy(Recipe $recipe)
+    public function destroy(recipe $recipe)
     {
         $recipe->delete();
 
         return redirect()->route('recipes.index')
-                         ->with('success', 'Recipe eliminado exitosamente.');
+                         ->with('success', 'recipe eliminado exitosamente.');
     }
 }

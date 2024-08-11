@@ -2,7 +2,7 @@
 
 @section('content')
     @auth
-    <div class="mb-8 text-3xl text-center font-bold">Punto de venta y Kevin está bien estúpido</div>
+    <div class="mb-8 text-3xl text-center font-bold">Punto de venta</div>
 
         <div class="flex justify-between items-center mt-1">
             <div class="relative">
@@ -130,7 +130,7 @@
     @endauth
 
     @guest
-        <div class="text-center text-red-600">No tienes acceso a esta página y Kevin está bien estúpido</div>
+        <div class="text-center text-red-600">No tienes acceso a esta página</div>
     @endguest
 @endsection
 
