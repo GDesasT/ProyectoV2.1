@@ -39,7 +39,7 @@
 <div class="container mx-auto mt-8">
     <div class="flex flex-col md:flex-row md:space-x-8 items-center animate-fadeInUp">
         <div class="md:w-1/3 flex justify-center animate-fadeInUp">
-            <img src="{{ asset('img/distintivoh.png') }}" class="h-64" alt="Distintivo H">
+            <img src="{{ asset('img/distintivoH.png') }}" class="h-64" alt="Distintivo H">
         </div>
         <div class="md:w-2/3 sm:w-auto bg-white rounded-2xl p-5 m-10 animate-fadeInUp">
             <h2 class="text-3xl font-bold text-center text-gray-800">DISTINTIVO “H”</h2>
