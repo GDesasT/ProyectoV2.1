@@ -20,7 +20,7 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     // Route::get('/inventory', [HomeController::class, 'inventory'])->name('inventory');
-    
+
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
     Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/PointOfSale', [SaleController::class, 'store'])->name('sales.store');
     Route::delete('/sales/{sale}', [SaleController::class, 'destroy'])->name('sales.destroy');
 
-    
+
 
     Route::get('/carousel', [CarouselImageController::class, 'index'])->name('carousel.index');
     Route::get('/carousel/create', [CarouselImageController::class, 'create'])->name('carousel.create');
