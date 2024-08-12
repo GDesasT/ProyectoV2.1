@@ -98,24 +98,30 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($inventories as $inventory)
-                        <tr>
-                            <td class="px-6 py-4">{{ $inventory->name }}</td>
-                            <td class="px-6 py-4">{{ $inventory->amount }}</td>
-                            <td class="px-6 py-4">{{ $inventory->type }}</td>
-                            <td class="px-6 py-4">{{ $inventory->updated_at }}</td>
-                            <td class="px-6 py-4 flex space-x-2">
-                                <a href="{{ route('inventory.edit', $inventory->id) }}"
-                                    class="text-blue-600 hover:text-blue-900">Editar</a>
-                                <form action="{{ route('inventory.destroy', $inventory->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-900"
-                                        onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
+                        @foreach($inventories as $inventory)
+                            <tr>
+                                <td class="px-6 py-4">{{ $inventory->name }}</td>
+                                <td class="px-6 py-4">{{ $inventory->amount }}</td>
+                                <td class="px-6 py-4">{{ $inventory->type }}</td>
+                                <td class="px-6 py-4">{{ $inventory->updated_at }}</td>
+                                <td class="px-6 py-4 flex space-x-2">
+                                    <form action="{{ route('inventory.edit', $inventory->id) }}" method="GET">
+                                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                            Editar
+                                        </button>
+                                    </form>
+                                    <form action="{{ route('inventory.destroy', $inventory->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
+                                            onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </td>
+                                
+                            </tr>
+                        @endforeach
                 </tbody>
             </table>
         </div>
