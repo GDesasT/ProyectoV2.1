@@ -47,6 +47,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/recipes/{recipe}/edit', [RecipeController::class, 'edit'])->name('recipes.edit');
     Route::put('/recipes/{recipe}', [RecipeController::class, 'update'])->name('recipes.update');
     Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy');
-
-    Route::resource('feedback', FeedbackController::class)->only(['index', 'store', 'destroy']);
 });
+
+    Route::resource('feedback', FeedbackController::class)->only(['index', 'store', 'destroy'])->middleware('admin:Admin');

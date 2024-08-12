@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->enum('type', ['Desarrollador', 'Administrador', 'Trabajador'])->default('Trabajador');
+            $table->enum('type', ['Dev', 'Admin', 'Employee'])->default('Employee');
             $table->timestamps();
         });
     }

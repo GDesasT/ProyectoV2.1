@@ -68,9 +68,9 @@ class DatabaseSeeder extends Seeder
 
         // Crear roles
         DB::table('roles')->insert([
-            ['type' => 'Desarrollador'],
-            ['type' => 'Administrador'],
-            ['type' => 'Trabajador'],
+            ['type' => 'Dev'],
+            ['type' => 'Admin'],
+            ['type' => 'Employee'],
         ]);
 
         // Crear el usuario administrador
@@ -83,7 +83,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'user' => 'admin',
             'password' => Hash::make('@comedor_fuent3'),
-            'role_id' => 3,
+            'role_id' => 2,
         ]);
 
         User::create([
