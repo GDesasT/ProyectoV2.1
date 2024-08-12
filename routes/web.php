@@ -20,8 +20,6 @@ Route::post('/login', [UserController::class, 'login'])->name('login.submit');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
-    // Route::get('/inventory', [HomeController::class, 'inventory'])->name('inventory');
-
 
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
     Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
@@ -49,8 +47,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/recipes/{recipe}', [RecipeController::class, 'update'])->name('recipes.update');
     Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy');
 });
-
-    // Route::resource('feedback', FeedbackController::class)->only(['index', 'store', 'destroy'])->middleware('admin:Admin');
 
 Route::middleware('admin:Admin,Dev')->group(function (){
     Route::resource('feedback', FeedbackController::class)->only(['index', 'store', 'destroy']);

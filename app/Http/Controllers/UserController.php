@@ -11,7 +11,7 @@ class UserController extends Controller
     public function showLoginForm()
     {
         if (Auth::check()) {
-            return redirect('/inventory'); // Redirige a la ruta que desees si ya está autenticado
+            return redirect('/inventory');
         }
     
         return view('login');
