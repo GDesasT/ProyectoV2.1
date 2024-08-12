@@ -8,7 +8,8 @@ use App\Http\Controllers\CarouselImageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\InventoryController;
-
+use GuzzleHttp\Middleware;
+use PHPUnit\Framework\Attributes\Group;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
@@ -49,4 +50,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy');
 });
 
-    Route::resource('feedback', FeedbackController::class)->only(['index', 'store', 'destroy'])->middleware('admin:Admin');
+    // Route::resource('feedback', FeedbackController::class)->only(['index', 'store', 'destroy'])->middleware('admin:Admin');
+
+Route::middleware('admin:Admin,Dev')->group(function (){
+    Route::resource('feedback', FeedbackController::class)->only(['index', 'store', 'destroy']);
+});
