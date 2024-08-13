@@ -25,7 +25,6 @@ class Admin
         $user->load('role');
     }
 
-    // Verifica si el usuario tiene uno de los roles permitidos
     if (!$user || !$user->role || !in_array($user->role->type, $roles)) {
         return redirect()->action([UserController::class, 'showLoginForm'])->with('error', 'Access denied. You do not have the required role.');
     }
