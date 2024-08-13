@@ -23,12 +23,16 @@ class EnterpriseController extends Controller
         // Validar los datos del formulario
         $request->validate([
             'name' => 'required|max:45',
+            'email' => 'required|max:45',
+            'phone' => 'required|max:45',
             'address' => 'required',
         ]);
 
         // Crear una nueva empresa y guardarla en la base de datos
         Enterprise::create([
             'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'phone' => $request->input('phone'),
             'address' => $request->input('address'),
         ]);
 

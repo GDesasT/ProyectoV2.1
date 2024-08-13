@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('enterprises', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->string('name', 45);
+            $table->string('email', 45);
+            $table->string('phone', 45);
             $table->text('address');
             $table->timestamps();
         });
