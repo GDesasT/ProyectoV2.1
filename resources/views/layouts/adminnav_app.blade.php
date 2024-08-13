@@ -9,7 +9,7 @@
     <title>Comedor S.A de C.V</title>
 </head>
 <body class="bg-amber-50">
-    @include('layouts.login_navbar')
+    @include('layouts.adminnav')
 
     <div class="container px-4 py-8 mx-auto">
         @yield('content')

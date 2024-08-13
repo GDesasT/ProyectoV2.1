@@ -7,9 +7,12 @@
         <div class="flex flex-wrap items-center justify-between mt-1">
             <div class="relative w-full mb-2 md:w-auto md:mb-0">
                 <form method="GET" action="{{ route('PointOfSale') }}" class="flex flex-wrap items-center space-x-2 md:flex-nowrap md:space-x-4">
+                    <input type="text" name="number" id="number"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                        placeholder="Buscar por Numero de Trabajador" value="{{ request('number') }}">
                     <input type="text" name="customer_id" id="customer_id"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        placeholder="Buscar por ID de trabajador" value="{{ request('customer_id') }}">
+                        placeholder="Buscar por ID de comedor" value="{{ request('customer_id') }}">
 
                     <input type="text" name="name" id="name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
@@ -66,10 +69,10 @@
                     <form id="product-form" class="p-6" method="POST" action="{{ route('sales.store') }}">
                         @csrf
                         <div class="mb-4">
-                            <label for="customer_id" class="block mb-2 text-sm font-medium text-gray-900">ID usuario</label>
-                            <input type="text" name="customer_id" id="customer_id"
+                            <label for="number" class="block mb-2 text-sm font-medium text-gray-900">Numero de Trabajador</label>
+                            <input type="text" name="number" id="number"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                placeholder="ID del usuario" required>
+                                placeholder="Numero de Trabajador" required>
                         </div>
                         <div class="mb-4">
                             <label for="dish_type" class="block mb-2 text-sm font-medium text-gray-900">Tipo de platillo</label>
@@ -95,7 +98,7 @@
             <table id="product-table" class="w-full text-sm text-left text-gray-500 rtl:text-right">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
-                        <th scope="col" class="px-6 py-3">ID usuario</th>
+                        <th scope="col" class="px-6 py-3">ID del Comedor</th>
                         <th scope="col" class="px-6 py-3">Nombre</th>
                         <th scope="col" class="px-6 py-3">Apellido</th>
                         <th scope="col" class="px-6 py-3">Tipo platillo</th>

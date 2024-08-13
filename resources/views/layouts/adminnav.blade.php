@@ -16,16 +16,13 @@
         <div :class="{ 'block': open, 'hidden': !open }" class="hidden w-full md:block md:w-auto" id="navbar-default">
             <ul class="flex flex-col p-4 mt-4 font-medium bg-blue-300 border border-gray-700 rounded-lg md:p-0 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
                 <li>
-                    <a href="{{ route('recipes.index') }}" class="block py-2 px-3 rounded {{ request()->routeIs('recipes.index') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}" aria-current="{{ request()->routeIs('recipes.index') ? 'page' : '' }}">Recetario</a>
-                </li>
-                <li>
                     <a href="{{ route('inventory') }}" class="block py-2 px-3 rounded {{ request()->routeIs('inventory') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}" aria-current="{{ request()->routeIs('inventory') ? 'page' : '' }}">Inventario</a>
                 </li>
                 <li>
-                    <a href="{{ route('PointOfSale') }}" class="block py-2 px-3 rounded {{ request()->routeIs('PointOfSale') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Punto de venta</a>
+                    <a href="{{ route('enterprises.create') }}" class="block py-2 px-3 rounded {{ request()->routeIs('enterprise') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Empresas</a>
                 </li>
                 <li>
-                    <a href="{{ route('carousel.index') }}" class="block py-2 px-3 rounded {{ request()->routeIs('carousel') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Carrusel</a>
+                    <a href="{{ route('customers.create') }}" class="block py-2 px-3 rounded {{ request()->routeIs('customers') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Trabajadores</a>
                 </li>
                 <li>
                     <a href="{{ route('feedback.index') }}" class="block py-2 px-3 rounded {{ request()->routeIs('feedback') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Comentarios</a>

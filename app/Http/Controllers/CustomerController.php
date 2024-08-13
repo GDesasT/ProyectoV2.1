@@ -24,6 +24,7 @@ class CustomerController extends Controller
 {
     // Validar los datos del formulario
     $request->validate([
+        'number' => 'required|max:45',
         'name' => 'required|max:45',
         'lastname' => 'required|max:45',
         'email' => 'required|email|max:45|unique:customers,email',
