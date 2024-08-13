@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
 
         DB::table('customers')->insert([
             [
+                'number' => '102312',
                 'name' => 'Ricardo',
                 'lastname' => 'Villarreal',
                 'email' => 'Villarreal@gmail.com',
@@ -50,6 +51,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'number' => '23170049',
                 'name' => 'Dan',
                 'lastname' => 'Cabrera',
                 'email' => 'cabrera@gmail.com',
@@ -58,6 +60,7 @@ class DatabaseSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'number' => '270905',
                 'name' => 'Kevin',
                 'lastname' => 'Gonzales',
                 'email' => 'gonzales@gmail.com',

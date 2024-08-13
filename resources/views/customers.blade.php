@@ -14,6 +14,12 @@
             <form action="{{ route('customers.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium text-gray-700">Numero de Empleado:</label>
+                    <input type="text" id="number" name="number" maxlength="45" required
+                           class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+
+                <div class="mb-4">
                     <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
                     <input type="text" id="name" name="name" maxlength="45" required
                         class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
@@ -75,6 +81,7 @@
         @if(isset($customer))
             <div class="p-4 mt-8 text-center bg-gray-100 rounded-lg">
                 <h3 class="text-lg font-bold">Empleado Encontrado:</h3>
+                <p>Numero de Empleado: {{ $customer->number }}</p>
                 <p>ID: {{ $customer->id }}</p>
                 <p>Nombre: {{ $customer->name }} {{ $customer->lastname }}</p>
                 <p>Email: {{ $customer->email }}</p>

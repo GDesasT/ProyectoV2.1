@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
@@ -12,6 +11,7 @@ class SaleController extends Controller
     public function index(Request $request)
     {
         // Obtener los parámetros de búsqueda
+        $number = $request->input('number');
         $customer_id = $request->input('customer_id');
         $name = $request->input('name');
         $lastName = $request->input('lastName');
@@ -22,6 +22,10 @@ class SaleController extends Controller
         $query = Sale::query();
 
         // Aplicar los filtros si existen
+        if ($number) {
+            $query->where('number', $number);
+        }
+
         if ($customer_id) {
             $query->where('customer_id', $customer_id);
         }
@@ -53,16 +57,17 @@ class SaleController extends Controller
     {
         // Validar los datos del formulario
         $request->validate([
-            'customer_id' => 'required|exists:customers,id',
+            'number' => 'required|exists:customers,number',
             'dish_type' => 'required|in:platillo normal,platillo ligero'
         ]);
 
-        // Obtener el nombre y apellido del cliente basado en su ID
-        $customer = Customer::findOrFail($request->customer_id);
+        // Obtener el cliente basado en su número de trabajador
+        $customer = Customer::where('number', $request->number)->firstOrFail();
 
         // Crear un nuevo registro en la base de datos
         Sale::create([
-            'customer_id' => $customer->id,
+            'number' => $customer->id, // Asegúrate de que este sea el id de customer
+            'customer_id' => $customer->id, // Aquí está el ID correcto
             'name' => $customer->name,
             'lastName' => $customer->lastname,
             'total' => 20, // Valor fijo para el total
@@ -105,5 +110,4 @@ class SaleController extends Controller
 
         return redirect()->route('PointOfSale')->with('success', 'Venta eliminada correctamente.');
     }
-
 }

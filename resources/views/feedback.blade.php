@@ -1,4 +1,4 @@
-@extends('layouts.login_app')
+@extends('layouts.adminnav_app')
 
 @section('content')
     @auth
