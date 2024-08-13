@@ -19,22 +19,13 @@ class DatabaseSeeder extends Seeder
         DB::table('enterprises')->insert([
             [
                 'name' => 'Aurrera',
+                'email' => 'example@gmail.com',
+                'phone' => '8713352950',
                 'address' => '123 First Street',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'name' => 'Alsuper',
-                'address' => '456 Second Avenue',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Soriana',
-                'address' => '789 Third Boulevard',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+           
         ]);
 
 
@@ -55,7 +46,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Dan',
                 'lastname' => 'Cabrera',
                 'email' => 'cabrera@gmail.com',
-                'enterprise_id' => 2, // ID de una enterprise existente
+                'enterprise_id' => 1, // ID de una enterprise existente
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -64,7 +55,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Kevin',
                 'lastname' => 'Gonzales',
                 'email' => 'gonzales@gmail.com',
-                'enterprise_id' => 3, // ID de una enterprise existente
+                'enterprise_id' => 1, // ID de una enterprise existente
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

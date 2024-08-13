@@ -10,6 +10,8 @@ class enterprise extends Model
     use HasFactory;
     protected $fillable = [
         'name',
+        'email',
+        'phone',
         'address',
     ];
 }

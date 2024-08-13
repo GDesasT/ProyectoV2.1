@@ -102,6 +102,7 @@
                         <th scope="col" class="px-6 py-3">Nombre</th>
                         <th scope="col" class="px-6 py-3">Apellido</th>
                         <th scope="col" class="px-6 py-3">Tipo platillo</th>
+                        <th scope="col" class="px-6 py-3">Empresa</th>
                         <th scope="col" class="px-6 py-3">Total</th>
                         <th scope="col" class="px-6 py-3">Fecha de venta</th>
                         <th scope="col" class="px-6 py-3">Acciones</th>
@@ -114,6 +115,7 @@
                         <td class="px-6 py-4">{{ $sale->name }}</td>
                         <td class="px-6 py-4">{{ $sale->lastName }}</td>
                         <td class="px-6 py-4">{{ $sale->dish_type }}</td>
+                        <td class="px-6 py-4">{{ $sale->enterprise }}</td>
                         <td class="px-6 py-4">{{ $sale->total }}</td>
                         <td class="px-6 py-4">{{ $sale->updated_at }}</td>
                         <td class="px-6 py-4 flex space-x-2">

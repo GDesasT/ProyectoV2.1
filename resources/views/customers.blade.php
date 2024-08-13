@@ -14,7 +14,7 @@
             <form action="{{ route('customers.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
-                    <label for="name" class="block text-sm font-medium text-gray-700">Numero de Empleado:</label>
+                    <label for="number" class="block text-sm font-medium text-gray-700">Número de Empleado:</label>
                     <input type="text" id="number" name="number" maxlength="45" required
                            class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
@@ -63,12 +63,27 @@
         @endif
 
         <div class="mt-8">
-            <h2 class="my-4 text-2xl font-bold text-center text-gray-800">Buscar Empleado por Email</h2>
+            <h2 class="my-4 text-2xl font-bold text-center text-gray-800">Buscar Empleado</h2>
             <form action="{{ route('customers.search') }}" method="GET" class="max-w-xl mx-auto">
                 <div class="mb-4">
                     <label for="search_email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="search_email" name="email" required
+                    <input type="email" id="search_email" name="email"
                         class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <div class="mb-4">
+                    <label for="search_number" class="block text-sm font-medium text-gray-700">Número de Empleado</label>
+                    <input type="text" id="search_number" name="number"
+                        class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <div class="mb-4">
+                    <label for="search_enterprise_id" class="block text-sm font-medium text-gray-700">Empresa</label>
+                    <select id="search_enterprise_id" name="enterprise_id"
+                        class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <option value="" disabled selected>Selecciona una empresa</option>
+                        @foreach($enterprises as $enterprise)
+                            <option value="{{ $enterprise->id }}">{{ $enterprise->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="flex justify-end">
                     <button type="submit" class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-700">
@@ -78,23 +93,31 @@
             </form>
         </div>
 
-        @if(isset($customer))
+        @if(isset($customers) && $customers->isNotEmpty())
             <div class="p-4 mt-8 text-center bg-gray-100 rounded-lg">
-                <h3 class="text-lg font-bold">Empleado Encontrado:</h3>
-                <p>Numero de Empleado: {{ $customer->number }}</p>
-                <p>ID: {{ $customer->id }}</p>
-                <p>Nombre: {{ $customer->name }} {{ $customer->lastname }}</p>
-                <p>Email: {{ $customer->email }}</p>
-                <p>Empresa: {{ $customer->enterprise->name }}</p>
+                <h3 class="text-lg font-bold">Empleados Encontrados:</h3>
+                @foreach($customers as $customer)
+                    <div class="my-4 p-2 bg-white rounded shadow-md">
+                        <p>Numero de Empleado: {{ $customer->number }}</p>
+                        <p>ID: {{ $customer->id }}</p>
+                        <p>Nombre: {{ $customer->name }} {{ $customer->lastname }}</p>
+                        <p>Email: {{ $customer->email }}</p>
+                        <p>Empresa: {{ $customer->enterprise->name }}</p>
 
-                <!-- Formulario para eliminar al empleado -->
-                <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este empleado?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="px-4 py-2 mt-4 font-bold text-white bg-red-500 rounded hover:bg-red-700">
-                        Eliminar Empleado
-                    </button>
-                </form>
+                        <!-- Formulario para eliminar al empleado -->
+                        <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este empleado?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="px-4 py-2 mt-4 font-bold text-white bg-red-500 rounded hover:bg-red-700">
+                                Eliminar Empleado
+                            </button>
+                        </form>
+                    </div>
+                @endforeach
+            </div>
+        @elseif(isset($customers))
+            <div class="p-4 mt-8 text-center text-red-700 bg-red-200 rounded">
+                No se encontraron empleados.
             </div>
         @endif
     @endauth

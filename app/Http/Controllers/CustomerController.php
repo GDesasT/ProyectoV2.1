@@ -33,6 +33,7 @@ class CustomerController extends Controller
 
     // Crear un nuevo empleado y guardarlo en la base de datos
     $customer = Customer::create([
+        'number' => $request->input('number'),
         'name' => $request->input('name'),
         'lastname' => $request->input('lastname'),
         'email' => $request->input('email'),
@@ -44,28 +45,41 @@ class CustomerController extends Controller
 }
 public function search(Request $request)
 {
-    // Validar el campo de email
+    // Validar los campos del formulario
     $request->validate([
-        'email' => 'required|email',
+        'email' => 'nullable|email',
+        'number' => 'nullable|string|max:45',
+        'enterprise_id' => 'nullable|exists:enterprises,id',
     ]);
 
-    // Buscar al empleado por email
-    $customer = Customer::where('email', $request->input('email'))->first();
+    // Crear una consulta base
+    $query = Customer::query();
 
-    if ($customer) {
-        // Si el empleado es encontrado, mostrarlo en la misma vista
-        return view('customers', compact('customer'))->with('enterprises', Enterprise::all());
-    } else {
-        // Si no se encuentra el empleado, redirigir con un mensaje de error
-        return redirect()->route('customers.create')->with('error', 'Employee not found.');
+    // Buscar por email si está presente
+    if ($request->filled('email')) {
+        $query->where('email', $request->input('email'));
     }
-}
-public function destroy($id)
-{
-    $customer = Customer::findOrFail($id);
-    $customer->delete();
 
-    return redirect()->route('customers.create')->with('success', 'Employee deleted successfully!');
+    // Buscar por número de empleado si está presente
+    if ($request->filled('number')) {
+        $query->orWhere('number', $request->input('number'));
+    }
+
+    // Buscar por empresa si está presente
+    if ($request->filled('enterprise_id')) {
+        $query->orWhere('enterprise_id', $request->input('enterprise_id'));
+    }
+
+    // Ejecutar la consulta y obtener resultados
+    $customers = $query->get();
+
+    if ($customers->isNotEmpty()) {
+        // Si se encuentran empleados, mostrarlos en la misma vista
+        return view('customers', compact('customers'))->with('enterprises', Enterprise::all());
+    } else {
+        // Si no se encuentran empleados, redirigir con un mensaje de error
+        return redirect()->route('customers.create')->with('error', 'No employees found.');
+    }
 }
 
 }
