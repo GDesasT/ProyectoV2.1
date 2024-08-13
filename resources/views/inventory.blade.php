@@ -2,12 +2,17 @@
 
 @section('content')
     @auth
+    
         <div class="mb-8 text-3xl text-center font-bold">Inventario</div>
 
         <!-- Notificación -->
         @if(session('status'))
             <div id="notification" class="mx-auto w-2/3 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
                 {{ session('status') }}
+            </div>
+            @elseif(session('delete'))
+            <div id="notification" class="mx-auto w-2/3 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
+                {{ session('delete') }}
             </div>
         @endif
 
@@ -96,41 +101,43 @@
         <br>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
             <table id="product-table" class="w-full text-sm text-left rtl:text-right text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <thead class="text-xs text-gray-700 uppercase bg-blue-200 ">
                     <tr>
-                        <th scope="col" class="px-6 py-3">Nombre</th>
-                        <th scope="col" class="px-6 py-3">Cantidad Kg</th>
-                        <th scope="col" class="px-6 py-3">Categoria</th>
-                        <th scope="col" class="px-6 py-3">Fecha Actualización</th>
-                        <th scope="col" class="px-6 py-3">Acciones</th>
+                        <th scope="col" class="px-6 py-3"><strong>Nombre</strong></th>
+                        <th scope="col" class="px-6 py-3"><strong>Cantidad Kg</strong></th>
+                        <th scope="col" class="px-6 py-3"><strong>Categoria</strong></th>
+                        <th scope="col" class="px-6 py-3"><strong>Fecha Actualización</strong></th>
+                        <th scope="col" class="px-6 py-3"><strong>Acciones</strong></th>
                     </tr>
-                </thead>
-                <tbody>
+                </thead> 
+                <tbody> 
                     @foreach ($inventories as $inventory)
-                        <tr>
-                            <td class="px-6 py-4">{{ $inventory->name }}</td>
-                            <td class="px-6 py-4">{{ $inventory->amount }}</td>
-                            <td class="px-6 py-4">{{ $inventory->type }}</td>
-                            <td class="px-6 py-4">{{ $inventory->updated_at }}</td>
-                            <td class="px-6 py-4 flex space-x-2">
-                                <form action="{{ route('inventory.edit', $inventory->id) }}" method="GET">
-                                    <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                        Editar
-                                    </button>
-                                </form>
-                                <form action="{{ route('inventory.destroy', $inventory->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800"
-                                        onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
-                                        Eliminar
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
+                    <tr class="bg-white border-b    dark:hover:bg-gray-100">
+                        <td class="px-6 py-4">{{ $inventory->name }}</td>
+                        <td class="px-6 py-4">{{ $inventory->amount }}</td>
+                        <td class="px-6 py-4">{{ $inventory->type }}</td>
+                        <td class="px-6 py-4">{{ $inventory->updated_at }}</td>
+                        <td class="px-6 py-4 flex space-x-2">
+                            <form action="{{ route('inventory.edit', $inventory->id) }}" method="GET">
+                                <button type="submit"
+                                    class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                                    Editar
+                                </button>
+                            </form>
+                            <form action="{{ route('inventory.destroy', $inventory->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                    class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                                    onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
+                                    Eliminar
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+                
+                
                 </tbody>
             </table>
         </div>
@@ -159,5 +166,7 @@
                 setTimeout(() => notification.remove(), 500); // Elimina el elemento del DOM después de la animación
             }, 3000); // La notificación desaparecerá después de 3 segundos
         }
-    });
+    })
+
+    
 </script>

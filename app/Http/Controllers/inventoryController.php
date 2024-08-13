@@ -52,9 +52,8 @@ public function update(Request $request, $id)
 }
 
 public function destroy($id)
-{
-    $inventory = inventory::findOrFail($id);
-    $inventory->delete();
+    public function destroy($id)
+    {
 
     return redirect()->route('inventory')->with('success', 'Producto eliminado correctamente.');
 }

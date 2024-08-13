@@ -108,6 +108,6 @@ class SaleController extends Controller
         $sale = Sale::findOrFail($id);
         $sale->delete();
 
-        return redirect()->route('PointOfSale')->with('success', 'Venta eliminada correctamente.');
+        return redirect()->route('PointOfSale')->with('delete', 'Venta eliminada correctamente.');
     }
 }
