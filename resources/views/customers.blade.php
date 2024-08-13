@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.adminnav_app')
 
 @section('content')
     @auth
@@ -16,7 +16,7 @@
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
                     <input type="text" id="name" name="name" maxlength="45" required
-                           class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                 </div>
 
                 <div class="mb-4">
