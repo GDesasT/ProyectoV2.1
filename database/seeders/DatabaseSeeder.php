@@ -44,6 +44,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Ricardo',
                 'lastname' => 'Villarreal',
+                'email' => 'Villarreal@gmail.com',
                 'enterprise_id' => 1, // ID de una enterprise existente
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -51,6 +52,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Dan',
                 'lastname' => 'Cabrera',
+                'email' => 'cabrera@gmail.com',
                 'enterprise_id' => 2, // ID de una enterprise existente
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -58,6 +60,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Kevin',
                 'lastname' => 'Gonzales',
+                'email' => 'gonzales@gmail.com',
                 'enterprise_id' => 3, // ID de una enterprise existente
                 'created_at' => now(),
                 'updated_at' => now(),

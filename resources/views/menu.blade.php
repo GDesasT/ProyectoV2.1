@@ -5,7 +5,7 @@
     <div class="container-heading">
         <h1 id="desayunos" class="text-3xl text-center font-bold mb-4">Desayunos</h1>
     </div>
-    
+
     @if(session('success'))
         <div class="bg-green-500 text-white p-4 rounded mb-4 text-center">
             {{ session('success') }}
@@ -53,7 +53,7 @@
             <img src="{{ asset('img/messenger.png') }}" id="openComment" class="h-5 mr-2">Comentarios
         </button>
     </div>
-    
+
     <div id="CommentModal" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-70">
         <div class="relative w-full max-w-md p-8 bg-white rounded-lg">
             <button class="absolute top-4 right-4 text-2xl text-gray-600 cursor-pointer" id="closeCommentModal">&times;</button>
@@ -69,7 +69,7 @@
         </div>
     </div>
 </div>
-    
+
 <script src="{{ asset('js/app.js') }}"></script>
 <script>
     function carouselData() {

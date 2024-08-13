@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id()->autoIncrement();
             $table->string('name', 45);
             $table->string('lastname', 45);
+            $table->string('email', 45);
             $table->foreignId('enterprise_id')->constrained('enterprises')->onDelete('cascade');
             $table->timestamps();
         });

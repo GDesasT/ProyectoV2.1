@@ -8,6 +8,8 @@ use App\Http\Controllers\CarouselImageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\EnterpriseController;
+use App\Http\Controllers\CustomerController;
 use GuzzleHttp\Middleware;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -18,6 +20,16 @@ Route::post('/menu', [FeedbackController::class, 'store'])->name('menu.store');
 Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserController::class, 'login'])->name('login.submit');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+
+Route::get('/enterprises', [EnterpriseController::class, 'create'])->name('enterprises.create');
+Route::post('/enterprises/create', [EnterpriseController::class, 'store'])->name('enterprises.store');
+
+Route::get('/customers', [CustomerController::class, 'create'])->name('customers.create');
+Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
+Route::get('/customers/search', [CustomerController::class, 'search'])->name('customers.search');
+Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
+
+
 
 Route::middleware('auth')->group(function () {
 

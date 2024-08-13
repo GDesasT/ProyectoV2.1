@@ -5,13 +5,13 @@
         <div class="text-center"><strong>Comentarios</strong></div>
 
         @if(session('success'))
-            <div class="bg-green-500 text-white p-4 rounded mb-4 text-center">
+            <div class="p-4 mb-4 text-center text-white bg-green-500 rounded">
                 {{ session('success') }}
             </div>
         @endif
 
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-5">
-            <table id="comment-table" class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <div class="relative mt-5 overflow-x-auto shadow-md sm:rounded-lg">
+            <table id="comment-table" class="w-full text-sm text-left text-gray-500 rtl:text-right">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                     <tr>
                         <th scope="col" class="px-6 py-3">Comentario</th>
@@ -24,7 +24,7 @@
                         <tr>
                             <td class="px-6 py-4">{{ $comment->comment }}</td>
                             <td class="px-6 py-4">{{ $comment->created_at }}</td>
-                            <td class="px-6 py-4 flex space-x-2">
+                            <td class="flex px-6 py-4 space-x-2">
                                 <form action="{{ route('feedback.destroy', $comment->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
