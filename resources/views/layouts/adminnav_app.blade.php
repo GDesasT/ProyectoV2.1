@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     @vite('resources/css/app.css')
-    <title>Comedor S.A de C.V</title>
+    <title>Comedores de la Fuente</title>
 </head>
 <body class="bg-amber-50">
     @include('layouts.adminnav')
