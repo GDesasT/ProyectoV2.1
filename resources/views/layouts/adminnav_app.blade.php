@@ -21,6 +21,7 @@
     
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
