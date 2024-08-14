@@ -1,9 +1,6 @@
 <nav class="bg-blue-300 rounded-b-2xl border-gray-200" x-data="{ open: false }">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <div class="relative bg-red-700 w-4 h-4 rounded-full">
-                <div class="absolute bg-red-700 w-4 h-4 rounded-full animate-ping"></div>
-            </div>
             <img src="{{ asset('img/logo.jpeg') }}" class="h-12 rounded-full" alt="Comedor Logo" />
             <span class="self-center text-2xl font-semibold whitespace-nowrap text-white">Comedores De la Fuente</span>
         </a>
