@@ -80,7 +80,7 @@ class SaleController extends Controller
         'customer_id' => $customer->id, // Aquí está el ID correcto
         'name' => $customer->name,
         'lastName' => $customer->lastname,
-        'total' => 20, // Valor fijo para el total
+        'total' => 50, // Valor fijo para el total
         'dish_type' => $request->dish_type
     ]);
 

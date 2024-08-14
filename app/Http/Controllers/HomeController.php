@@ -44,6 +44,10 @@ class HomeController extends Controller
     $enterprises = Enterprise::all();
     return view('customers', compact('enterprises'));
     }
-
+    
+    public function showSaleHistory()
+    {
+        return view('salehistory');
+    }
 
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
             $table->string('name',45);
             $table->string('lastName',45);
-            $table->double('total')->default(20);
+            $table->double('total')->default(50);
             $table->enum('dish_type', ['platillo normal', 'platillo ligero']);
             $table->timestamps();
         });
