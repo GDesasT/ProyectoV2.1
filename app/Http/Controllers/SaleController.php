@@ -19,7 +19,7 @@ class SaleController extends Controller
         $dish_type = $request->input('dish_type');
 
         // Crear una consulta base
-        $query = Sale::query();
+        $query = sale::query();
 
         // Aplicar los filtros si existen
         if ($number) {
@@ -62,10 +62,10 @@ class SaleController extends Controller
     ]);
 
     // Obtener el cliente basado en su número de trabajador
-    $customer = Customer::where('number', $request->number)->firstOrFail();
+    $customer = customer::where('number', $request->number)->firstOrFail();
 
     // Verificar si ya compró un platillo hoy
-    $existingSale = Sale::where('customer_id', $customer->id)
+    $existingSale = sale::where('customer_id', $customer->id)
                         ->whereDate('created_at', now()->format('Y-m-d'))
                         ->first();
 
@@ -75,7 +75,7 @@ class SaleController extends Controller
     }
 
     // Crear un nuevo registro en la base de datos
-    Sale::create([
+    sale::create([
         'number' => $customer->id, // Asegúrate de que este sea el id de customer
         'customer_id' => $customer->id, // Aquí está el ID correcto
         'name' => $customer->name,
@@ -92,7 +92,7 @@ class SaleController extends Controller
     // Muestra el formulario para editar una venta existente
     public function edit($id)
     {
-        $sale = Sale::findOrFail($id);
+        $sale = sale::findOrFail($id);
         return view('sales.edit', compact('sale'));
     }
 
@@ -107,7 +107,7 @@ class SaleController extends Controller
             'dish_type' => 'required|in:platillo normal,platillo ligero',
         ]);
 
-        $sale = Sale::findOrFail($id);
+        $sale = sale::findOrFail($id);
         $sale->update($request->all());
 
         return redirect()->route('sales.index')->with('success', 'Venta actualizada correctamente.');
@@ -116,7 +116,7 @@ class SaleController extends Controller
     // Elimina una venta existente
     public function destroy($id)
     {
-        $sale = Sale::findOrFail($id);
+        $sale = sale::findOrFail($id);
         $sale->delete();
 
         return redirect()->route('PointOfSale')->with('delete', 'Venta eliminada correctamente.');

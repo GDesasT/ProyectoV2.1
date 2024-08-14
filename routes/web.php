@@ -7,11 +7,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CarouselImageController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\SaleController;
-use App\Http\Controllers\InventoryController;
+use App\Http\Controllers\inventoryController;
 use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\CustomerController;
-use GuzzleHttp\Middleware;
-use PHPUnit\Framework\Attributes\Group;
 use App\Http\Controllers\SaleHistoryController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -34,11 +32,11 @@ Route::get('/salehistory', [SaleHistoryController::class, 'index'])->name('sales
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
-    Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
-    Route::get('/inventory/{id}/edit', [InventoryController::class, 'edit'])->name('inventory.edit');
-    Route::put('/inventory/{id}', [InventoryController::class, 'update'])->name('inventory.update');
-    Route::delete('/inventory/{id}', [InventoryController::class, 'destroy'])->name('inventory.destroy');
+    Route::get('/inventory', [inventoryController::class, 'index'])->name('inventory');
+    Route::post('/inventory', [inventoryController::class, 'store'])->name('inventory.store');
+    Route::get('/inventory/{id}/edit', [inventoryController::class, 'edit'])->name('inventory.edit');
+    Route::put('/inventory/{id}', [inventoryController::class, 'update'])->name('inventory.update');
+    Route::delete('/inventory/{id}', [inventoryController::class, 'destroy'])->name('inventory.destroy');
 
 
     Route::get('/PointOfSale', [SaleController::class, 'index'])->name('PointOfSale');
