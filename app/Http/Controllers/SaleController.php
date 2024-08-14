@@ -12,7 +12,7 @@ class SaleController extends Controller
     // Muestra la lista de ventas
     public function index(Request $request)
     {
-        $query = Sale::query();
+        $query = sale::query();
 
         if ($request->filled('enterprise_id')) {
             $query->where('enterprise_id', $request->enterprise_id);
@@ -43,7 +43,7 @@ class SaleController extends Controller
         }
 
         $sales = $query->get();
-        $enterprises = Enterprise::all();
+        $enterprises = enterprise::all();
 
         return view('PointOfSale', compact('sales', 'enterprises'));
     }
@@ -57,7 +57,7 @@ class SaleController extends Controller
             'enterprise_id' => 'required|exists:enterprises,id'
         ]);
 
-        $customer = Customer::where('number', $request->number)->firstOrFail();
+        $customer = customer::where('number', $request->number)->firstOrFail();
 
         $existingSale = Sale::where('customer_id', $customer->id)
             ->where('enterprise_id', $request->enterprise_id)
