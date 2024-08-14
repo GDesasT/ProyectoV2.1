@@ -10,25 +10,34 @@
             </div>
         @endif
 
+        @if(session('error'))
+            <div class="p-4 mb-4 text-center text-white bg-red-500 rounded">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <div class="relative max-w-4xl p-6 mx-auto mt-5 overflow-x-auto bg-white rounded-lg shadow-md sm:rounded-lg">
             <form action="{{ route('customers.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
                     <label for="number" class="block text-sm font-medium text-gray-700">Número de Empleado:</label>
                     <input type="text" id="number" name="number" maxlength="45" required
-                           class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                           class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                           title="Solo se permiten números" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
 
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-medium text-gray-700">Nombre</label>
-                    <input type="text" id="name" name="name" maxlength="45" required
-                        class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <input type="text" id="name" name="name" maxlength="45" required 
+                        class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        title="Solo se permiten letras" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                 </div>
 
                 <div class="mb-4">
                     <label for="lastname" class="block text-sm font-medium text-gray-700">Apellido</label>
-                    <input type="text" id="lastname" name="lastname" maxlength="45" required
-                        class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <input type="text" id="lastname" name="lastname" maxlength="45" required 
+                        class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        title="Solo se permiten letras" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                 </div>
 
                 <div class="mb-4">
@@ -56,12 +65,6 @@
             </form>
         </div>
 
-        @if(session('success'))
-            <div class="p-4 mt-8 mb-4 text-center text-green-700 bg-green-200 rounded">
-                {{ session('success') }}
-            </div>
-        @endif
-
         <div class="mt-8">
             <h2 class="my-4 text-2xl font-bold text-center text-gray-800">Buscar Empleado</h2>
             <form action="{{ route('customers.search') }}" method="GET" class="max-w-xl mx-auto">
@@ -72,8 +75,9 @@
                 </div>
                 <div class="mb-4">
                     <label for="search_number" class="block text-sm font-medium text-gray-700">Número de Empleado</label>
-                    <input type="text" id="search_number" name="number"
-                        class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <input type="text" id="search_number" name="number" pattern="[0-9]+" 
+                        class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        title="Solo se permiten números" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                 </div>
                 <div class="mb-4">
                     <label for="search_enterprise_id" class="block text-sm font-medium text-gray-700">Empresa</label>

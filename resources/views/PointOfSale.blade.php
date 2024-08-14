@@ -44,7 +44,7 @@
                     <div class="relative group">
                         <input type="text" name="number" id="number"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="Buscar por Número de Trabajador" value="{{ request('number') }}">
+                            placeholder="Buscar por Número de Trabajador" value="{{ request('number') }}" title="Solo se permiten números" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                         <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
                             Buscar por Número de Trabajador
                             <div class="tooltip-arrow" data-popper-arrow></div>
@@ -55,7 +55,7 @@
                     <div class="relative group">
                         <input type="text" name="customer_id" id="customer_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="Buscar por ID de comedor" value="{{ request('customer_id') }}">
+                            placeholder="Buscar por ID de comedor" value="{{ request('customer_id') }}" title="Solo se permiten números" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                         <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
                             Buscar por ID de comedor
                             <div class="tooltip-arrow" data-popper-arrow></div>
@@ -66,7 +66,7 @@
                     <div class="relative group">
                         <input type="text" name="name" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="Buscar por nombre" value="{{ request('name') }}">
+                            placeholder="Buscar por nombre" value="{{ request('name') }}" title="Solo se permiten letras" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                         <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
                             Buscar por nombre
                             <div class="tooltip-arrow" data-popper-arrow></div>
@@ -77,7 +77,7 @@
                     <div class="relative group">
                         <input type="text" name="lastName" id="lastName"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="Buscar por apellido" value="{{ request('lastName') }}">
+                            placeholder="Buscar por apellido" value="{{ request('lastName') }}" title="Solo se permiten letras" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                         <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
                             Buscar por apellido
                             <div class="tooltip-arrow" data-popper-arrow></div>

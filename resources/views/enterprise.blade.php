@@ -16,19 +16,23 @@
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-medium text-gray-700">Nombre de la Empresa</label>
                     <input type="text" id="name" name="name" maxlength="45" required
-                           class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                           class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                           >
                 </div>
 
                 <div class="mb-4">
                     <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                     <input type="text" id="email" name="email" maxlength="45" required
-                           class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                           class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                           title="Solo se permiten letras" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                 </div>
 
                 <div class="mb-4">
                     <label for="phone" class="block text-sm font-medium text-gray-700">Numero de Telefono</label>
                     <input type="text" id="phone" name="phone" maxlength="45" required
-                           class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                           class="block w-full p-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                           title="Solo se permiten números" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                           
                 </div>
 
                 <div class="mb-4">
