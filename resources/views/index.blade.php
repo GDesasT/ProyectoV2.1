@@ -2,10 +2,10 @@
 
 @section('content')
 <div class="bg-cover bg-center" style="background-image: url('../img/comedorbueno.png');">
-    <div class="container mx-auto py-20 px-20 animate-fadeInUp">
+    <div class="container mx-auto py-20 px-10 animate-fadeInUp">
         <div class="flex flex-col md:flex-row md:space-x-8 items-center">
             <div class="md:w-1/2 flex justify-center animate-fadeInUp">
-                <img src="{{ asset('img/logo.jpeg') }}" class="h-64 rounded-full" alt="Logo Comedor Industrial">
+                <img src="{{ asset('img/logo.jpeg') }}" class="h-64 md:h-1/2 rounded-full" alt="Logo Comedor Industrial">
             </div>
             <div class="md:w-1/2 sm:w-auto bg-black bg-opacity-40 rounded-2xl p-5 m-10 animate-fadeInUp">
                 <h1 class="text-3xl font-bold text-center text-white">Conócenos</h1>
