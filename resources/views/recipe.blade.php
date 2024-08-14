@@ -3,7 +3,7 @@
 @section('content')
 @auth
 <div class="container">
-    <h1>Gestión de Recipes</h1>
+    <h1 class="text-xl font-bold mb-6">Gestión de Recipes</h1>
 
     {{-- Carrusel de Recetas Recomendadas --}}
     <div class="bg-white-100">
@@ -43,9 +43,9 @@
 
     {{-- Modal para agregar receta --}}
     <div id="addRecipeModal" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-70">
-        <div class="relative w-full h-auto max-w-2xl max-h-screen p-8 overflow-auto transition-transform duration-300 transform scale-90 bg-white rounded-lg">
-            <button class="absolute text-2xl text-gray-600 cursor-pointer top-4 right-4" id="closeAddRecipeModal">&times;</button>
-            <h2 class="mb-6 text-3xl font-bold text-center text-gray-800">Agregar Nueva Receta</h2>
+        <div class="relative w-full max-w-lg p-4 bg-white rounded-lg overflow-auto transform scale-90 transition-transform duration-300 max-h-full sm:max-w-xl md:max-w-2xl">
+            <button class="absolute text-2xl text-gray-600 cursor-pointer top-2 right-2 sm:top-4 sm:right-4" id="closeAddRecipeModal">&times;</button>
+            <h2 class="mb-6 text-2xl sm:text-3xl font-bold text-center text-gray-800">Agregar Nueva Receta</h2>
             <form action="{{ route('recipes.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
@@ -81,10 +81,10 @@
                     <label for="ingredient" class="block mb-2 text-sm font-medium text-gray-600">Ingredientes:</label>
                     <div id="ingredients-wrapper">
                         <div class="mb-2 ingredient-group">
-                            <div class="flex items-center space-x-2">
-                                <input type="text" name="ingredient_name[]" placeholder="Nombre del Ingrediente" class="form-control" required>
-                                <input type="number" name="ingredient_quantity[]" placeholder="Cantidad" class="form-control" step="0.01" required>
-                                <select name="ingredient_unit[]" class="form-control">
+                            <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                                <input type="text" name="ingredient_name[]" placeholder="Nombre del Ingrediente" class="w-full sm:w-auto form-control" required>
+                                <input type="number" name="ingredient_quantity[]" placeholder="Cantidad" class="w-full sm:w-auto form-control" step="0.01" required>
+                                <select name="ingredient_unit[]" class="w-full sm:w-auto form-control">
                                     <option value="kg">Kg</option>
                                     <option value="g">g</option>
                                     <option value="l">L</option>
@@ -107,6 +107,30 @@
             </form>
         </div>
     </div>
+
+    {{-- Modal de Información de Receta --}}
+    <div id="modal1" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-70">
+        <div class="relative w-full max-w-lg p-4 bg-white rounded-lg overflow-auto transform scale-90 transition-transform duration-300 max-h-full sm:max-w-xl md:max-w-2xl">
+            <button class="absolute text-2xl text-black cursor-pointer top-2 right-2 sm:top-4 sm:right-4" id="closeModal">&times;</button>
+            <h2 class="mb-4 text-2xl sm:text-3xl font-bold" id="modalRecipeName">Información de la Receta</h2>
+            <div id="modalContent">
+                <p class="text-lg"><strong>Ingredientes:</strong></p>
+                <ul id="modalIngredients">
+                    <!-- Los ingredientes se insertarán aquí -->
+                </ul>
+                <p class="mt-4"><strong>Preparación:</strong><br><span id="modalPreparation"></span></p>
+            </div>
+            {{-- Botón de eliminación --}}
+            <div class="flex justify-end mt-4">
+                <form id="deleteRecipeForm" method="POST" action="">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700">Eliminar Receta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <style>
@@ -114,29 +138,6 @@
         white-space: pre-line;
     }
 </style>
-
-{{-- Modal de Información de Receta --}}
-<div id="modal1" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black opacity-0 bg-opacity-70">
-    <div class="relative p-8 transition-transform duration-300 transform scale-90 bg-white rounded-lg w-xl h-xl">
-        <button class="absolute text-2xl text-black cursor-pointer top-4 right-4" id="closeModal">&times;</button>
-        <h2 class="mb-4 text-3xl font-bold" id="modalRecipeName">Información de la Receta</h2>
-        <div id="modalContent">
-            <p class="text-lg"><strong>Ingredientes:</strong></p>
-            <ul id="modalIngredients">
-                <!-- Los ingredientes se insertarán aquí -->
-            </ul>
-            <p class="mt-4"><strong>Preparación:</strong><br><span id="modalPreparation"></span></p>
-        </div>
-        {{-- Botón de eliminación --}}
-        <div class="flex justify-end mt-4">
-            <form id="deleteRecipeForm" method="POST" action="">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700">Eliminar Receta</button>
-            </form>
-        </div>
-    </div>
-</div>
 
 {{-- Scripts --}}
 <script>
@@ -270,10 +271,10 @@
             const newIngredientGroup = document.createElement('div');
             newIngredientGroup.classList.add('ingredient-group', 'mb-2');
             newIngredientGroup.innerHTML = `
-                <div class="flex items-center space-x-2">
-                    <input type="text" name="ingredient_name[]" placeholder="Nombre del Ingrediente" class="form-control" required>
-                    <input type="number" name="ingredient_quantity[]" placeholder="Cantidad" class="form-control" step="0.01" required>
-                    <select name="ingredient_unit[]" class="form-control">
+                <div class="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                    <input type="text" name="ingredient_name[]" placeholder="Nombre del Ingrediente" class="w-full sm:w-auto form-control" required>
+                    <input type="number" name="ingredient_quantity[]" placeholder="Cantidad" class="w-full sm:w-auto form-control" step="0.01" required>
+                    <select name="ingredient_unit[]" class="w-full sm:w-auto form-control">
                         <option value="kg">Kg</option>
                         <option value="g">g</option>
                         <option value="l">L</option>
