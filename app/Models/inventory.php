@@ -12,6 +12,6 @@ class inventory extends Model
         'name',
         'amount',
         'type',
-        'unit,'
+        'unit',
     ];
 }
