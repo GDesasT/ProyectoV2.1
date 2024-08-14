@@ -1,9 +1,6 @@
 <nav class="bg-blue-300 border-gray-200 rounded-b-2xl" x-data="{ open: false }">
     <div class="flex flex-wrap items-center justify-between max-w-screen-xl p-4 mx-auto">
         <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <div class="relative w-4 h-4 bg-red-700 rounded-full">
-                <div class="absolute w-4 h-4 bg-red-700 rounded-full animate-ping"></div>
-            </div>
             <img src="{{ asset('img/logo.jpeg') }}" class="h-12 rounded-full" alt="Comedor Logo" />
             <span class="self-center text-2xl font-semibold text-white whitespace-nowrap">Comedores De la Fuente</span>
         </a>
@@ -14,7 +11,7 @@
             </svg>
         </button>
         <div :class="{ 'block': open, 'hidden': !open }" class="hidden w-full md:block md:w-auto" id="navbar-default">
-            <ul class="flex flex-col p-4 mt-4 font-medium bg-blue-300 border border-gray-700 rounded-lg md:p-0 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
+            <ul class="flex flex-col p-4 ml-0 mt-4 font-medium bg-blue-300 border border-gray-700 rounded-lg md:p-0 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0">
                 <li>
                     <a href="{{ route('enterprises.create') }}" class="block py-2 px-3 rounded {{ request()->routeIs('enterprise') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Empresas</a>
                 </li>
