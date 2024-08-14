@@ -121,10 +121,10 @@
                             
                                 <select id="unit" name="unit"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                    <option value="" selected>Seleccionar unidad</option>
-                                    <option value="kg">Kilogramos(kg)</option>
-                                    <option value="l">Litros(L)</option>
-                                    <option value="pz">Unidades(Pz)</option>
+                                    <option selected>Seleccionar unidad</option>
+                                    <option value="Kg">Kilogramos(Kg)</option>
+                                    <option value="L">Litros(L)</option>
+                                    <option value="Pz">Unidades(Pz)</option>
                                 </select>
                             </div>
                             
@@ -172,8 +172,8 @@
                 <tbody>
                     @foreach ($inventories as $inventory)
                         <tr class="bg-white border-b dark:hover:bg-gray-100">
-                            <td class="px-6 py-4">{{ $inventory->name }}</td>
-                            <td class="px-6 py-4">{{ $inventory->amount }}</td>
+                            <td class="px-6 py-4">{{ $inventory->name}}</td>
+                            <td class="px-6 py-4">{{ $inventory->amount }} {{ $inventory->unit}}
                             <td class="px-6 py-4">{{ $inventory->type }}</td>
                             <td class="px-6 py-4">{{ $inventory->updated_at }}</td>
                             <td class="px-6 py-4 flex space-x-2">
