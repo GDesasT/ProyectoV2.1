@@ -4,6 +4,7 @@
     @auth
 
         <div class="mb-8 text-3xl text-center font-bold">Inventario</div>
+        <br>
 
         <!-- Notificación -->
         @if (session('status'))
@@ -78,7 +79,7 @@
                 <!-- Botón para agregar un nuevo producto -->
                 <button onclick="openModal()" crud-modal data-modal-toggle="crud-modal" type="button"
                     class="w-full px-4 py-2 font-medium text-white bg-blue-500 rounded md:w-auto hover:bg-blue-700">Agregar
-                    producto</button>
+                    producto / Añadir</button>
             </div>
         </div>
 
@@ -89,7 +90,7 @@
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                         <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                            Agregar producto
+                            Agregar producto / Añadir
                         </h3>
                         <button onclick="closeModal()" type="button"
                             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -113,12 +114,21 @@
                                     placeholder="Nombre del producto" required>
                             </div>
                             <div class="col-span-2 sm:col-span-1">
-                                <label for="amount"
-                                    class="block mb-2 text-sm text-center font-medium text-gray-900 dark:text-white">Cantidad</label>
+                                <label for="amount" class="block mb-2 text-sm text-center font-medium text-gray-900 dark:text-white">Cantidad</label>
                                 <input type="number" name="amount" id="amount"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    placeholder="Kg" required>
+                                    placeholder="" required>
+                            
+                                <select id="unit" name="unit"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <option value="" selected>Seleccionar unidad</option>
+                                    <option value="kg">Kilogramos(kg)</option>
+                                    <option value="l">Litros(L)</option>
+                                    <option value="pz">Unidades(Pz)</option>
+                                </select>
                             </div>
+                            
+                        
                             <div class="col-span-2 sm:col-span-1">
                                 <label for="type"
                                     class="block mb-2 text-sm text-center font-medium text-gray-900 dark:text-white">Categoria</label>
@@ -140,7 +150,7 @@
                                     d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                     clip-rule="evenodd"></path>
                             </svg>
-                            Agregar nuevo producto
+                            Agregar producto / Añadir
                         </button>
                     </form>
                 </div>
@@ -153,7 +163,7 @@
                 <thead class="text-xs text-gray-700 uppercase bg-blue-200 ">
                     <tr>
                         <th scope="col" class="px-6 py-3"><strong>Nombre</strong></th>
-                        <th scope="col" class="px-6 py-3"><strong>Cantidad Kg</strong></th>
+                        <th scope="col" class="px-6 py-3"><strong>Cantidad</strong></th>
                         <th scope="col" class="px-6 py-3"><strong>Categoria</strong></th>
                         <th scope="col" class="px-6 py-3"><strong>Fecha Actualización</strong></th>
                         <th scope="col" class="px-6 py-3"><strong>Acciones</strong></th>

@@ -12,6 +12,11 @@
             <div id="notification" class="mx-auto w-2/3 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
                 {{ session('delete') }}
             </div>
+            @elseif (session('error'))
+            <div id="notification" class="mx-auto w-2/3 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
+                {{ session('error') }}
+            </div>
+
         @endif
         <br>
 
@@ -19,27 +24,64 @@
             <div class="relative w-full mb-2 md:w-auto md:mb-0">
                 <form method="GET" action="{{ route('PointOfSale') }}"
                     class="flex flex-wrap items-center space-x-2 md:flex-nowrap md:space-x-4">
-                    <input type="text" name="number" id="number"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        placeholder="Buscar por Numero de Trabajador" value="{{ request('number') }}">
-                    <input type="text" name="customer_id" id="customer_id"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        placeholder="Buscar por ID de comedor" value="{{ request('customer_id') }}">
 
-                    <input type="text" name="name" id="name"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        placeholder="Buscar por nombre" value="{{ request('name') }}">
+                    <!-- Input Numero de Trabajador con Tooltip -->
+                    <div class="relative group">
+                        <input type="text" name="number" id="number"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            placeholder="Buscar por Número de Trabajador" value="{{ request('number') }}">
+                        <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            Buscar por Número de Trabajador
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
 
-                    <input type="text" name="lastName" id="lastName"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        placeholder="Buscar por apellido" value="{{ request('lastName') }}">
+                    <!-- Input ID de comedor con Tooltip -->
+                    <div class="relative group">
+                        <input type="text" name="customer_id" id="customer_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            placeholder="Buscar por ID de comedor" value="{{ request('customer_id') }}">
+                        <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            Buscar por ID de comedor
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
 
-                    <input type="date" name="date" id="date"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                        value="{{ request('date') }}">
+                    <!-- Input Nombre con Tooltip -->
+                    <div class="relative group">
+                        <input type="text" name="name" id="name"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            placeholder="Buscar por nombre" value="{{ request('name') }}">
+                        <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            Buscar por nombre
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
+
+                    <!-- Input Apellido con Tooltip -->
+                    <div class="relative group">
+                        <input type="text" name="lastName" id="lastName"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            placeholder="Buscar por apellido" value="{{ request('lastName') }}">
+                        <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            Buscar por apellido
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
+
+                    <!-- Input Fecha con Tooltip -->
+                    <div class="relative group">
+                        <input type="date" name="date" id="date"
+                            class="bg-gray-50 border border-gray-300 cursor-pointer text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            value="{{ request('date') }}">
+                        <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            Buscar por fecha
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
 
                     <select name="dish_type" id="dish_type"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-50% p-2.5">
                         <option value="" disabled selected>Filtrar por tipo de platillo</option>
                         <option value="platillo normal" {{ request('dish_type') == 'platillo normal' ? 'selected' : '' }}>
                             Platillo Normal</option>
@@ -48,21 +90,22 @@
                     </select>
 
                     <button type="submit"
-                        class="px-4 py-2 ml-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-700">Buscar</button>
+                        class="px-4 py-2 ml-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-700 cursor-pointer">Buscar</button>
                 </form>
             </div>
 
             <div class="flex flex-wrap items-center w-full space-x-2 md:w-auto md:flex-nowrap md:space-x-4">
                 <button onclick="filterTodaySales()" type="button"
-                    class="w-full px-4 py-2 font-medium text-white bg-green-500 rounded md:w-auto hover:bg-green-700">Ventas de
+                    class="w-full px-4 py-2 font-medium text-white bg-green-500 rounded md:w-auto hover:bg-green-700 cursor-pointer">Ventas de
                     Hoy</button>
 
                 <button onclick="openModal()" crud-modal data-modal-toggle="crud-modal" type="button"
-                    class="w-full px-4 py-2 font-medium text-white bg-blue-500 rounded md:w-auto hover:bg-blue-700">Agregar
+                    class="w-full px-4 py-2 font-medium text-white bg-blue-500 rounded md:w-auto hover:bg-blue-700 cursor-pointer">Agregar
                     Venta</button>
             </div>
         </div>
 
+        <!-- Modal -->
         <div id="crud-modal" tabindex="-1" aria-hidden="true" class="fixed inset-0 z-50 hidden overflow-y-auto">
             <div class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-50"></div>
             <div class="flex items-center justify-center min-h-screen p-4 text-center">
@@ -85,11 +128,11 @@
                     <form id="product-form" class="p-6" method="POST" action="{{ route('sales.store') }}">
                         @csrf
                         <div class="mb-4">
-                            <label for="number" class="block mb-2 text-sm font-medium text-gray-900">Numero de
+                            <label for="number" class="block mb-2 text-sm font-medium text-gray-900">Número de
                                 Trabajador</label>
                             <input type="text" name="number" id="number"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                placeholder="Numero de Trabajador" required>
+                                placeholder="Número de Trabajador" required>
                         </div>
                         <div class="mb-4">
                             <label for="dish_type" class="block mb-2 text-sm font-medium text-gray-900">Tipo de platillo</label>
@@ -139,7 +182,7 @@
                                     @method('DELETE')
                                     <button type="submit"
                                         class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
-                                        onclick="return confirm('¿Estás seguro de que quieres eliminar esta venta?');">
+                                        onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
                                         Eliminar
                                     </button>
                                 </form>
@@ -156,6 +199,39 @@
         <div class="text-center text-red-600">No tienes acceso a esta página</div>
     @endguest
 @endsection
+
+<style>
+    .tooltip-light {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 125%; /* Ajusta la posición vertical del tooltip */
+        background-color: white;
+        color: #1f2937; /* text-gray-900 */
+        border: 1px solid #e5e7eb; /* border-gray-200 */
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        white-space: nowrap;
+        z-index: 1000;
+    }
+
+    .group:hover .tooltip-light {
+        display: block;
+    }
+
+    .tooltip-arrow {
+        position: absolute;
+        bottom: -0.25rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 0.25rem solid transparent;
+        border-right: 0.25rem solid transparent;
+        border-top: 0.25rem solid #e5e7eb; /* border-gray-200 */
+    }
+</style>
 
 <script>
     function openModal() {
@@ -187,6 +263,7 @@
         const today = new Date().toISOString().split('T')[0];
         window.location.href = `{{ route('PointOfSale') }}?date=${today}`;
     }
+
     document.addEventListener('DOMContentLoaded', function() {
         const notification = document.getElementById('notification');
         if (notification) {
