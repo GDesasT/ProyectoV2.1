@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Customer;
-use App\Models\Enterprise;
+use App\Models\customer;
+use App\Models\enterprise;
 
 class CustomerController extends Controller
 {
@@ -13,7 +13,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        $enterprises = Enterprise::all();
+        $enterprises = enterprise::all();
         return view('customers', compact('enterprises'));
     }
 
@@ -32,7 +32,7 @@ class CustomerController extends Controller
     ]);
 
     // Crear un nuevo empleado y guardarlo en la base de datos
-    $customer = Customer::create([
+    $customer = customer::create([
         'number' => $request->input('number'),
         'name' => $request->input('name'),
         'lastname' => $request->input('lastname'),
@@ -53,7 +53,7 @@ public function search(Request $request)
     ]);
 
     // Crear una consulta base
-    $query = Customer::query();
+    $query = customer::query();
 
     // Buscar por email si está presente
     if ($request->filled('email')) {
