@@ -21,6 +21,11 @@ return new class extends Migration
             $table->enum('dish_type', ['platillo normal', 'platillo ligero']);
             $table->timestamps();
         });
+
+        Schema::table('sales', function (Blueprint $table) {
+            $table->foreignId('enterprise_id')->constrained('enterprises')->onDelete('cascade');
+        });
+        
     }
 
     /**

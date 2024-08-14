@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Models\sale;
+use App\Models\Sale;
 use App\Models\Customer;
+use App\Models\Enterprise;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -10,89 +12,79 @@ class SaleController extends Controller
     // Muestra la lista de ventas
     public function index(Request $request)
     {
-        // Obtener los parámetros de búsqueda
-        $number = $request->input('number');
-        $customer_id = $request->input('customer_id');
-        $name = $request->input('name');
-        $lastName = $request->input('lastName');
-        $date = $request->input('date');
-        $dish_type = $request->input('dish_type');
+        $query = Sale::query();
 
-        // Crear una consulta base
-        $query = sale::query();
-
-        // Aplicar los filtros si existen
-        if ($number) {
-            $query->where('number', $number);
+        if ($request->filled('enterprise_id')) {
+            $query->where('enterprise_id', $request->enterprise_id);
         }
 
-        if ($customer_id) {
-            $query->where('customer_id', $customer_id);
+        if ($request->filled('number')) {
+            $query->where('number', $request->number);
         }
 
-        if ($name) {
-            $query->where('name', 'like', '%' . $name . '%');
+        if ($request->filled('customer_id')) {
+            $query->where('customer_id', $request->customer_id);
         }
 
-        if ($lastName) {
-            $query->where('lastName', 'like', '%' . $lastName . '%');
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
         }
 
-        if ($date) {
-            $query->whereDate('updated_at', $date);
+        if ($request->filled('lastName')) {
+            $query->where('lastName', 'like', '%' . $request->lastName . '%');
         }
 
-        if ($dish_type) {
-            $query->where('dish_type', $dish_type);
+        if ($request->filled('date')) {
+            $query->whereDate('updated_at', $request->date);
         }
 
-        // Obtener las ventas filtradas
+        if ($request->filled('dish_type')) {
+            $query->where('dish_type', $request->dish_type);
+        }
+
         $sales = $query->get();
+        $enterprises = Enterprise::all();
 
-        return view('PointOfSale', compact('sales'));
+        return view('PointOfSale', compact('sales', 'enterprises'));
     }
 
     // Almacena una nueva venta
     public function store(Request $request)
-{
-    // Validar los datos del formulario
-    $request->validate([
-        'number' => 'required|exists:customers,number',
-        'dish_type' => 'required|in:platillo normal,platillo ligero'
-    ]);
+    {
+        $request->validate([
+            'number' => 'required|exists:customers,number',
+            'dish_type' => 'required|in:platillo normal,platillo ligero',
+            'enterprise_id' => 'required|exists:enterprises,id'
+        ]);
 
-    // Obtener el cliente basado en su número de trabajador
-    $customer = customer::where('number', $request->number)->firstOrFail();
+        $customer = Customer::where('number', $request->number)->firstOrFail();
 
-    // Verificar si ya compró un platillo hoy
-    $existingSale = sale::where('customer_id', $customer->id)
-                        ->whereDate('created_at', now()->format('Y-m-d'))
-                        ->first();
+        $existingSale = Sale::where('customer_id', $customer->id)
+            ->where('enterprise_id', $request->enterprise_id)
+            ->whereDate('created_at', now()->format('Y-m-d'))
+            ->first();
 
-    if ($existingSale) {
-        // Si ya existe una venta para este cliente hoy, redirigir con un mensaje de error
-        return redirect()->route('PointOfSale')->with('error', 'Este cliente ya ha comprado un platillo hoy.');
+        if ($existingSale) {
+            return redirect()->route('PointOfSale')->with('error', 'Este cliente ya ha comprado un platillo hoy en esta empresa.');
+        }
+
+        Sale::create([
+            'number' => $customer->id,
+            'customer_id' => $customer->id,
+            'name' => $customer->name,
+            'lastName' => $customer->lastname,
+            'total' => 50,
+            'dish_type' => $request->dish_type,
+            'enterprise_id' => $request->enterprise_id,
+        ]);
+
+        return redirect()->route('PointOfSale')->with('success', 'Venta agregada exitosamente.');
     }
-
-    // Crear un nuevo registro en la base de datos
-    sale::create([
-        'number' => $customer->id, // Asegúrate de que este sea el id de customer
-        'customer_id' => $customer->id, // Aquí está el ID correcto
-        'name' => $customer->name,
-        'lastName' => $customer->lastname,
-        'total' => 50, // Valor fijo para el total
-        'dish_type' => $request->dish_type
-    ]);
-
-    // Redirigir y mostrar mensaje de éxito
-    return redirect()->route('PointOfSale')->with('success', 'Venta agregada exitosamente.');
-}
-
 
     // Muestra el formulario para editar una venta existente
     public function edit($id)
     {
-        $sale = sale::findOrFail($id);
+        $sale = Sale::findOrFail($id);
         return view('sales.edit', compact('sale'));
     }
 
@@ -105,9 +97,10 @@ class SaleController extends Controller
             'lastName' => 'required|string|max:45',
             'total' => 'required|numeric|min:0',
             'dish_type' => 'required|in:platillo normal,platillo ligero',
+            'enterprise_id' => 'required|exists:enterprises,id'
         ]);
 
-        $sale = sale::findOrFail($id);
+        $sale = Sale::findOrFail($id);
         $sale->update($request->all());
 
         return redirect()->route('sales.index')->with('success', 'Venta actualizada correctamente.');
@@ -116,7 +109,7 @@ class SaleController extends Controller
     // Elimina una venta existente
     public function destroy($id)
     {
-        $sale = sale::findOrFail($id);
+        $sale = Sale::findOrFail($id);
         $sale->delete();
 
         return redirect()->route('PointOfSale')->with('delete', 'Venta eliminada correctamente.');

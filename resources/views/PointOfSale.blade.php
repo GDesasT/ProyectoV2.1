@@ -2,7 +2,6 @@
 
 @section('content')
     @auth
-
         <div class="mb-8 text-3xl font-bold text-center">Punto de venta</div>
         @if (session('success'))
             <div id="notification" class="mx-auto w-2/3 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
@@ -12,11 +11,10 @@
             <div id="notification" class="mx-auto w-2/3 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
                 {{ session('delete') }}
             </div>
-            @elseif (session('error'))
+        @elseif (session('error'))
             <div id="notification" class="mx-auto w-2/3 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
                 {{ session('error') }}
             </div>
-
         @endif
         <br>
 
@@ -24,6 +22,23 @@
             <div class="relative w-full mb-2 md:w-auto md:mb-0">
                 <form method="GET" action="{{ route('PointOfSale') }}"
                     class="flex flex-wrap items-center space-x-2 md:flex-nowrap md:space-x-4">
+
+                    <!-- Select Empresa -->
+                    <div class="relative group">
+                        <select name="enterprise_id" id="enterprise_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            <option value="" disabled selected>Selecciona la Empresa</option>
+                            @foreach($enterprises as $enterprise)
+                                <option value="{{ $enterprise->id }}" {{ request('enterprise_id') == $enterprise->id ? 'selected' : '' }}>
+                                    {{ $enterprise->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            Filtrar por Empresa
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
 
                     <!-- Input Numero de Trabajador con Tooltip -->
                     <div class="relative group">
@@ -96,12 +111,10 @@
 
             <div class="flex flex-wrap items-center w-full space-x-2 md:w-auto md:flex-nowrap md:space-x-4">
                 <button onclick="filterTodaySales()" type="button"
-                    class="w-full px-4 py-2 font-medium text-white bg-green-500 rounded md:w-auto hover:bg-green-700 cursor-pointer">Ventas de
-                    Hoy</button>
+                    class="w-full px-4 py-2 font-medium text-white bg-green-500 rounded md:w-auto hover:bg-green-700 cursor-pointer">Ventas de Hoy</button>
 
                 <button onclick="openModal()" crud-modal data-modal-toggle="crud-modal" type="button"
-                    class="w-full px-4 py-2 font-medium text-white bg-blue-500 rounded md:w-auto hover:bg-blue-700 cursor-pointer">Agregar
-                    Venta</button>
+                    class="w-full px-4 py-2 font-medium text-white bg-blue-500 rounded md:w-auto hover:bg-blue-700 cursor-pointer">Agregar Venta</button>
             </div>
         </div>
 
@@ -109,8 +122,7 @@
         <div id="crud-modal" tabindex="-1" aria-hidden="true" class="fixed inset-0 z-50 hidden overflow-y-auto">
             <div class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-50"></div>
             <div class="flex items-center justify-center min-h-screen p-4 text-center">
-                <div
-                    class="relative w-full max-w-md transition-transform transform scale-95 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0">
+                <div class="relative w-full max-w-md transition-transform transform scale-95 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0">
                     <div class="flex items-center justify-between p-6">
                         <h3 class="text-2xl font-bold text-gray-900">
                             Agregar Venta
@@ -144,6 +156,17 @@
                                 <option value="platillo ligero">Platillo Ligero</option>
                             </select>
                         </div>
+                        <div class="mb-4">
+                            <label for="enterprise_id" class="block mb-2 text-sm font-medium text-gray-900">Empresa</label>
+                            <select name="enterprise_id" id="enterprise_id"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                required>
+                                <option value="" disabled selected>Selecciona la Empresa</option>
+                                @foreach($enterprises as $enterprise)
+                                    <option value="{{ $enterprise->id }}">{{ $enterprise->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <button type="submit"
                             class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                             Agregar nueva venta
@@ -169,7 +192,7 @@
                 </thead>
                 <tbody>
                     @foreach ($sales as $sale)
-                        <tr class="bg-white border-b    dark:hover:bg-gray-100">
+                        <tr class="bg-white border-b dark:hover:bg-gray-100">
                             <td class="px-6 py-4">{{ $sale->customer_id }}</td>
                             <td class="px-6 py-4">{{ $sale->name }}</td>
                             <td class="px-6 py-4">{{ $sale->lastName }}</td>
@@ -205,10 +228,10 @@
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        bottom: 125%; /* Ajusta la posición vertical del tooltip */
+        bottom: 125%;
         background-color: white;
-        color: #1f2937; /* text-gray-900 */
-        border: 1px solid #e5e7eb; /* border-gray-200 */
+        color: #1f2937;
+        border: 1px solid #e5e7eb;
         padding: 0.5rem;
         border-radius: 0.5rem;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -229,7 +252,7 @@
         height: 0;
         border-left: 0.25rem solid transparent;
         border-right: 0.25rem solid transparent;
-        border-top: 0.25rem solid #e5e7eb; /* border-gray-200 */
+        border-top: 0.25rem solid #e5e7eb;
     }
 </style>
 
@@ -256,7 +279,7 @@
 
         setTimeout(() => {
             modal.classList.add('hidden');
-        }, 200); // Tiempo reducido para cerrar más rápido
+        }, 200);
     }
 
     function filterTodaySales() {
@@ -270,8 +293,8 @@
             setTimeout(() => {
                 notification.style.opacity = '0';
                 setTimeout(() => notification.remove(),
-                500); // Elimina el elemento del DOM después de la animación
-            }, 3000); // La notificación desaparecerá después de 3 segundos
+                500);
+            }, 3000);
         }
     })
 </script>

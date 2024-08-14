@@ -42,17 +42,25 @@
                 document.addEventListener('DOMContentLoaded', function () {
                     var ctx = document.getElementById('dailySalesChart').getContext('2d');
                     var labels = @json($chartData->pluck('date'));
-                    var totalData = @json($chartData->pluck('total'));
+                    var normalData = @json($chartData->pluck('total_normales'));
+                    var ligeroData = @json($chartData->pluck('total_ligeros'));
 
                     var chart = new Chart(ctx, {
                         type: 'bar',
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: 'Total Ventas (MXN)',
-                                data: totalData,
+                                label: 'Platillos Normales',
+                                data: normalData,
                                 backgroundColor: 'rgba(54, 162, 235, 0.5)',
                                 borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Platillos Ligeros',
+                                data: ligeroData,
+                                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
                                 borderWidth: 1
                             }]
                         },
@@ -111,17 +119,25 @@
                 document.addEventListener('DOMContentLoaded', function () {
                     var ctx = document.getElementById('monthlySalesChart').getContext('2d');
                     var labels = @json($monthlyChartData->pluck('date'));
-                    var totalData = @json($monthlyChartData->pluck('total'));
+                    var normalData = @json($monthlyChartData->pluck('total_normales'));
+                    var ligeroData = @json($monthlyChartData->pluck('total_ligeros'));
 
                     var chart = new Chart(ctx, {
                         type: 'bar',
                         data: {
                             labels: labels,
                             datasets: [{
-                                label: 'Total Ventas (MXN)',
-                                data: totalData,
+                                label: 'Platillos Normales',
+                                data: normalData,
                                 backgroundColor: 'rgba(54, 162, 235, 0.5)',
                                 borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            },
+                            {
+                                label: 'Platillos Ligeros',
+                                data: ligeroData,
+                                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
                                 borderWidth: 1
                             }]
                         },

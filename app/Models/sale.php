@@ -16,17 +16,21 @@ class Sale extends Model
         'lastName',
         'total',
         'dish_type',
+        'enterprise_id',
     ];
 
-    // Relación con el modelo Customer
     public function customer()
     {
         return $this->belongsTo(Customer::class);
     }
 
-    // Relación con el modelo Dish
     public function dish()
     {
         return $this->belongsTo(Dish::class);
+    }
+
+    public function enterprise()
+    {
+        return $this->belongsTo(Enterprise::class);
     }
 }
