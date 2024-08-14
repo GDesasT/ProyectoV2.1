@@ -2,38 +2,87 @@
 
 @section('content')
     @auth
-    
+
         <div class="mb-8 text-3xl text-center font-bold">Inventario</div>
 
         <!-- Notificación -->
-        @if(session('status'))
+        @if (session('status'))
             <div id="notification" class="mx-auto w-2/3 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
                 {{ session('status') }}
             </div>
-            @elseif(session('delete'))
+        @elseif (session('delete'))
             <div id="notification" class="mx-auto w-2/3 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
                 {{ session('delete') }}
             </div>
         @endif
 
-        <div class="flex justify-between items-center mt-4">
-            <div class="relative">
-                <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-                    <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                    </svg>
-                </div>
-                <input type="text" id="table-search"
-                    class="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Buscar elemento">
+        <div class="flex flex-wrap items-center justify-between mt-1">
+            <div class="relative w-full mb-2 md:w-auto md:mb-0">
+                <form method="GET" action="{{ route('inventory') }}"
+                    class="flex flex-wrap items-center space-x-2 md:flex-nowrap md:space-x-4">
+
+                    <!-- Input Nombre con Tooltip -->
+                    <div class="relative group">
+                        <input type="text" name="name" id="name"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            placeholder="Buscar producto por nombre" value="{{ request('name') }}">
+                        <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            Buscar por nombre
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
+
+                    <!-- Input Monto con Tooltip -->
+                    <div class="relative group">
+                        <input type="text" name="amount" id="amount"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            placeholder="Buscar producto por monto" value="{{ request('amount') }}">
+                        <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            Buscar por monto
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
+
+                    <!-- Input Tipo con Tooltip -->
+                    <div class="relative group">
+                        <input type="text" name="type" id="type"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            placeholder="Buscar producto por tipo" value="{{ request('type') }}">
+                        <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+                            Buscar por categoria
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
+
+                    <!-- Input Fecha con Tooltip -->
+                    <div class="relative group c ">
+                        <input type="date" name="date" id="date"
+                            class="bg-gray-50 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            value="{{ request('date') }}">
+                        <div class="tooltip-light  text-center hidden group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+                           Buscar por fecha
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="px-4 py-2 ml-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-700">Buscar</button>
+                </form>
             </div>
 
-            <button onclick="openModal()" crud-modal data-modal-toggle="crud-modal" type="button"
-                class="px-4 py-2 text-white bg-blue-500 hover:bg-blue-700 font-medium rounded">Agregar producto</button>
+            <div class="flex flex-wrap items-center w-full space-x-2 md:w-auto md:flex-nowrap md:space-x-4">
+                <!-- Botón que muestra todo el inventario -->
+                <button onclick="location.href='{{ route('inventory') }}'" type="button"
+                    class="w-full px-4 py-2 font-medium text-white bg-green-500 rounded md:w-auto hover:bg-green-700">Inventario total</button>
+
+                <!-- Botón para agregar un nuevo producto -->
+                <button onclick="openModal()" crud-modal data-modal-toggle="crud-modal" type="button"
+                    class="w-full px-4 py-2 font-medium text-white bg-blue-500 rounded md:w-auto hover:bg-blue-700">Agregar
+                    producto</button>
+            </div>
         </div>
 
+        <!-- Modal para agregar producto -->
         <div id="crud-modal" tabindex="-1" aria-hidden="true"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full max-w-md max-h-full">
@@ -109,35 +158,33 @@
                         <th scope="col" class="px-6 py-3"><strong>Fecha Actualización</strong></th>
                         <th scope="col" class="px-6 py-3"><strong>Acciones</strong></th>
                     </tr>
-                </thead> 
-                <tbody> 
+                </thead>
+                <tbody>
                     @foreach ($inventories as $inventory)
-                    <tr class="bg-white border-b    dark:hover:bg-gray-100">
-                        <td class="px-6 py-4">{{ $inventory->name }}</td>
-                        <td class="px-6 py-4">{{ $inventory->amount }}</td>
-                        <td class="px-6 py-4">{{ $inventory->type }}</td>
-                        <td class="px-6 py-4">{{ $inventory->updated_at }}</td>
-                        <td class="px-6 py-4 flex space-x-2">
-                            <form action="{{ route('inventory.edit', $inventory->id) }}" method="GET">
-                                <button type="submit"
-                                    class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-                                    Editar
-                                </button>
-                            </form>
-                            <form action="{{ route('inventory.destroy', $inventory->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
-                                    onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
-                                    Eliminar
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-                
-                
+                        <tr class="bg-white border-b dark:hover:bg-gray-100">
+                            <td class="px-6 py-4">{{ $inventory->name }}</td>
+                            <td class="px-6 py-4">{{ $inventory->amount }}</td>
+                            <td class="px-6 py-4">{{ $inventory->type }}</td>
+                            <td class="px-6 py-4">{{ $inventory->updated_at }}</td>
+                            <td class="px-6 py-4 flex space-x-2">
+                                <form action="{{ route('inventory.edit', $inventory->id) }}" method="GET">
+                                    <button type="submit"
+                                        class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                                        Editar
+                                    </button>
+                                </form>
+                                <form action="{{ route('inventory.destroy', $inventory->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                                        onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
+                                        Eliminar
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -148,6 +195,39 @@
         <div class="text-center text-red-600">No tienes acceso a esta página</div>
     @endguest
 @endsection
+
+<style>
+    .tooltip-light {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 125%; /* Ajusta la posición vertical del tooltip */
+        background-color: white;
+        color: #1f2937; /* text-gray-900 */
+        border: 1px solid #e5e7eb; /* border-gray-200 */
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        white-space: nowrap;
+        z-index: 1000;
+    }
+
+    .group:hover .tooltip-light {
+        display: block;
+    }
+
+    .tooltip-arrow {
+        position: absolute;
+        bottom: -0.25rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 0.25rem solid transparent;
+        border-right: 0.25rem solid transparent;
+        border-top: 0.25rem solid #e5e7eb; /* border-gray-200 */
+    }
+</style>
 
 <script>
     function openModal() {
@@ -163,10 +243,9 @@
         if (notification) {
             setTimeout(() => {
                 notification.style.opacity = '0';
-                setTimeout(() => notification.remove(), 500); // Elimina el elemento del DOM después de la animación
+                setTimeout(() => notification.remove(),
+                500); // Elimina el elemento del DOM después de la animación
             }, 3000); // La notificación desaparecerá después de 3 segundos
         }
-    })
-
-    
+    });
 </script>
