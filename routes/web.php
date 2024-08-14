@@ -12,6 +12,7 @@ use App\Http\Controllers\EnterpriseController;
 use App\Http\Controllers\CustomerController;
 use GuzzleHttp\Middleware;
 use PHPUnit\Framework\Attributes\Group;
+use App\Http\Controllers\SaleHistoryController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/menu', [HomeController::class, 'menu'])->name('menu');
@@ -29,7 +30,7 @@ Route::post('/customers/create', [CustomerController::class, 'store'])->name('cu
 Route::get('/customers/search', [CustomerController::class, 'search'])->name('customers.search');
 Route::delete('/customers/{id}', [CustomerController::class, 'destroy'])->name('customers.destroy');
 
-
+Route::get('/salehistory', [SaleHistoryController::class, 'index'])->name('sales.history');
 
 Route::middleware('auth')->group(function () {
 

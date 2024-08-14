@@ -54,29 +54,40 @@ class SaleController extends Controller
 
     // Almacena una nueva venta
     public function store(Request $request)
-    {
-        // Validar los datos del formulario
-        $request->validate([
-            'number' => 'required|exists:customers,number',
-            'dish_type' => 'required|in:platillo normal,platillo ligero'
-        ]);
+{
+    // Validar los datos del formulario
+    $request->validate([
+        'number' => 'required|exists:customers,number',
+        'dish_type' => 'required|in:platillo normal,platillo ligero'
+    ]);
 
-        // Obtener el cliente basado en su número de trabajador
-        $customer = Customer::where('number', $request->number)->firstOrFail();
+    // Obtener el cliente basado en su número de trabajador
+    $customer = Customer::where('number', $request->number)->firstOrFail();
 
-        // Crear un nuevo registro en la base de datos
-        Sale::create([
-            'number' => $customer->id, // Asegúrate de que este sea el id de customer
-            'customer_id' => $customer->id, // Aquí está el ID correcto
-            'name' => $customer->name,
-            'lastName' => $customer->lastname,
-            'total' => 20, // Valor fijo para el total
-            'dish_type' => $request->dish_type
-        ]);
+    // Verificar si ya compró un platillo hoy
+    $existingSale = Sale::where('customer_id', $customer->id)
+                        ->whereDate('created_at', now()->format('Y-m-d'))
+                        ->first();
 
-        // Redirigir y mostrar mensaje de éxito
-        return redirect()->route('PointOfSale')->with('success', 'Venta agregada exitosamente.');
+    if ($existingSale) {
+        // Si ya existe una venta para este cliente hoy, redirigir con un mensaje de error
+        return redirect()->route('PointOfSale')->with('error', 'Este cliente ya ha comprado un platillo hoy.');
     }
+
+    // Crear un nuevo registro en la base de datos
+    Sale::create([
+        'number' => $customer->id, // Asegúrate de que este sea el id de customer
+        'customer_id' => $customer->id, // Aquí está el ID correcto
+        'name' => $customer->name,
+        'lastName' => $customer->lastname,
+        'total' => 50, // Valor fijo para el total
+        'dish_type' => $request->dish_type
+    ]);
+
+    // Redirigir y mostrar mensaje de éxito
+    return redirect()->route('PointOfSale')->with('success', 'Venta agregada exitosamente.');
+}
+
 
     // Muestra el formulario para editar una venta existente
     public function edit($id)
