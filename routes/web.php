@@ -59,6 +59,7 @@ Route::middleware('admin:Admin,Dev')->group(function (){
     Route::resource('feedback', FeedbackController::class)->only(['index', 'store', 'destroy']);
     Route::get('/salehistory', [SaleHistoryController::class, 'index'])->name('sales.history');
     Route::get('/enterprises', [EnterpriseController::class, 'create'])->name('enterprises.create');
+    Route::get('/enterprises/search', [EnterpriseController::class, 'search'])->name('enterprises.search');
     Route::post('/enterprises/create', [EnterpriseController::class, 'store'])->name('enterprises.store');
     Route::get('/customers', [CustomerController::class, 'create'])->name('customers.create');
     Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
