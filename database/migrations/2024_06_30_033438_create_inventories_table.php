@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name', 45);
             $table->double('amount');
             $table->enum('unit', ['Kg', 'L', 'Pz']);
-            $table->enum('type', ['Verdura', 'Fruta', 'Proteina', 'Cereales y Legumbres'])->default('Verdura');
+            $table->enum('type', ['Verdura', 'Fruta', 'Proteina', 'Cereales y Legumbres','Lacteo','Embutido','Especia'])->default('Verdura');
             $table->timestamps();
         });
     }

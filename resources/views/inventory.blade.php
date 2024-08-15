@@ -144,6 +144,9 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
                         <option value="Verdura">Verdura</option>
                         <option value="Fruta">Fruta</option>
                         <option value="Proteina">Proteina</option>
+                        <option value="Lacteo">Lacteo</option>
+                        <option value="Embutido">Embutido</option>
+                        <option value="Especia">Especia</option>
                         <option value="Cereales y Legumbres">Cereales y Legumbres</option>
                     </select>
                 </div>

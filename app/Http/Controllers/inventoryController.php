@@ -54,7 +54,7 @@ class inventoryController extends Controller
         $request->validate([
             'name' => 'required|string|max:45',
             'amount' => 'required|numeric|min:0',
-            'type' => 'required|in:Verdura,Fruta,Proteina,Cereales y Legumbres',
+            'type' => 'required|in:Verdura,Fruta,Proteina,Cereales y Legumbres,Lacteo,Embutido,Especia',
             'unit' => 'required|in:Kg,L,Pz',
         ]);
 
