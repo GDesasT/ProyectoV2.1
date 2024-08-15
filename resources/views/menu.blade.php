@@ -41,19 +41,20 @@
                 </span>
             </button>
         </div>
+
+        <div class="text-center mt-4">
+            <button type="button" id="feedback" class="flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">
+                <img src="{{ asset('img/messenger.png') }}" id="openComment" class="h-5 mr-2">Comentarios
+            </button>
+        </div>
     @else
         <p class="text-center">No hay imágenes activas en el carrusel.</p>
     @endif
-    <div class="text-center mt-4">
-        <button type="button" id="feedback" class="flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">
-            <img src="{{ asset('img/messenger.png') }}" id="openComment" class="h-5 mr-2">Comentarios
-        </button>
-    </div>
 
     <div id="CommentModal" class="fixed inset-0 flex items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-70">
         <div class="relative w-full max-w-md p-8 bg-white rounded-lg">
             <button class="absolute top-4 right-4 text-2xl text-gray-600 cursor-pointer" id="closeCommentModal">&times;</button>
-            <h2 class="mb-6 text-2xl font-bold text-center text-gray-800">Deja tu Comentario</h2>
+            <h2 class="mb-6 text-2xl font-bold text-center text-gray-800">Deja tu Comentario sobre el platillo</h2>
             <form action="{{ route('menu.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
@@ -97,17 +98,23 @@
         document.getElementById('next').classList.remove('hidden');
         document.getElementById('next').classList.add('flex');
     });
-    
-    document.addEventListener("DOMContentLoaded", function () {
-    var now = new Date();
-    var hours = now.getHours();
-    var text = document.getElementById('desayunos');
 
-    if (hours >= 12) {
-        text.textContent = 'Comidas';
-    } else {
-        text.textContent = 'Desayunos';
-    }
-});
+    document.addEventListener("DOMContentLoaded", function () {
+        var now = new Date();
+        var hours = now.getHours();
+        var text = document.getElementById('desayunos');
+
+        if (hours >= 12) {
+            text.textContent = 'Comidas';
+        } else {
+            text.textContent = 'Desayunos';
+        }
+
+        // Ocultar el botón de feedback si no hay imágenes
+        var images = @json($images);
+        if (images.length === 0) {
+            document.getElementById('feedback').style.display = 'none';
+        }
+    });
 </script>
 @endsection

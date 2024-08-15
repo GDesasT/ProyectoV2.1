@@ -9,8 +9,9 @@
                 {{ session('success') }}
             </div>
         @endif
-{{-- ricardo --}}
-        <div class="relative mt-5 overflow-x-auto shadow-md sm:rounded-lg">
+        
+        <!-- Sección de comentarios -->
+        <div id="comment-section" class="relative mt-5 overflow-x-auto shadow-md sm:rounded-lg" style="display: none;">
             <table id="comment-table" class="w-full text-sm text-left rtl:text-right text-gray-500">
                 <thead class="text-xs text-gray-700 uppercase bg-blue-200">
                     <tr>
@@ -37,10 +38,33 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- Mensaje cuando no hay fotos -->
+        <div id="no-photos-message" class="text-center text-gray-500" style="display: none;">
+            No hay fotos disponibles, por lo tanto, los comentarios están deshabilitados.
+        </div>
+        
         <br>
     @endauth
 
     @guest
         <div class="text-center text-red-600">No tienes acceso a esta página</div>
     @endguest
+@endsection
+
+@section('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Suponiendo que pasas la variable desde el backend al frontend
+        var hasPhotos = @json($hasPhotos);
+
+        if (hasPhotos) {
+            document.getElementById('comment-section').style.display = 'block';
+            document.getElementById('no-photos-message').style.display = 'none';
+        } else {
+            document.getElementById('comment-section').style.display = 'none';
+            document.getElementById('no-photos-message').style.display = 'block';
+        }
+    });
+</script>
 @endsection
