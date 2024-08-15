@@ -45,8 +45,10 @@ class SaleController extends Controller
         }
     
         if ($request->filled('date')) {
-            $query->whereDate('updated_at', $request->date);
-        }
+        $query->whereDate('updated_at', $request->date);
+    } else {
+        $query->whereDate('updated_at', now()->toDateString());
+    }
     
         if ($request->filled('dish_type')) {
             $query->where('dish_type', $request->dish_type);
