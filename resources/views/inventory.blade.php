@@ -83,7 +83,7 @@
                     class="w-full md:w-auto px-4 py-2 font-medium text-white bg-green-500 rounded hover:bg-green-700">Inventario total</button>
 
                 <!-- Botón para agregar un nuevo producto -->
-                <button onclick="openModal()" crud-modal data-modal-toggle="crud-modal" type="button"
+                <button onclick="openModal('crud-modal')" crud-modal data-modal-toggle="crud-modal" type="button"
                     class="w-full md:w-auto px-4 py-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-700">Agregar
                     producto / Añadir</button>
             </div>
@@ -98,7 +98,7 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
             <h3 class="text-lg font-semibold text-gray-900">
                 Agregar producto / Añadir
             </h3>
-            <button onclick="closeModal()" type="button"
+            <button onclick="closeModal('crud-modal')" type="button"
                 class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
                 data-modal-toggle="crud-modal">
                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -165,6 +165,7 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
 
         <br>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            
             <table id="product-table" class="w-full text-sm text-left rtl:text-right text-gray-500">
                 <thead class="text-xs text-gray-700 uppercase bg-blue-200">
                     <tr>
@@ -183,22 +184,22 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
                             <td class="px-6 py-4">{{ $inventory->type }}</td>
                             <td class="px-6 py-4">{{ $inventory->updated_at }}</td>
                             <td class="px-6 py-4 flex space-x-2">
-                                <form action="{{ route('inventory.edit', $inventory->id) }}" method="GET">
-                                    <button type="submit"
-                                        class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
-                                        Editar
-                                    </button>
-                                </form>
+                                <button type="button" 
+                                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
+                                    onclick="openEditModal('{{ $inventory->id }}', '{{ $inventory->name }}', '{{ $inventory->amount }}', '{{ $inventory->unit }}', '{{ $inventory->type }}')">
+                                    Editar
+                                </button>
                                 <form action="{{ route('inventory.destroy', $inventory->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
                                         onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
                                         Eliminar
                                     </button>
                                 </form>
                             </td>
+                            
                         </tr>
                     @endforeach
                 </tbody>
@@ -212,8 +213,21 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
 <!-- Modal de Edición -->
 <div id="editInventoryModal" class="fixed inset-0 items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-70">
     <div class="relative w-full max-w-lg p-4 bg-white rounded-lg overflow-auto transform scale-90 transition-transform duration-300 max-h-full sm:max-w-xl md:max-w-2xl">
-        <button class="absolute text-2xl text-gray-600 cursor-pointer top-2 right-2 sm:top-4 sm:right-4" onclick="closeModal()">&times;</button>
-        <h2 class="mb-6 text-2xl sm:text-3xl font-bold text-center text-gray-800">Editar Inventario</h2>
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+            <h2 class="text-lg font-semibold text-gray-900">
+                Editar Inventario
+            </h2>
+            <button onclick="closeModal('editInventoryModal')" type="button"
+                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center"
+                data-modal-toggle="editInventoryModal">
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                </svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+        </div>
         <form id="editInventoryForm" action="" method="POST">
             @csrf
             @method('PUT')
@@ -302,69 +316,39 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
 </style>
 
 <script>
-  function openModal() {
-    // Mostrar el modal
-    document.getElementById("crud-modal").style.display = 'flex';
+    function openModal(modalId) {
+        // Mostrar el modal
+        document.getElementById(modalId).style.display = 'flex';
 
-    // Animación para hacer visible el modal
-    setTimeout(() => {
-        document.getElementById('crud-modal').style.opacity = '1';
-        document.getElementById('crud-modal').firstElementChild.style.transform = 'scale(1)';
-    }, 10);
-}
+        // Animación para hacer visible el modal
+        setTimeout(() => {
+            document.getElementById(modalId).style.opacity = '1';
+            document.getElementById(modalId).firstElementChild.style.transform = 'scale(1)';
+        }, 10);
+    }
 
-function closeModal() {
-    // Ocultar el modal con animación
-    document.getElementById('crud-modal').style.opacity = '0';
-    document.getElementById('crud-modal').firstElementChild.style.transform = 'scale(0.9)';
+    function closeModal(modalId) {
+        // Ocultar el modal con animación
+        document.getElementById(modalId).style.opacity = '0';
+        document.getElementById(modalId).firstElementChild.style.transform = 'scale(0.9)';
 
-    // Después de la animación, ocultar completamente el modal
-    setTimeout(() => {
-        document.getElementById('crud-modal').style.display = 'none';
-    }, 300);
-}
-
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const notification = document.getElementById('notification');
-        if (notification) {
-            setTimeout(() => {
-                notification.style.opacity = '0';
-                setTimeout(() => notification.remove(),
-                500); // Elimina el elemento del DOM después de la animación
-            }, 3000); // La notificación desaparecerá después de 3 segundos
-        }
-    })
+        // Después de la animación, ocultar completamente el modal
+        setTimeout(() => {
+            document.getElementById(modalId).style.display = 'none';
+        }, 300);
+    }
 
     function openEditModal(id, name, amount, unit, type) {
-    // Rellenar los campos del formulario con los valores actuales
-    document.getElementById('editName').value = name;
-    document.getElementById('editQuantity').value = amount;
-    document.getElementById('editUnit').value = unit;
-    document.getElementById('editType').value = type;
+        // Rellenar los campos del formulario con los valores actuales
+        document.getElementById('editName').value = name;
+        document.getElementById('editQuantity').value = amount;
+        document.getElementById('editUnit').value = unit;
+        document.getElementById('editType').value = type;
 
-    // Establecer la acción del formulario para enviar la actualización a la ruta correcta
-    document.getElementById('editInventoryForm').action = `/inventory/${id}`;
+        // Establecer la acción del formulario para enviar la actualización a la ruta correcta
+        document.getElementById('editInventoryForm').action = `/inventory/${id}`;
 
-    // Mostrar el modal
-    document.getElementById('editInventoryModal').style.display = 'flex';
-
-    // Animación para hacer visible el modal
-    setTimeout(() => {
-        document.getElementById('editInventoryModal').style.opacity = '1';
-        document.getElementById('editInventoryModal').firstElementChild.style.transform = 'scale(1)';
-    }, 10);
-}
-
-function closeModal() {
-    // Ocultar el modal
-    document.getElementById('editInventoryModal').style.opacity = '0';
-    document.getElementById('editInventoryModal').firstElementChild.style.transform = 'scale(0.9)';
-
-    // Después de la animación, ocultar completamente el modal
-    setTimeout(() => {
-        document.getElementById('editInventoryModal').style.display = 'none';
-    }, 300);
-}
-
+        // Mostrar el modal de edición
+        openModal('editInventoryModal');
+    }
 </script>
