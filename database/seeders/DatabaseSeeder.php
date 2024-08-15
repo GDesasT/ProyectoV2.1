@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
                     ['name' => 'Tomate', 'quantity' => 0.05, 'unit' => 'kg'],
                     ['name' => 'Pepino', 'quantity' => 0.05, 'unit' => 'kg'],
                     ['name' => 'Zanahoria', 'quantity' => 0.03, 'unit' => 'kg'],
-                    ['name' => 'Aceite de oliva', 'quantity' => 0.01, 'unit' => 'L'],
+                    ['name' => 'Aceite de Oliva', 'quantity' => 0.01, 'unit' => 'L'],
                     ['name' => 'Sal', 'quantity' => 0.005, 'unit' => 'kg'],
                     ['name' => 'Limón', 'quantity' => 1, 'unit' => 'unidad']
                 ]),
