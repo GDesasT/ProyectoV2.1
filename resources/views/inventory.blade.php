@@ -2,7 +2,6 @@
 
 @section('content')
     @auth
-
         <div class="mb-8 text-3xl text-center font-bold">Inventario</div>
         <br>
 
@@ -165,7 +164,6 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
 
         <br>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            
             <table id="product-table" class="w-full text-sm text-left rtl:text-right text-gray-500">
                 <thead class="text-xs text-gray-700 uppercase bg-blue-200">
                     <tr>
@@ -173,33 +171,33 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
                         <th scope="col" class="px-6 py-3"><strong>Cantidad</strong></th>
                         <th scope="col" class="px-6 py-3"><strong>Categoría</strong></th>
                         <th scope="col" class="px-6 py-3"><strong>Fecha Actualización</strong></th>
-                        <th scope="col" class="px-6 py-3"><strong>Acciones</strong></th>
+                        <th scope="col" colspan="2" class="px-6 py-3"><strong>Acciones</strong></th> <!-- colspan="2" asegura que haya espacio para ambos botones -->
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($inventories as $inventory)
                         <tr class="bg-white border-b">
-                            <td class="px-6 py-4">{{ $inventory->name}}</td>
-                            <td class="px-6 py-4">{{ $inventory->amount }} {{ $inventory->unit}}
+                            <td class="px-6 py-4">{{ $inventory->name }}</td>
+                            <td class="px-6 py-4">{{ $inventory->amount }} {{ $inventory->unit }}</td>
                             <td class="px-6 py-4">{{ $inventory->type }}</td>
                             <td class="px-6 py-4">{{ $inventory->updated_at }}</td>
-                            <td class="px-6 py-4 flex space-x-2">
-                                <button type="button" 
-                                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
-                                    onclick="openEditModal('{{ $inventory->id }}', '{{ $inventory->name }}', '{{ $inventory->amount }}', '{{ $inventory->unit }}', '{{ $inventory->type }}')">
-                                    Editar
-                                </button>
-                                <form action="{{ route('inventory.destroy', $inventory->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2"
-                                        onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
-                                        Eliminar
+                            <td class="px-6 py-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <button type="button"
+                                        class="w-full h-10 text-center font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg">
+                                        Editar
                                     </button>
-                                </form>
+                                    <form action="{{ route('inventory.destroy', $inventory->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="w-full h-10 text-center font-medium text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 rounded-lg"
+                                            onclick="return confirm('¿Estás seguro de que quieres eliminar este producto?');">
+                                            Eliminar
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
-                            
                         </tr>
                     @endforeach
                 </tbody>
@@ -208,7 +206,6 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
     </div>
 
         <br>
-{{-- <!-- Botón para Editar (dentro del loop de inventario --}}
 
 <!-- Modal de Edición -->
 <div id="editInventoryModal" class="fixed inset-0 items-center justify-center hidden transition-opacity duration-300 bg-black bg-opacity-70">
@@ -261,8 +258,6 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
         </form>
     </div>
 </div>
-
-
 
     @endauth
 
