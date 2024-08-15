@@ -467,4 +467,18 @@ class DatabaseSeeder extends Seeder
 
         DB::table('customers')->insert($customers);
     }
+    
 }
+DB::table('sales')->insert([
+    [
+        'number' => 1,  // Asegúrate de usar el ID correcto del cliente relacionado
+        'customer_id' => 1,  // Asegúrate de usar el ID correcto del cliente relacionado
+        'name' => 'Henniges Automotive',
+        'lastName' => 'Gomez Palacio - Cerca del centro trailero',
+        'total' => 50,
+        'dish_type' => 'platillo normal',
+        'created_at' => '2024-08-12 09:00:05',
+        'updated_at' => '2024-08-12 09:00:05',
+    ],
+    // Puedes agregar más registros aquí si es necesario
+]);
