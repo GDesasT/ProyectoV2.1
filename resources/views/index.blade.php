@@ -5,7 +5,9 @@
     <div class="container mx-auto py-20 px-10 animate-fadeInUp">
         <div class="flex flex-col md:flex-row md:space-x-8 items-center">
             <div class="md:w-1/2 flex justify-center animate-fadeInUp">
-                <img src="{{ asset('img/logo.jpeg') }}" class="h-64 md:h-1/2 rounded-full" alt="Logo Comedor Industrial">
+                <div class="w-64 h-64 flex justify-center items-center">
+                    <img src="{{ asset('img/logo.jpeg') }}" class="max-w-full max-h-full rounded-full" alt="Logo Comedor Industrial">
+                </div>
             </div>
             <div class="md:w-1/2 sm:w-auto bg-black bg-opacity-40 rounded-2xl p-5 m-10 animate-fadeInUp">
                 <h1 class="text-3xl font-bold text-center text-white">Conócenos</h1>

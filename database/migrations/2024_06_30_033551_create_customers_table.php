@@ -19,6 +19,9 @@ return new class extends Migration
             $table->string('email', 45);
             $table->foreignId('enterprise_id')->constrained('enterprises')->onDelete('cascade');
             $table->timestamps();
+
+            // Agregar índice único compuesto para enterprise_id y number
+            $table->unique(['enterprise_id', 'number']);
         });
     }
 
