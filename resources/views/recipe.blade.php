@@ -45,7 +45,7 @@
             <p id="recipeModalDescription" class="mb-4 text-gray-600" style="white-space: pre-wrap;"></p>
 
             <!-- Botón Elaborar -->
-            <button id="elaborarBtn" class="w-full px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700">Elaborar</button>
+            {{-- <button id="elaborarBtn" class="w-full px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700">Elaborar</button> --}}
         </div>
     </div>
 
