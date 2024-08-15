@@ -35,7 +35,7 @@
                     @endforeach
                 </select>
                 <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
-                    Selecciona la Empresa para realizar ventas
+                    Selecciona la Empresa
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
             </div>
@@ -103,10 +103,7 @@
                         <input type="date" name="date" id="date"
                             class="bg-gray-50 border border-gray-300 cursor-pointer text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             value="{{ request('date') }}">
-                        <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
-                            Buscar por fecha
-                            <div class="tooltip-arrow" data-popper-arrow></div>
-                        </div>
+                       
                     </div>
 
                     <!-- Select Tipo de Platillo -->
@@ -196,6 +193,7 @@
                         <th scope="col" class="px-6 py-3"><strong>Nombre</strong></th>
                         <th scope="col" class="px-6 py-3"><strong>Apellido</strong></th>
                         <th scope="col" class="px-6 py-3"><strong>Tipo platillo</strong></th>
+                        <th scope="col" class="px-6 py-3"><strong>Empresa</strong></th>
                         <th scope="col" class="px-6 py-3"><strong>Total</strong></th>
                         <th scope="col" class="px-6 py-3"><strong>Fecha de venta</strong></th>
                         <th scope="col" class="px-6 py-3"><strong>Acciones</strong></th>
@@ -208,6 +206,7 @@
                             <td class="px-6 py-4">{{ $sale->name }}</td>
                             <td class="px-6 py-4">{{ $sale->lastName }}</td>
                             <td class="px-6 py-4">{{ $sale->dish_type }}</td>
+                            <td class="px-6 py-4">{{ $enterprise->name }}</td>
                             <td class="px-6 py-4">{{ $sale->total }}</td>
                             <td class="px-6 py-4">{{ $sale->updated_at }}</td>
                             <td class="px-6 py-4 flex space-x-2">

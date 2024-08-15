@@ -45,9 +45,9 @@
             <h3 class="mt-4 mb-2 text-lg font-bold">Preparación:</h3>
             <p id="recipeModalDescription" class="mb-4 text-gray-600" style="white-space: pre-wrap;"></p>
 
-            {{-- <!-- Botón Elaborar -->
-            <button id="elaborarBtn" class="w-full px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700">Elaborar</button>
-        </div> --}}
+            <!-- Botón Elaborar -->
+            <button id="elaborarBtn" class="w-full px-4 py-2 text-white bg-white rounded-lg pointer-events-none">Elaborar</button>
+        </div>
     </div>
 
     <!-- Modal para añadir/editar receta -->

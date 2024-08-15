@@ -24,7 +24,7 @@
                     <div class="relative group flex-1 min-w-[200px]">
                         <input type="text" name="name" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="Buscar producto por nombre" value="{{ request('name') }}">
+                            placeholder="Buscar producto por nombre" value="{{ request('name') }}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
                         <div
                             class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
                             Buscar por nombre
@@ -36,7 +36,7 @@
                     <div class="relative group flex-1 min-w-[200px]">
                         <input type="text" name="amount" id="amount"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                            placeholder="Buscar producto por cantidad" value="{{ request('amount') }}">
+                            placeholder="Buscar producto por cantidad" value="{{ request('amount') }}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
                         <div
                             class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
                             Buscar por cantidad
