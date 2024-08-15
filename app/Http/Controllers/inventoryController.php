@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Inventory;
+use App\Models\inventory;
 use Illuminate\Http\Request;
 
-class InventoryController extends Controller
+class inventoryController extends Controller
 {
     // Muestra la lista de inventario
     public function index(Request $request)
@@ -15,38 +15,39 @@ class InventoryController extends Controller
         $type = $request->input('type');
         $unit = $request->input('unit');
         $date = $request->input('date');
-
+    
         // Crear una consulta base
-        $query = Inventory::query();
-
+        $query = inventory::query();
+    
         // Aplicar los filtros si existen
         if ($name) {
-            $query->where('name', $name);
+            $query->where('name', 'like', '%' . $name . '%');
         }
-
+    
         if ($amount) {
             $query->where('amount', $amount);
         }
-
+    
         if ($type) {
             $query->where('type', $type);
         }
-
+    
         if ($unit) {
             $query->where('unit', $unit);
         }
-
+    
         if ($date) {
             $query->whereDate('updated_at', $date);
         }
-
+    
         // Obtener los inventarios filtrados
         $inventories = $query->get();
-
+    
+        // Retornar la vista con los inventarios filtrados
         return view('inventory', compact('inventories'));
     }
-
-    // Almacena un nuevo producto en el inventario
+    
+    // Almacena un nuevo producto en el inventario 
     public function store(Request $request)
     {
         // Validar los datos del formulario
@@ -58,7 +59,7 @@ class InventoryController extends Controller
         ]);
 
         // Verificar si el producto ya existe en el inventario con el mismo nombre y categoría
-        $existingProduct = Inventory::where('name', $request->name)
+        $existingProduct = inventory::where('name', $request->name)
             ->where('type', $request->type)
             ->where('unit', $request->unit)
             ->first();
@@ -72,38 +73,38 @@ class InventoryController extends Controller
             return redirect()->route('inventory')->with('status', 'Cantidad agregada exitosamente al producto existente.');
         } else {
             // Si el producto no existe, crear un nuevo registro
-            Inventory::create($request->all());
+            inventory::create($request->all());
 
             // Redirigir y mostrar mensaje de éxito
             return redirect()->route('inventory')->with('status', 'Producto agregado exitosamente.');
         }
     }
+
     public function edit($id)
-{
-    $inventory = inventory::findOrFail($id);
-    return view('inventory', compact('inventory'));
-}
-
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'name' => 'required',
-        'amount' => 'required|numeric',
-        'type' => 'required'
-    ]);
-
-    $inventory = inventory::findOrFail($id);
-    $inventory->update($request->all());
-
-    return redirect()->route('inventory')->with('success', 'Producto actualizado correctamente.');
-}
-
-public function destroy($id)
+    {
+        $inventory = inventory::findOrFail($id);
+        return view('inventory.edit', compact('inventory'));
+    }
+    public function update(Request $request, $id)
     {
         $inventory = Inventory::findOrFail($id);
+    
+        $inventory->name = $request->input('name');
+        $inventory->amount = $request->input('quantity');
+        $inventory->unit = $request->input('unit');
+        $inventory->type = $request->input('type');
+    
+        $inventory->save();
+    
+        return redirect()->route('inventory')->with('status', 'Producto actualizado correctamente');
+    }
+    
+    
+    public function destroy($id)
+    {
+        $inventory = inventory::findOrFail($id);
         $inventory->delete();
 
-
-    return redirect()->route('inventory')->with('delete', 'Producto eliminado correctamente.');
-}
+        return redirect()->route('inventory')->with('delete', 'Producto eliminado correctamente.');
+    }
 }
