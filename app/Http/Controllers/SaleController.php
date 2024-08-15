@@ -4,87 +4,108 @@ namespace App\Http\Controllers;
 
 use App\Models\sale;
 use App\Models\customer;
-use App\Models\Enterprise;
+use App\Models\enterprise;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
     // Muestra la lista de ventas
     public function index(Request $request)
-    {
-        $query = sale::query();
+{
 
-        if ($request->filled('enterprise_id')) {
-            $query->where('enterprise_id', $request->enterprise_id);
+    // Mostrar todos los datos enviados en la solicitud
+    $query = sale::query();
+
+    // Validación del número de trabajador
+    if ($request->filled('number')) {
+        $employeeExists = customer::where('number', $request->number)->exists();
+
+        if (!$employeeExists) {
+            return redirect()->route('PointOfSale')->with('error', 'El número de trabajador no está registrado.');
         }
 
-        if ($request->filled('number')) {
-            $query->where('number', $request->number);
-        }
-
-        if ($request->filled('customer_id')) {
-            $query->where('customer_id', $request->customer_id);
-        }
-
-        if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
-
-        if ($request->filled('lastName')) {
-            $query->where('lastName', 'like', '%' . $request->lastName . '%');
-        }
-
-        if ($request->filled('date')) {
-            $query->whereDate('updated_at', $request->date);
-        }
-
-        if ($request->filled('dish_type')) {
-            $query->where('dish_type', $request->dish_type);
-        }
-
-        $sales = $query->get();
-        $enterprises = enterprise::all();
-
-        return view('PointOfSale', compact('sales', 'enterprises'));
+        $query->where('number', $request->number);
     }
+
+    // Otros filtros
+    if ($request->filled('enterprise_id')) {
+        $query->where('enterprise_id', $request->enterprise_id);
+    }
+
+    if ($request->filled('customer_id')) {
+        $query->where('customer_id', $request->customer_id);
+    }
+
+    if ($request->filled('name')) {
+        $query->where('name', 'like', '%' . $request->name . '%');
+    }
+
+    if ($request->filled('lastName')) {
+        $query->where('lastName', 'like', '%' . $request->lastName . '%');
+    }
+
+    if ($request->filled('date')) {
+        $query->whereDate('updated_at', $request->date);
+    }
+
+    if ($request->filled('dish_type')) {
+        $query->where('dish_type', $request->dish_type);
+    }
+
+    $sales = $query->get();
+    $enterprises = enterprise::all();
+
+    return view('PointOfSale', compact('sales', 'enterprises'));
+}
+
 
     // Almacena una nueva venta
     public function store(Request $request)
-    {
-        $request->validate([
-            'number' => 'required|exists:customers,number',
-            'dish_type' => 'required|in:platillo normal,platillo ligero',
-            'enterprise_id' => 'required|exists:enterprises,id'
-        ]);
+{
+    // Validación inicial de los campos enviados en el formulario
+    $request->validate([
+        'number' => 'required',
+        'dish_type' => 'required|in:platillo normal,platillo ligero',
+        'enterprise_id' => 'required|exists:enterprises,id'
+    ]);
 
-        $customer = customer::where('number', $request->number)->firstOrFail();
+    // Verificar si el número de trabajador existe en la base de datos
+    $customer = customer::where('number', $request->number)->first();
 
-        $existingSale = Sale::where('customer_id', $customer->id)
-            ->where('enterprise_id', $request->enterprise_id)
-            ->whereDate('created_at', now()->format('Y-m-d'))
-            ->first();
-
-        if ($existingSale) {
-            return redirect()->route('PointOfSale')->with('error', 'Este cliente ya ha comprado un platillo hoy en esta empresa.');
-        }
-
-        Sale::create([
-            'number' => $customer->id,
-            'customer_id' => $customer->id,
-            'name' => $customer->name,
-            'lastName' => $customer->lastname,
-            'total' => 50,
-            'dish_type' => $request->dish_type,
-            'enterprise_id' => $request->enterprise_id,
-        ]);
-
-        return redirect()->route('PointOfSale')->with('success', 'Venta agregada exitosamente.');
+    // Si el número no existe, redirige con un error
+    if (!$customer) {
+        return redirect()->route('PointOfSale')->with('error', 'El número de trabajador no está registrado.');
     }
+
+    // Verificar si el cliente ya ha realizado una compra en el día en la misma empresa
+    $existingSale = sale::where('customer_id', $customer->id)
+        ->where('enterprise_id', $request->enterprise_id)
+        ->whereDate('created_at', now()->format('Y-m-d'))
+        ->first();
+
+    if ($existingSale) {
+        return redirect()->route('PointOfSale')->with('error', 'Este cliente ya ha comprado un platillo hoy en esta empresa.');
+    }
+
+    // Si todo es válido, crear la venta
+    sale::create([
+        'number' => $customer->id,
+        'customer_id' => $customer->id,
+        'name' => $customer->name,
+        'lastName' => $customer->lastname,
+        'total' => 50, // Se mantiene fijo el total como indicaste
+        'dish_type' => $request->dish_type,
+        'enterprise_id' => $request->enterprise_id,
+    ]);
+
+    // Redirigir con éxito
+    return redirect()->route('PointOfSale')->with('success', 'Venta agregada exitosamente.');
+}
 
     // Muestra el formulario para editar una venta existente
     public function edit($id)
     {
-        $sale = Sale::findOrFail($id);
+        $sale = sale::findOrFail($id);
         return view('sales.edit', compact('sale'));
     }
 
@@ -100,7 +121,7 @@ class SaleController extends Controller
             'enterprise_id' => 'required|exists:enterprises,id'
         ]);
 
-        $sale = Sale::findOrFail($id);
+        $sale = sale::findOrFail($id);
         $sale->update($request->all());
 
         return redirect()->route('sales.index')->with('success', 'Venta actualizada correctamente.');
@@ -109,7 +130,7 @@ class SaleController extends Controller
     // Elimina una venta existente
     public function destroy($id)
     {
-        $sale = Sale::findOrFail($id);
+        $sale = sale::findOrFail($id);
         $sale->delete();
 
         return redirect()->route('PointOfSale')->with('delete', 'Venta eliminada correctamente.');
