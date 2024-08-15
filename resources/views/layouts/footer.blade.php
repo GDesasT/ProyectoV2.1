@@ -26,7 +26,7 @@
                 <strong>Telefono:</strong> +52 8711551686
             </p>
             <p>
-                <strong>Direccion:</strong> Gómez Palacio cerca del centro trailero
+                <strong>Direccion:</strong> Puerta Real, Paseo Borbon #102
             </p>
         </div>
     </div>
