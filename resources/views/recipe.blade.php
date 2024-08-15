@@ -185,12 +185,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         const availableQuantity = ingredient.available;
                         const missingQuantity = Math.max(requiredQuantity - availableQuantity, 0);
 
-                        listItem.innerHTML = `${ingredient.name}: ${availableQuantity}${ingredient.unit} / ${requiredQuantity}${ingredient.unit}`;
+                        listItem.innerHTML = `${ingredient.name}: ${availableQuantity.toFixed(2)}${ingredient.unit} / ${requiredQuantity.toFixed(2)}${ingredient.unit}`;
 
                         if (missingQuantity > 0) {
                             const missingSpan = document.createElement('span');
                             missingSpan.style.color = 'red';
-                            missingSpan.innerText = ` (Faltan ${missingQuantity}${ingredient.unit})`;
+                            missingSpan.innerText = ` (Faltan ${missingQuantity.toFixed(2)}${ingredient.unit})`;
                             listItem.appendChild(missingSpan);
                         }
 
@@ -352,6 +352,7 @@ document.addEventListener('DOMContentLoaded', function() {
             event.target.parentElement.parentElement.remove();
         }
     });
+    
 
     document.getElementById('portionMultiplier').addEventListener('input', function() {
         const portionMultiplier = parseFloat(this.value) || 1;
@@ -360,11 +361,11 @@ document.addEventListener('DOMContentLoaded', function() {
         ingredientsListItems.forEach(listItem => {
             const name = listItem.dataset.name;
             const unit = listItem.dataset.unit;
-            const quantityPerPortion = parseFloat(listItem.dataset.quantity);
-            const available = parseFloat(listItem.dataset.available);
+            const quantityPerPortion = parseFloat(listItem.dataset.quantity).toFixed(2);
+            const available = parseFloat(listItem.dataset.available).toFixed(2);
 
-            const totalRequired = quantityPerPortion * portionMultiplier;
-            const missing = Math.max(totalRequired - available, 0);
+            const totalRequired = (quantityPerPortion * portionMultiplier).toFixed(2);
+            const missing = Math.max(totalRequired - available, 0).toFixed(2);
 
             listItem.innerHTML = `${name}: ${available}${unit} / ${totalRequired}${unit}`;
 
@@ -377,6 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
 
 </script>
 @endsection

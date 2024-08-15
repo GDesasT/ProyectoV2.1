@@ -52,7 +52,7 @@
             </form>
         </div>
 
-        <div class="mt-8">
+        <div class="relative max-w-4xl p-6 mx-auto mt-5 overflow-x-auto bg-white rounded-lg shadow-md sm:rounded-lg">
             <h2 class="my-4 text-2xl font-bold text-center text-gray-800">Buscar Empresa</h2>
             <form action="{{ route('enterprises.search') }}" method="GET" class="max-w-xl mx-auto">
                 <div class="mb-4">

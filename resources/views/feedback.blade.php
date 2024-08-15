@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                     @foreach($comments as $comment)
-                        <tr>
+                        <tr class="bg-white border-b">
                             <td class="px-6 py-4">{{ $comment->comment }}</td>
                             <td class="px-6 py-4">{{ $comment->created_at }}</td>
                             <td class="flex px-6 py-4 space-x-2">

@@ -65,8 +65,7 @@
             </form>
         </div>
 
-        <div class="mt-8">
-            <h2 class="my-4 text-2xl font-bold text-center text-gray-800">Buscar Empleado</h2>
+        <div class="relative max-w-4xl p-6 mx-auto mt-5 overflow-x-auto bg-white rounded-lg shadow-md sm:rounded-lg">            <h2 class="my-4 text-2xl font-bold text-center text-gray-800">Buscar Empleado</h2>
             <form action="{{ route('customers.search') }}" method="GET" class="max-w-xl mx-auto">
                 <div class="mb-4">
                     <label for="search_email" class="block text-sm font-medium text-gray-700">Email</label>
