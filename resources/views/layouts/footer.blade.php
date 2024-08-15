@@ -20,7 +20,7 @@
         <div class="footer-section contact">
             <h2>Contactanos</h2>
             <p>
-                <strong>E-mail:</strong> comedoresdelafuenterg@gmail.com
+                <strong>E-mail:</strong> comedoresrg@yahoo.com.mx
             </p>
             <p>
                 <strong>Telefono:</strong> +52 8711551686
