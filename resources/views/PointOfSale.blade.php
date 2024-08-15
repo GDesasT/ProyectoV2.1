@@ -202,7 +202,7 @@
                 <tbody>
                     @foreach ($sales as $sale)
                         <tr class="bg-white border-b dark:hover:bg-gray-100">
-                            <td class="px-6 py-4">{{ $sale->customer_id }}</td>
+                            <td class="px-6 py-4">{{ $sale->number}}</td>
                             <td class="px-6 py-4">{{ $sale->name }}</td>
                             <td class="px-6 py-4">{{ $sale->lastName }}</td>
                             <td class="px-6 py-4">{{ $sale->dish_type }}</td>
