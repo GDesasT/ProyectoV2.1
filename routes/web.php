@@ -30,8 +30,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/inventory/{id}/edit', [inventoryController::class, 'edit'])->name('inventory.edit');
         Route::put('/inventory/{id}', [inventoryController::class, 'update'])->name('inventory.update');
         Route::delete('/inventory/{id}', [inventoryController::class, 'destroy'])->name('inventory.destroy');
-    
-    
+
+
     Route::get('/PointOfSale', [SaleController::class, 'index'])->name('PointOfSale');
     Route::post('/PointOfSale', [SaleController::class, 'store'])->name('sales.store');
     Route::delete('/sales/{sale}', [SaleController::class, 'destroy'])->name('sales.destroy');
@@ -52,6 +52,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/recipes/{recipe}', [RecipeController::class, 'destroy'])->name('recipes.destroy');
     Route::post('/recipes/calculate-ingredients', [RecipeController::class, 'calculateIngredients'])->name('recipes.calculateIngredients');
     Route::resource('recipes', RecipeController::class);
+    Route::post('/recipes/elaborate/{id}', [RecipeController::class, 'elaborate'])->name('recipes.elaborate');
+
+
+
 
 });
 

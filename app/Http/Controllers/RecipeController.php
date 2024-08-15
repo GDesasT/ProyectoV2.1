@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Recipe;
 use App\Models\Inventory;
+use Illuminate\Support\Facades\DB;
 
 class RecipeController extends Controller
 {
@@ -97,9 +98,6 @@ class RecipeController extends Controller
         ]);
     }
 
-
-
-
     public function update(Request $request, Recipe $recipe)
     {
         // Validar los datos de la receta
@@ -169,4 +167,54 @@ class RecipeController extends Controller
         // Devolver los ingredientes calculados como JSON
         return response()->json($calculatedIngredients);
     }
+
+    public function elaborate(Request $request, $id)
+{
+    dd($request->all());
+
+    $recipe = Recipe::findOrFail($id);
+    $multiplier = $request->input('multiplier', 1);
+
+    // Decodificar los ingredientes almacenados en JSON
+    $ingredients = json_decode($recipe->ingredient, true);
+
+    DB::beginTransaction();
+
+    try {
+        // Verificar si hay suficientes ingredientes
+        foreach ($ingredients as $ingredient) {
+            $requiredAmount = $ingredient['quantity'] * $multiplier;
+            $inventoryItem = Inventory::where('name', $ingredient['name'])->first();
+
+            if (!$inventoryItem || $inventoryItem->amount < $requiredAmount) {
+                throw new \Exception("No hay suficientes ingredientes: {$ingredient['name']}");
+            }
+        }
+
+        // Restar la cantidad utilizada del inventario
+        foreach ($ingredients as $ingredient) {
+            $requiredAmount = $ingredient['quantity'] * $multiplier;
+            $inventoryItem = Inventory::where('name', $ingredient['name'])->first();
+
+            // Debugging: Asegúrate de que la operación se ejecuta
+            if ($inventoryItem) {
+                $inventoryItem->amount -= $requiredAmount;
+                $inventoryItem->save();
+            }
+        }
+
+        DB::commit();
+
+        return response()->json(['success' => true]);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage(),
+            'line' => $e->getLine(),
+            'file' => $e->getFile(),
+        ]);
+    }
+}
+
 }
