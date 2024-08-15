@@ -66,6 +66,7 @@ Route::middleware('admin:Admin,Dev')->group(function (){
     Route::get('/enterprises', [EnterpriseController::class, 'create'])->name('enterprises.create');
     Route::get('/enterprises/search', [EnterpriseController::class, 'search'])->name('enterprises.search');
     Route::post('/enterprises/create', [EnterpriseController::class, 'store'])->name('enterprises.store');
+    Route::delete('/enterprises/{id}', [EnterpriseController::class, 'destroy'])->name('enterprises.destroy');
     Route::get('/customers', [CustomerController::class, 'create'])->name('customers.create');
     Route::post('/customers/create', [CustomerController::class, 'store'])->name('customers.store');
     Route::get('/customers/search', [CustomerController::class, 'search'])->name('customers.search');
