@@ -23,6 +23,17 @@ class DatabaseSeeder extends Seeder
             ['type' => 'Employee'],
         ]);
 
+        DB::table('enterprises')->insert([
+            [
+                'name' => 'Henniges Automotive',
+                'email' => 'HennigesAutomotive@gmail.com',
+                'phone' => '9713815637',
+                'address' => 'Gomez Palacio - Cerca del centro trailero',
+                'created_at' => '2024-08-12 09:00:05',
+                'updated_at' => '2024-08-12 09:00:05',
+            ]
+            ]);
+
         // Crear usuarios
         User::create([
             'user' => 'dev',
@@ -52,7 +63,7 @@ class DatabaseSeeder extends Seeder
                     ['name' => 'Tomate', 'quantity' => 0.05, 'unit' => 'kg'],
                     ['name' => 'Pepino', 'quantity' => 0.05, 'unit' => 'kg'],
                     ['name' => 'Zanahoria', 'quantity' => 0.03, 'unit' => 'kg'],
-                    ['name' => 'Aceite de Oliva', 'quantity' => 0.01, 'unit' => 'L'],
+                    
                     ['name' => 'Sal', 'quantity' => 0.005, 'unit' => 'kg'],
                     ['name' => 'Limón', 'quantity' => 1, 'unit' => 'unidad']
                 ]),
