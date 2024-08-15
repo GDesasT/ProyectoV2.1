@@ -11,52 +11,52 @@ class SaleController extends Controller
 {
     // Muestra la lista de ventas
     public function index(Request $request)
-{
-
-    // Mostrar todos los datos enviados en la solicitud
-    $query = sale::query();
-
-    // Validación del número de trabajador
-    if ($request->filled('number')) {
-        $employeeExists = customer::where('number', $request->number)->exists();
-
-        if (!$employeeExists) {
-            return redirect()->route('PointOfSale')->with('error', 'El número de trabajador no está registrado.');
+    {
+        // Mostrar todos los datos enviados en la solicitud
+        $query = sale::with(['customer.enterprise']);
+    
+        // Validación del número de trabajador
+        if ($request->filled('number')) {
+            $employeeExists = customer::where('number', $request->number)->exists();
+    
+            if (!$employeeExists) {
+                return redirect()->route('PointOfSale')->with('error', 'El número de trabajador no está registrado.');
+            }
+    
+            $query->where('number', $request->number);
         }
-
-        $query->where('number', $request->number);
+    
+        // Otros filtros
+        if ($request->filled('enterprise_id')) {
+            $query->where('enterprise_id', $request->enterprise_id);
+        }
+    
+        if ($request->filled('customer_id')) {
+            $query->where('customer_id', $request->customer_id);
+        }
+    
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
+    
+        if ($request->filled('lastName')) {
+            $query->where('lastName', 'like', '%' . $request->lastName . '%');
+        }
+    
+        if ($request->filled('date')) {
+            $query->whereDate('updated_at', $request->date);
+        }
+    
+        if ($request->filled('dish_type')) {
+            $query->where('dish_type', $request->dish_type);
+        }
+    
+        $sales = $query->get();
+        $enterprises = enterprise::all();
+    
+        return view('PointOfSale', compact('sales', 'enterprises'));
     }
 
-    // Otros filtros
-    if ($request->filled('enterprise_id')) {
-        $query->where('enterprise_id', $request->enterprise_id);
-    }
-
-    if ($request->filled('customer_id')) {
-        $query->where('customer_id', $request->customer_id);
-    }
-
-    if ($request->filled('name')) {
-        $query->where('name', 'like', '%' . $request->name . '%');
-    }
-
-    if ($request->filled('lastName')) {
-        $query->where('lastName', 'like', '%' . $request->lastName . '%');
-    }
-
-    if ($request->filled('date')) {
-        $query->whereDate('updated_at', $request->date);
-    }
-
-    if ($request->filled('dish_type')) {
-        $query->where('dish_type', $request->dish_type);
-    }
-
-    $sales = $query->get();
-    $enterprises = enterprise::all();
-
-    return view('PointOfSale', compact('sales', 'enterprises'));
-}
 
 
     // Almacena una nueva venta

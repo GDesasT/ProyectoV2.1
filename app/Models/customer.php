@@ -11,9 +11,8 @@ class Customer extends Model
 
     protected $fillable = ['number','name', 'lastname', 'email', 'enterprise_id'];
 
-    // Relación con la empresa
     public function enterprise()
-    {
-        return $this->belongsTo(Enterprise::class);
-    }
+{
+    return $this->belongsTo(enterprise::class, 'enterprise_id');
+}
 }

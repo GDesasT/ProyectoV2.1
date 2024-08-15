@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.login_app')
 
 @section('content')
 <div class="container">
@@ -46,7 +46,7 @@
             <p id="recipeModalDescription" class="mb-4 text-gray-600" style="white-space: pre-wrap;"></p>
 
             <!-- Botón Elaborar -->
-            <button id="elaborarBtn" class="w-full px-4 py-2 text-white bg-white rounded-lg pointer-events-none">Elaborar</button>
+            <button id="elaborarBtn" class="w-full px-4 py-2 text-white bg-white rounded-lg pointer-events-none ">Elaborar</button>
         </div>
     </div>
 

@@ -55,8 +55,7 @@
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Suponiendo que pasas la variable desde el backend al frontend
-        var hasPhotos = @json($hasPhotos);
+
 
         if (hasPhotos) {
             document.getElementById('comment-section').style.display = 'block';
