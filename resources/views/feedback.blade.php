@@ -2,7 +2,7 @@
 
 @section('content')
     @auth
-        <div class="text-center"><strong>Comentarios</strong></div>
+        <div class="mb-8 text-3xl text-center"><strong>Comentarios</strong></div>
 
         @if(session('success'))
             <div class="p-4 mb-4 text-center text-white bg-green-500 rounded">
@@ -11,12 +11,12 @@
         @endif
 
         <div class="relative mt-5 overflow-x-auto shadow-md sm:rounded-lg">
-            <table id="comment-table" class="w-full text-sm text-left text-gray-500 rtl:text-right">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <table id="comment-table" class="w-full text-sm text-left rtl:text-right text-gray-500">
+                <thead class="text-xs text-gray-700 uppercase bg-blue-200">
                     <tr>
-                        <th scope="col" class="px-6 py-3">Comentario</th>
-                        <th scope="col" class="px-6 py-3">Fecha</th>
-                        <th scope="col" class="px-6 py-3">Acciones</th>
+                        <th scope="col" class="px-6 py-3"><strong>Comentarios</strong></th>
+                        <th scope="col" class="px-6 py-3"><strong>Fecha</strong></th>
+                        <th scope="col" class="px-6 py-3"><strong>Acciones</strong></th>
                     </tr>
                 </thead>
                 <tbody>
