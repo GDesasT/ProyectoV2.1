@@ -63,7 +63,7 @@
                 TELEFONO: 8711551686
             </p>
             <p class="mt-4 text-xl text-gray-600 text-center leading-relaxed">
-                CORREO ELECTRONICO: comedoresdelafuenterg@gmail.com
+                CORREO ELECTRONICO: comedoresrg@yahoo.com.mx
             </p>
         </div>
         <div class="md:w-1/3 flex justify-center animate-fadeInUp">
