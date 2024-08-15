@@ -410,7 +410,7 @@ class DatabaseSeeder extends Seeder
         $faker = Faker::create();
 
         $customers = [
-            ['number' => '103665', 'name' => 'Cecilia', 'lastname' => 'Figueroa Ruiz', 'email' => $faker->unique()->userName.'@gmail.com', 'enterprise_id' => 1],
+            ['number' => '103665', 'name' => 'Ceciliaaaa', 'lastname' => 'Figueroa Ruiz', 'email' => $faker->unique()->userName.'@gmail.com', 'enterprise_id' => 1],
             ['number' => '103716', 'name' => 'Elsa', 'lastname' => 'Valenzuela Contreras', 'email' => $faker->unique()->userName.'@gmail.com', 'enterprise_id' => 1],
             ['number' => '103045', 'name' => 'Dolores', 'lastname' => 'Montiel Tapia', 'email' => $faker->unique()->userName.'@gmail.com', 'enterprise_id' => 1],
             ['number' => '103362', 'name' => 'Jeremías', 'lastname' => 'Vázquez Soto', 'email' => $faker->unique()->userName.'@gmail.com', 'enterprise_id' => 1],
