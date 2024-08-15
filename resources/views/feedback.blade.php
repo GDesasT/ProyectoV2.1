@@ -9,7 +9,7 @@
                 {{ session('success') }}
             </div>
         @endif
-
+{{-- ricardo --}}
         <div class="relative mt-5 overflow-x-auto shadow-md sm:rounded-lg">
             <table id="comment-table" class="w-full text-sm text-left rtl:text-right text-gray-500">
                 <thead class="text-xs text-gray-700 uppercase bg-blue-200">
