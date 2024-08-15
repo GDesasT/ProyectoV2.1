@@ -9,17 +9,39 @@
         <div id="notification" class="mx-auto w-2/3 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
             {{ session('success') }}
         </div>
-    @elseif (session('delete'))
+        @elseif (session('delete'))
         <div id="notification" class="mx-auto w-2/3 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
             {{ session('delete') }}
         </div>
-    @elseif (session('error'))
+        @elseif (session('error'))
         <div id="notification" class="mx-auto w-2/3 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
             {{ session('error') }}
         </div>
-    @endif
-    
+        @endif
 
+        <br>
+
+        <!-- Formulario de Selección de Empresa -->
+        <form method="POST" action="{{ route('set-enterprise') }}" class="flex items-center justify-center mb-4">
+            @csrf
+            <div class="relative group">
+                <select name="enterprise_id" id="enterprise_id"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                    <option value="" disabled selected>Selecciona la Empresa</option>
+                    @foreach($enterprises as $enterprise)
+                        <option value="{{ $enterprise->id }}" {{ session('enterprise_id') == $enterprise->id ? 'selected' : '' }}>
+                            {{ $enterprise->name }}
+                        </option>
+                    @endforeach
+                </select>
+                <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+                    Selecciona la Empresa para realizar ventas
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+            </div>
+            <button type="submit"
+                class="px-4 py-2 ml-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-700 cursor-pointer">Guardar</button>
+        </form>
 
         <br>
 
@@ -28,23 +50,9 @@
             <div class="relative w-full mb-2 md:w-auto md:mb-0">
                 <form method="GET" action="{{ route('PointOfSale') }}"
                     class="flex flex-wrap gap-4">
-
+                    
                     <!-- Select Empresa -->
-                    <div class="relative group flex-1 min-w-[200px]">
-                        <select name="enterprise_id" id="enterprise_id"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                            <option value="" disabled selected>Selecciona la Empresa</option>
-                            @foreach($enterprises as $enterprise)
-                                <option value="{{ $enterprise->id }}" {{ request('enterprise_id') == $enterprise->id ? 'selected' : '' }}>
-                                    {{ $enterprise->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
-                            Filtrar por Empresa
-                            <div class="tooltip-arrow" data-popper-arrow></div>
-                        </div>
-                    </div>
+                    <input type="hidden" name="enterprise_id" value="{{ session('enterprise_id') }}">
 
                     <!-- Input Numero de Trabajador con Tooltip -->
                     <div class="relative group flex-1 min-w-[200px]">
@@ -167,15 +175,8 @@
                             </select>
                         </div>
                         <div class="mb-4">
-                            <label for="enterprise_id" class="block mb-2 text-sm font-medium text-gray-900">Empresa</label>
-                            <select name="enterprise_id" id="enterprise_id"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                required>
-                                <option value="" disabled selected>Selecciona la Empresa</option>
-                                @foreach($enterprises as $enterprise)
-                                    <option value="{{ $enterprise->id }}">{{ $enterprise->name }}</option>
-                                @endforeach
-                            </select>
+                            <!-- Empresa seleccionada ya está en la sesión, no necesita ser seleccionada nuevamente -->
+                            <input type="hidden" name="enterprise_id" value="{{ session('enterprise_id') }}">
                         </div>
                         <button type="submit"
                             class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">

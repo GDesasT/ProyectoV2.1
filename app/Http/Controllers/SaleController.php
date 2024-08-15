@@ -61,46 +61,56 @@ class SaleController extends Controller
 
     // Almacena una nueva venta
     public function store(Request $request)
-{
-    // Validación inicial de los campos enviados en el formulario
-    $request->validate([
-        'number' => 'required',
-        'dish_type' => 'required|in:platillo normal,platillo ligero',
-        'enterprise_id' => 'required|exists:enterprises,id'
-    ]);
-
-    // Verificar si el número de trabajador existe en la base de datos
-    $customer = customer::where('number', $request->number)->first();
-
-    // Si el número no existe, redirige con un error
-    if (!$customer) {
-        return redirect()->route('PointOfSale')->with('error', 'El número de trabajador no está registrado.');
+    {
+        // Validación inicial de los campos enviados en el formulario
+        $request->validate([
+            'number' => 'required',
+            'dish_type' => 'required|in:platillo normal,platillo ligero',
+        ]);
+    
+        // Obtener la empresa de la sesión
+        $enterpriseId = session('enterprise_id');
+    
+        // Si no hay empresa en la sesión, redirigir con error
+        if (!$enterpriseId) {
+            return redirect()->route('PointOfSale')->with('error', 'Por favor, selecciona una empresa antes de realizar la venta.');
+        }
+    
+        // Verificar si el número de trabajador existe en la empresa seleccionada
+        $customer = customer::where('number', $request->number)
+                            ->where('enterprise_id', $enterpriseId)
+                            ->first();
+    
+        // Si el número no existe en la empresa seleccionada, redirige con un error
+        if (!$customer) {
+            return redirect()->route('PointOfSale')->with('error', 'El número de trabajador no está registrado en esta empresa.');
+        }
+    
+        // Verificar si el cliente ya ha realizado una compra en el día en la misma empresa
+        $existingSale = sale::where('customer_id', $customer->id)
+            ->where('enterprise_id', $enterpriseId)
+            ->whereDate('created_at', now()->format('Y-m-d'))
+            ->first();
+    
+        if ($existingSale) {
+            return redirect()->route('PointOfSale')->with('error', 'Este cliente ya ha comprado un platillo hoy en esta empresa.');
+        }
+    
+        // Si todo es válido, crear la venta
+        sale::create([
+            'number' => $customer->id,
+            'customer_id' => $customer->id,
+            'name' => $customer->name,
+            'lastName' => $customer->lastname,
+            'total' => 50, // Se mantiene fijo el total como indicaste
+            'dish_type' => $request->dish_type,
+            'enterprise_id' => $enterpriseId, // Utilizar la empresa de la sesión
+        ]);
+    
+        // Redirigir con éxito
+        return redirect()->route('PointOfSale')->with('success', 'Venta agregada exitosamente.');
     }
-
-    // Verificar si el cliente ya ha realizado una compra en el día en la misma empresa
-    $existingSale = sale::where('customer_id', $customer->id)
-        ->where('enterprise_id', $request->enterprise_id)
-        ->whereDate('created_at', now()->format('Y-m-d'))
-        ->first();
-
-    if ($existingSale) {
-        return redirect()->route('PointOfSale')->with('error', 'Este cliente ya ha comprado un platillo hoy en esta empresa.');
-    }
-
-    // Si todo es válido, crear la venta
-    sale::create([
-        'number' => $customer->id,
-        'customer_id' => $customer->id,
-        'name' => $customer->name,
-        'lastName' => $customer->lastname,
-        'total' => 50, // Se mantiene fijo el total como indicaste
-        'dish_type' => $request->dish_type,
-        'enterprise_id' => $request->enterprise_id,
-    ]);
-
-    // Redirigir con éxito
-    return redirect()->route('PointOfSale')->with('success', 'Venta agregada exitosamente.');
-}
+    
 
     // Muestra el formulario para editar una venta existente
     public function edit($id)
@@ -134,5 +144,16 @@ class SaleController extends Controller
         $sale->delete();
 
         return redirect()->route('PointOfSale')->with('delete', 'Venta eliminada correctamente.');
+    }
+
+    public function setEnterprise(Request $request)
+    {
+        $request->validate([
+            'enterprise_id' => 'required|exists:enterprises,id',
+        ]);
+
+        session(['enterprise_id' => $request->enterprise_id]);
+
+        return redirect()->route('PointOfSale')->with('success', 'Empresa seleccionada correctamente.');
     }
 }

@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/PointOfSale', [SaleController::class, 'index'])->name('PointOfSale');
     Route::post('/PointOfSale', [SaleController::class, 'store'])->name('sales.store');
     Route::delete('/sales/{sale}', [SaleController::class, 'destroy'])->name('sales.destroy');
+    Route::post('/set-enterprise', [SaleController::class, 'setEnterprise'])->name('set-enterprise');
 
 
 
