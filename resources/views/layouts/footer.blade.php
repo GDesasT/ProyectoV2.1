@@ -20,13 +20,13 @@
         <div class="footer-section contact">
             <h2>Contactanos</h2>
             <p>
-                <strong>E-mail:</strong> comedoresdelafuenterg@gmail.com
+                <strong>E-mail:</strong> comedoresrg@yahoo.com.mx
             </p>
             <p>
                 <strong>Telefono:</strong> +52 8711551686
             </p>
             <p>
-                <strong>Direccion:</strong> Casa de Kevin
+                <strong>Direccion:</strong> Gómez Palacio cerca del centro trailero
             </p>
         </div>
     </div>
