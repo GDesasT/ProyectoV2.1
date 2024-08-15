@@ -3,40 +3,68 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Enterprise;
+use App\Models\enterprise;
 
 class EnterpriseController extends Controller
 {
-    /**
-     * Mostrar el formulario para crear una nueva empresa.
-     */
     public function create()
     {
-        return view('enterprise'); // Asegúrate de que la vista esté correctamente ubicada
+        return view('enterprise');
     }
 
-    /**
-     * Almacenar una nueva empresa en la base de datos.
-     */
     public function store(Request $request)
     {
-        // Validar los datos del formulario
         $request->validate([
             'name' => 'required|max:45',
-            'email' => 'required|max:45',
+            'email' => 'required|max:45|email|unique:enterprises,email',
             'phone' => 'required|max:45',
             'address' => 'required',
         ]);
 
-        // Crear una nueva empresa y guardarla en la base de datos
-        Enterprise::create([
+        enterprise::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
             'address' => $request->input('address'),
         ]);
 
-        // Redirigir de nuevo al formulario con un mensaje de éxito
-        return redirect()->route('enterprises.create')->with('success', 'La empresa se Añadio Correctamente!');
+        return redirect()->route('enterprises.create')->with('success', 'La empresa se añadió correctamente!');
+    }
+
+
+    public function search(Request $request)
+    {
+        $request->validate([
+            'name' => 'nullable|string|max:45',
+            'email' => 'nullable|email|max:45',
+            'phone' => 'nullable|string|max:45',
+        ]);
+
+        $query = enterprise::query();
+
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->input('name') . '%');
+        }
+
+        if ($request->filled('email')) {
+            $query->where('email', $request->input('email'));
+        }
+
+        if ($request->filled('phone')) {
+            $query->where('phone', $request->input('phone'));
+        }
+
+        $enterprises = $query->get();
+
+        return view('enterprise', compact('enterprises'));
+    }
+
+
+    public function destroy($id)
+    {
+        $enterprise = enterprise::findOrFail($id);
+        $enterprise->delete();
+
+        return redirect()->route('enterprises.create')->with('success', 'La empresa fue eliminada correctamente!');
     }
 }

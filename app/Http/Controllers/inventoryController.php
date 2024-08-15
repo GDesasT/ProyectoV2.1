@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\inventory;
+use App\Models\Inventory;
 use Illuminate\Http\Request;
 
-class inventoryController extends Controller
+class InventoryController extends Controller
 {
     // Muestra la lista de inventario
     public function index(Request $request)
@@ -17,7 +17,7 @@ class inventoryController extends Controller
         $date = $request->input('date');
     
         // Crear una consulta base
-        $query = inventory::query();
+        $query = Inventory::query();
     
         // Aplicar los filtros si existen
         if ($name) {
@@ -54,12 +54,18 @@ class inventoryController extends Controller
         $request->validate([
             'name' => 'required|string|max:45',
             'amount' => 'required|numeric|min:0',
-            'type' => 'required|in:Verdura,Fruta,Proteina,Cereales y Legumbres',
+            'type' => 'required|in:Verdura,Fruta,Proteina,Cereales y Legumbres,Lacteo,Embutido,Especia',
             'unit' => 'required|in:Kg,L,Pz',
         ]);
 
+        // Capitalizar la primera letra de cada palabra en 'name' y 'type'
+        $request->merge([
+            'name' => ucwords(strtolower($request->input('name'))),
+            'type' => ucwords(strtolower($request->input('type')))
+        ]);
+
         // Verificar si el producto ya existe en el inventario con el mismo nombre y categoría
-        $existingProduct = inventory::where('name', $request->name)
+        $existingProduct = Inventory::where('name', $request->name)
             ->where('type', $request->type)
             ->where('unit', $request->unit)
             ->first();
@@ -73,7 +79,7 @@ class inventoryController extends Controller
             return redirect()->route('inventory')->with('status', 'Cantidad agregada exitosamente al producto existente.');
         } else {
             // Si el producto no existe, crear un nuevo registro
-            inventory::create($request->all());
+            Inventory::create($request->all());
 
             // Redirigir y mostrar mensaje de éxito
             return redirect()->route('inventory')->with('status', 'Producto agregado exitosamente.');
@@ -82,27 +88,28 @@ class inventoryController extends Controller
 
     public function edit($id)
     {
-        $inventory = inventory::findOrFail($id);
+        $inventory = Inventory::findOrFail($id);
         return view('inventory.edit', compact('inventory'));
     }
+
     public function update(Request $request, $id)
     {
         $inventory = Inventory::findOrFail($id);
-    
-        $inventory->name = $request->input('name');
+
+        // Capitalizar la primera letra de cada palabra en 'name' y 'type'
+        $inventory->name = ucwords(strtolower($request->input('name')));
         $inventory->amount = $request->input('quantity');
         $inventory->unit = $request->input('unit');
-        $inventory->type = $request->input('type');
-    
+        $inventory->type = ucwords(strtolower($request->input('type')));
+
         $inventory->save();
-    
+
         return redirect()->route('inventory')->with('status', 'Producto actualizado correctamente');
     }
     
-    
     public function destroy($id)
     {
-        $inventory = inventory::findOrFail($id);
+        $inventory = Inventory::findOrFail($id);
         $inventory->delete();
 
         return redirect()->route('inventory')->with('delete', 'Producto eliminado correctamente.');
