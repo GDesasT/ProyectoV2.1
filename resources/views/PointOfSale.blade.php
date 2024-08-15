@@ -3,21 +3,27 @@
 @section('content')
     @auth
         <div class="mb-8 text-3xl font-bold text-center">Punto de venta</div>
+
+        <!-- Mostrar Notificaciones -->
         @if (session('success'))
-            <div id="notification" class="mx-auto w-2/3 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
-                {{ session('success') }}
-            </div>
-        @elseif (session('delete'))
-            <div id="notification" class="mx-auto w-2/3 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
-                {{ session('delete') }}
-            </div>
-        @elseif (session('error'))
-            <div id="notification" class="mx-auto w-2/3 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
-                {{ session('error') }}
-            </div>
-        @endif
+        <div id="notification" class="mx-auto w-2/3 bg-green-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
+            {{ session('success') }}
+        </div>
+    @elseif (session('delete'))
+        <div id="notification" class="mx-auto w-2/3 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
+            {{ session('delete') }}
+        </div>
+    @elseif (session('error'))
+        <div id="notification" class="mx-auto w-2/3 bg-red-500 text-white px-4 py-2 rounded-md shadow-lg text-center">
+            {{ session('error') }}
+        </div>
+    @endif
+    
+
+
         <br>
 
+        <!-- Formulario de Búsqueda -->
         <div class="flex flex-wrap items-center justify-between mt-1">
             <div class="relative w-full mb-2 md:w-auto md:mb-0">
                 <form method="GET" action="{{ route('PointOfSale') }}"
@@ -145,8 +151,7 @@
                     <form id="product-form" class="p-6" method="POST" action="{{ route('sales.store') }}">
                         @csrf
                         <div class="mb-4">
-                            <label for="number" class="block mb-2 text-sm font-medium text-gray-900">Número de
-                                Trabajador</label>
+                            <label for="number" class="block mb-2 text-sm font-medium text-gray-900">Número de Trabajador</label>
                             <input type="text" name="number" id="number"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                 placeholder="Número de Trabajador" required>
@@ -176,7 +181,7 @@
                             class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                             Agregar nueva venta
                         </button>
-                    </form>
+                    </form>                    
                 </div>
             </div>
         </div>

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Customer;
-use App\Models\Enterprise;
+use App\Models\customer;
+use App\Models\enterprise;
 use Illuminate\Database\QueryException;
 
 class CustomerController extends Controller
@@ -14,7 +14,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        $enterprises = Enterprise::all();
+        $enterprises = enterprise::all();
         return view('customers', compact('enterprises'));
     }
 
@@ -34,7 +34,7 @@ class CustomerController extends Controller
 
         try {
             // Intentar crear un nuevo empleado y guardarlo en la base de datos
-            $customer = Customer::create([
+            $customer = customer::create([
                 'number' => $request->input('number'),
                 'name' => $request->input('name'),
                 'lastname' => $request->input('lastname'),
@@ -69,7 +69,7 @@ class CustomerController extends Controller
         ]);
 
         // Crear una consulta base
-        $query = Customer::query();
+        $query = customer::query();
 
         // Buscar por email si está presente
         if ($request->filled('email')) {
@@ -91,7 +91,7 @@ class CustomerController extends Controller
 
         if ($customers->isNotEmpty()) {
             // Si se encuentran empleados, mostrarlos en la misma vista
-            return view('customers', compact('customers'))->with('enterprises', Enterprise::all());
+            return view('customers', compact('customers'))->with('enterprises', enterprise::all());
         } else {
             // Si no se encuentran empleados, redirigir con un mensaje de error
             return redirect()->route('customers.create')->with('error', 'No employees found.');
@@ -103,7 +103,7 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        $customer = Customer::findOrFail($id);
+        $customer = customer::findOrFail($id);
         $customer->delete();
 
         return redirect()->route('customers.create')->with('success', 'Employee deleted successfully!');
