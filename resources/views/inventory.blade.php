@@ -184,7 +184,7 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
                             <td class="px-6 py-4">
                                 <div class="grid grid-cols-2 gap-4">
                                     <button type="button"
-                                        class="w-full h-10 text-center font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg">
+                                        class="w-full h-10 text-center font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 rounded-lg"onclick="openEditModal('{{ $inventory->id }}', '{{ $inventory->name }}', '{{ $inventory->amount }}', '{{ $inventory->unit }}', '{{ $inventory->type }}')">
                                         Editar
                                     </button>
                                     <form action="{{ route('inventory.destroy', $inventory->id) }}" method="POST">
