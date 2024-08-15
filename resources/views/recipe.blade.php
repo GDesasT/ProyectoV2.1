@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    {{-- dan --}}
     <h1 class="mb-6 text-xl font-bold">Recetario</h1>
 
     <!-- Botón para abrir el modal de añadir receta -->
