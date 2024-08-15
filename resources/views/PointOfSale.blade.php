@@ -206,7 +206,7 @@
                             <td class="px-6 py-4">{{ $sale->name }}</td>
                             <td class="px-6 py-4">{{ $sale->lastName }}</td>
                             <td class="px-6 py-4">{{ $sale->dish_type }}</td>
-                            <td class="px-6 py-4">{{ $enterprise->name }}</td>
+                            <td class="px-6 py-4">{{ $sale->customer->enterprise->name }}</td>
                             <td class="px-6 py-4">{{ $sale->total }}</td>
                             <td class="px-6 py-4">{{ $sale->updated_at }}</td>
                             <td class="px-6 py-4 flex space-x-2">
