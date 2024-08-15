@@ -145,6 +145,9 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
                         <option value="Verdura">Verdura</option>
                         <option value="Fruta">Fruta</option>
                         <option value="Proteina">Proteina</option>
+                        <option value="Lacteo">Lacteo</option>
+                        <option value="Embutido">Embutido</option>
+                        <option value="Especia">Especia</option>
                         <option value="Cereales y Legumbres">Cereales y Legumbres</option>
                     </select>
                 </div>
@@ -185,7 +188,7 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
                             <td class="px-6 py-4">{{ $inventory->updated_at }}</td>
                             <td class="px-6 py-4 flex space-x-2">
                                 <button type="button" 
-                                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none"
+                                    class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2" 
                                     onclick="openEditModal('{{ $inventory->id }}', '{{ $inventory->name }}', '{{ $inventory->amount }}', '{{ $inventory->unit }}', '{{ $inventory->type }}')">
                                     Editar
                                 </button>
