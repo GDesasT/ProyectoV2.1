@@ -20,10 +20,10 @@
         <div class="flex flex-wrap items-center justify-between mt-1">
             <div class="relative w-full mb-2 md:w-auto md:mb-0">
                 <form method="GET" action="{{ route('inventory') }}"
-                    class="flex flex-wrap items-center space-x-2 md:flex-nowrap md:space-x-4">
+                    class="flex flex-wrap gap-4">
 
                     <!-- Input Nombre con Tooltip -->
-                    <div class="relative group">
+                    <div class="relative group flex-1 min-w-[200px]">
                         <input type="text" name="name" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             placeholder="Buscar producto por nombre" value="{{ request('name') }}">
@@ -34,7 +34,7 @@
                     </div>
 
                     <!-- Input Monto con Tooltip -->
-                    <div class="relative group">
+                    <div class="relative group flex-1 min-w-[200px]">
                         <input type="text" name="amount" id="amount"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             placeholder="Buscar producto por cantidad" value="{{ request('amount') }}">
@@ -45,9 +45,9 @@
                     </div>
 
                     <!-- Input Tipo con Tooltip -->
-                    <div class="relative group">
+                    <div class="relative group flex-1 min-w-[200px]">
                         <select id="type" name="type"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"" required value="{{ request('type') }}">
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" required value="{{ request('type') }}">
                         <option selected disabled value="">Seleccionar Categoría</option>
                         <option value="Verdura">Verdura</option>
                         <option value="Fruta">Fruta</option>
@@ -55,37 +55,37 @@
                         <option value="Cereales y Legumbres">Cereales y Legumbres</option>
                     </select>
                         <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
-                            Buscar por categoria
+                            Buscar por categoría
                             <div class="tooltip-arrow" data-popper-arrow></div>
                         </div>
                     </div>
 
                     <!-- Input Fecha con Tooltip -->
-                    <div class="relative group c ">
+                    <div class="relative group flex-1 min-w-[200px]">
                         <input type="date" name="date" id="date"
                             class="bg-gray-50 border cursor-pointer border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             value="{{ request('date') }}">
-                        <div class="tooltip-light  text-center hidden group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
+                        <div class="tooltip-light hidden text-center group-hover:block absolute z-10 w-64 px-3 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg shadow-sm">
                            Buscar por fecha
                             <div class="tooltip-arrow" data-popper-arrow></div>
                         </div>
                     </div>
 
                     <button type="submit"
-                        class="px-4 py-2 ml-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-700">Buscar</button>
+                        class="px-4 py-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-700">Buscar</button>
                 </form>
             </div>
 
-            <div class="flex flex-wrap items-center w-full space-x-2 md:w-auto md:flex-nowrap md:space-x-4">
+            <!-- Botones de Inventario total y Añadir -->
+            <div class="flex flex-wrap gap-4 mt-4 md:mt-0">
                 <!-- Botón que muestra todo el inventario -->
                 <button onclick="location.href='{{ route('inventory') }}'" type="button"
-                    class="w-full px-4 py-2 font-medium text-white bg-green-500 rounded md:w-auto hover:bg-green-700">Inventario total</button>
+                    class="w-full md:w-auto px-4 py-2 font-medium text-white bg-green-500 rounded hover:bg-green-700">Inventario total</button>
 
                 <!-- Botón para agregar un nuevo producto -->
                 <button onclick="openModal()" crud-modal data-modal-toggle="crud-modal" type="button"
-                    class="w-full px-4 py-2 font-medium text-white bg-blue-500 rounded md:w-auto hover:bg-blue-700">Agregar
+                    class="w-full md:w-auto px-4 py-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-700">Agregar
                     producto / Añadir</button>
-
             </div>
         </div>
 
@@ -111,7 +111,7 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
         </div>
         <form id="product-form" class="p-4 md:p-5" method="POST" action="{{ route('inventory.store') }}">
             @csrf
-            <div class="grid gap-4 mb-4 grid-cols-2">
+            <div class="grid gap-4 mb-4 grid-cols-1 sm:grid-cols-2">
                 <div class="col-span-2">
                     <label for="name" class="block mb-2 text-sm text-center font-medium text-gray-900">Nombre</label>
                     <input type="text" name="name" id="name"
@@ -119,14 +119,14 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
                         placeholder="Nombre del producto" required>
                 </div>
             
-                <div class="col-span-2 sm:col-span-1">
+                <div>
                     <label for="amount" class="block mb-2 text-sm text-center font-medium text-gray-900">Cantidad</label>
                     <input type="number" name="amount" id="amount" step="0.01"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                         placeholder="" required>
                 </div>                            
                     
-                <div class="col-span-2 sm:col-span-1">
+                <div>
                     <label for="unit" class="block mb-2 text-sm text-center font-medium text-gray-900">Unidad</label>
                     <select id="unit" name="unit"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5" required>
@@ -137,7 +137,7 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
                     </select>
                 </div>
             
-                <div class="col-span-2">
+                <div class="col-span-2 sm:col-span-1">
                     <label for="type" class="block mb-2 text-sm text-center font-medium text-gray-900">Categoría</label>
                     <select id="type" name="type"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5" required>

@@ -21,10 +21,10 @@
         <div class="flex flex-wrap items-center justify-between mt-1">
             <div class="relative w-full mb-2 md:w-auto md:mb-0">
                 <form method="GET" action="{{ route('PointOfSale') }}"
-                    class="flex flex-wrap items-center space-x-2 md:flex-nowrap md:space-x-4">
+                    class="flex flex-wrap gap-4">
 
                     <!-- Select Empresa -->
-                    <div class="relative group">
+                    <div class="relative group flex-1 min-w-[200px]">
                         <select name="enterprise_id" id="enterprise_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                             <option value="" disabled selected>Selecciona la Empresa</option>
@@ -41,7 +41,7 @@
                     </div>
 
                     <!-- Input Numero de Trabajador con Tooltip -->
-                    <div class="relative group">
+                    <div class="relative group flex-1 min-w-[200px]">
                         <input type="text" name="number" id="number"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             placeholder="Buscar por Número de Trabajador" value="{{ request('number') }}" title="Solo se permiten números" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
@@ -52,7 +52,7 @@
                     </div>
 
                     <!-- Input ID de comedor con Tooltip -->
-                    <div class="relative group">
+                    <div class="relative group flex-1 min-w-[200px]">
                         <input type="text" name="customer_id" id="customer_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             placeholder="Buscar por ID de comedor" value="{{ request('customer_id') }}" title="Solo se permiten números" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
@@ -63,7 +63,7 @@
                     </div>
 
                     <!-- Input Nombre con Tooltip -->
-                    <div class="relative group">
+                    <div class="relative group flex-1 min-w-[200px]">
                         <input type="text" name="name" id="name"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             placeholder="Buscar por nombre" value="{{ request('name') }}" title="Solo se permiten letras" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
@@ -74,7 +74,7 @@
                     </div>
 
                     <!-- Input Apellido con Tooltip -->
-                    <div class="relative group">
+                    <div class="relative group flex-1 min-w-[200px]">
                         <input type="text" name="lastName" id="lastName"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             placeholder="Buscar por apellido" value="{{ request('lastName') }}" title="Solo se permiten letras" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
@@ -85,7 +85,7 @@
                     </div>
 
                     <!-- Input Fecha con Tooltip -->
-                    <div class="relative group">
+                    <div class="relative group flex-1 min-w-[200px]">
                         <input type="date" name="date" id="date"
                             class="bg-gray-50 border border-gray-300 cursor-pointer text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             value="{{ request('date') }}">
@@ -95,26 +95,31 @@
                         </div>
                     </div>
 
-                    <select name="dish_type" id="dish_type"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-50% p-2.5">
-                        <option value="" disabled selected>Filtrar por tipo de platillo</option>
-                        <option value="platillo normal" {{ request('dish_type') == 'platillo normal' ? 'selected' : '' }}>
-                            Platillo Normal</option>
-                        <option value="platillo ligero" {{ request('dish_type') == 'platillo ligero' ? 'selected' : '' }}>
-                            Platillo Ligero</option>
-                    </select>
+                    <!-- Select Tipo de Platillo -->
+                    <div class="relative group flex-1 min-w-[200px]">
+                        <select name="dish_type" id="dish_type"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                            <option value="" disabled selected>Filtrar por tipo de platillo</option>
+                            <option value="platillo normal" {{ request('dish_type') == 'platillo normal' ? 'selected' : '' }}>
+                                Platillo Normal</option>
+                            <option value="platillo ligero" {{ request('dish_type') == 'platillo ligero' ? 'selected' : '' }}>
+                                Platillo Ligero</option>
+                        </select>
+                    </div>
 
+                    <!-- Botón Buscar -->
                     <button type="submit"
                         class="px-4 py-2 ml-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-700 cursor-pointer">Buscar</button>
                 </form>
             </div>
 
-            <div class="flex flex-wrap items-center w-full space-x-2 md:w-auto md:flex-nowrap md:space-x-4">
+            <!-- Botones de Filtrado y Añadir Venta -->
+            <div class="flex flex-wrap gap-4 mt-4 md:mt-0">
                 <button onclick="filterTodaySales()" type="button"
-                    class="w-full px-4 py-2 font-medium text-white bg-green-500 rounded md:w-auto hover:bg-green-700 cursor-pointer">Ventas de Hoy</button>
+                    class="w-full md:w-auto px-4 py-2 font-medium text-white bg-green-500 rounded hover:bg-green-700 cursor-pointer">Ventas de Hoy</button>
 
                 <button onclick="openModal()" crud-modal data-modal-toggle="crud-modal" type="button"
-                    class="w-full px-4 py-2 font-medium text-white bg-blue-500 rounded md:w-auto hover:bg-blue-700 cursor-pointer">Agregar Venta</button>
+                    class="w-full md:w-auto px-4 py-2 font-medium text-white bg-blue-500 rounded hover:bg-blue-700 cursor-pointer">Agregar Venta</button>
             </div>
         </div>
 

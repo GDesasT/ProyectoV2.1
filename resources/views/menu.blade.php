@@ -66,7 +66,6 @@
     </div>
 </div>
 
-<script src="{{ asset('js/app.js') }}"></script>
 <script>
     function carouselData() {
         return {
@@ -98,5 +97,17 @@
         document.getElementById('next').classList.remove('hidden');
         document.getElementById('next').classList.add('flex');
     });
+    
+    document.addEventListener("DOMContentLoaded", function () {
+    var now = new Date();
+    var hours = now.getHours();
+    var text = document.getElementById('desayunos');
+
+    if (hours >= 12) {
+        text.textContent = 'Comidas';
+    } else {
+        text.textContent = 'Desayunos';
+    }
+});
 </script>
 @endsection
