@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Recipe;
-use App\Models\Inventory;
+use App\Models\recipe;
+use App\Models\inventory;
 use Illuminate\Support\Facades\DB;
 
 class RecipeController extends Controller
@@ -12,7 +12,7 @@ class RecipeController extends Controller
     public function index()
     {
         // Obtener todas las recetas para mostrarlas en la vista de paneles
-        $recipes = Recipe::all();
+        $recipes = recipe::all();
         return view('recipe', compact('recipes'));
     }
 
@@ -47,7 +47,7 @@ class RecipeController extends Controller
         // Verificar si es una edición o una nueva creación
         if ($request->filled('recipeId')) {
             // Edición
-            $recipe = Recipe::findOrFail($request->recipeId);
+            $recipe = recipe::findOrFail($request->recipeId);
             $recipe->update([
                 'name' => $request->name,
                 'difficult' => $request->difficult,
@@ -61,7 +61,7 @@ class RecipeController extends Controller
             return redirect()->route('recipes.index')->with('success', 'Receta actualizada exitosamente.');
         } else {
             // Creación
-            Recipe::create([
+            recipe::create([
                 'name' => $request->name,
                 'difficult' => $request->difficult,
                 'description' => $request->description,
@@ -78,11 +78,11 @@ class RecipeController extends Controller
     public function show($id)
     {
         // Obtener la receta por ID
-        $recipe = Recipe::findOrFail($id);
+        $recipe = recipe::findOrFail($id);
 
         // Obtener los ingredientes del inventario
         $ingredients = json_decode($recipe->ingredient, true);
-        $inventory = Inventory::whereIn('name', array_column($ingredients, 'name'))->get()->keyBy('name');
+        $inventory = inventory::whereIn('name', array_column($ingredients, 'name'))->get()->keyBy('name');
 
         // Calcular cuánto falta
         foreach ($ingredients as &$ingredient) {
@@ -98,7 +98,7 @@ class RecipeController extends Controller
         ]);
     }
 
-    public function update(Request $request, Recipe $recipe)
+    public function update(Request $request, recipe $recipe)
     {
         // Validar los datos de la receta
         $request->validate([
@@ -140,7 +140,7 @@ class RecipeController extends Controller
         return redirect()->route('recipes.index')->with('success', 'Receta actualizada exitosamente.');
     }
 
-    public function destroy(Recipe $recipe)
+    public function destroy(recipe $recipe)
     {
         // Eliminar la receta
         $recipe->delete();
@@ -149,7 +149,7 @@ class RecipeController extends Controller
 
     public function calculateIngredients(Request $request)
     {
-        $recipe = Recipe::findOrFail($request->id);
+        $recipe = recipe::findOrFail($request->id);
         $quantity = $request->input('quantity', 1); // Tomar la cantidad de platillos
 
         // Decodificar los ingredientes almacenados en JSON
@@ -172,7 +172,7 @@ class RecipeController extends Controller
 {
     dd($request->all());
 
-    $recipe = Recipe::findOrFail($id);
+    $recipe = recipe::findOrFail($id);
     $multiplier = $request->input('multiplier', 1);
 
     // Decodificar los ingredientes almacenados en JSON
@@ -184,7 +184,7 @@ class RecipeController extends Controller
         // Verificar si hay suficientes ingredientes
         foreach ($ingredients as $ingredient) {
             $requiredAmount = $ingredient['quantity'] * $multiplier;
-            $inventoryItem = Inventory::where('name', $ingredient['name'])->first();
+            $inventoryItem = inventory::where('name', $ingredient['name'])->first();
 
             if (!$inventoryItem || $inventoryItem->amount < $requiredAmount) {
                 throw new \Exception("No hay suficientes ingredientes: {$ingredient['name']}");
@@ -194,7 +194,7 @@ class RecipeController extends Controller
         // Restar la cantidad utilizada del inventario
         foreach ($ingredients as $ingredient) {
             $requiredAmount = $ingredient['quantity'] * $multiplier;
-            $inventoryItem = Inventory::where('name', $ingredient['name'])->first();
+            $inventoryItem = inventory::where('name', $ingredient['name'])->first();
 
             // Debugging: Asegúrate de que la operación se ejecuta
             if ($inventoryItem) {
