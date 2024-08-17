@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="bg-cover bg-center" style="background-image: url('../img/comedorbueno.png');">
-    <div class="container mx-auto py-20 px-10 animate-fadeInUp">
+    <div class="container mx-auto py-20 px-4 animate-fadeInUp">
         <div class="flex flex-col md:flex-row md:space-x-8 items-center">
             <div class="md:w-1/2 flex justify-center animate-fadeInUp">
                 <div class="w-64 h-64 flex justify-center items-center">
@@ -63,7 +63,7 @@
                 TELEFONO: 8711551686
             </p>
             <p class="mt-4 text-xl text-gray-600 text-center leading-relaxed">
-                CORREO ELECTRONICO: comedoresrg@yahoo.com.mx
+                CORREO ELECTRONICO: comedoresdelafuenterg@gmail.com
             </p>
         </div>
         <div class="md:w-1/3 flex justify-center animate-fadeInUp">

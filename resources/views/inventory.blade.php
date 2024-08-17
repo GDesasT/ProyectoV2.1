@@ -96,12 +96,12 @@
         </div>
 
         <!-- Modal para agregar producto -->
-        <div id="crud-modal" tabindex="-1" aria-hidden="true"
-            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full max-w-md max-h-full">
-                <div class="relative bg-white rounded-lg shadow">
-                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
-                        <h3 class="text-lg font-semibold text-gray-900">
+       <div id="crud-modal" tabindex="-1" aria-hidden="true" class="fixed inset-0 z-50 hidden overflow-y-auto">
+            <div class="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-50"></div>
+            <div class="flex items-center justify-center min-h-screen p-4 text-center">
+                <div class="relative w-full max-w-md transition-transform transform scale-95 bg-white border border-gray-200 rounded-lg shadow-xl opacity-0">
+                    <div class="flex items-center justify-between p-6">
+                        <h3 class="text-2xl font-bold text-gray-900">
                             Agregar producto / Añadir
                         </h3>
                         <button onclick="closeModal('crud-modal')" type="button"
@@ -345,26 +345,29 @@
 </style>
 
 <script>
-    function openModal(modalId) {
-        // Mostrar el modal
-        document.getElementById(modalId).style.display = 'flex';
+    function openModal() {
+        const modal = document.getElementById("crud-modal");
+        const modalContent = modal.querySelector('.relative');
 
-        // Animación para hacer visible el modal
+        modal.classList.remove('hidden');
         setTimeout(() => {
-            document.getElementById(modalId).style.opacity = '1';
-            document.getElementById(modalId).firstElementChild.style.transform = 'scale(1)';
+            modal.querySelector('.bg-opacity-50').classList.add('opacity-100');
+            modalContent.classList.remove('opacity-0', 'scale-95');
+            modalContent.classList.add('opacity-100', 'scale-100');
         }, 10);
     }
 
-    function closeModal(modalId) {
-        // Ocultar el modal con animación
-        document.getElementById(modalId).style.opacity = '0';
-        document.getElementById(modalId).firstElementChild.style.transform = 'scale(0.9)';
+    function closeModal() {
+        const modal = document.getElementById("crud-modal");
+        const modalContent = modal.querySelector('.relative');
 
-        // Después de la animación, ocultar completamente el modal
+        modalContent.classList.remove('opacity-100', 'scale-100');
+        modalContent.classList.add('opacity-0', 'scale-95');
+        modal.querySelector('.bg-opacity-50').classList.remove('opacity-100');
+
         setTimeout(() => {
-            document.getElementById(modalId).style.display = 'none';
-        }, 300);
+            modal.classList.add('hidden');
+        }, 200);
     }
 
     function openEditModal(id, name, amount, unit, type) {

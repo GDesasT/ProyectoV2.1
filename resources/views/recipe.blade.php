@@ -1,8 +1,7 @@
-@extends('layouts.login_app')
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
-    {{-- dan --}}
     <h1 class="mb-6 text-xl font-bold">Recetario</h1>
 
     <!-- Botón para abrir el modal de añadir receta -->
@@ -37,16 +36,14 @@
             <h2 id="recipeModalTitle" class="mb-6 text-2xl font-bold text-center text-gray-800 sm:text-3xl"></h2>
             <img id="recipeModalImage" class="object-cover w-full h-48 mb-4 rounded-lg">
             <h3 class="mt-4 mb-2 text-lg font-bold">Ingredientes:</h3>
-            <div class="mb-4">
+            <div>
                 <label for="portionMultiplier" class="block mb-2 text-sm font-medium text-gray-600">Porciones:</label>
-                <input type="number" id="portionMultiplier" value="1" min="1" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none">
+                <input type="number" id="portionMultiplier" class="w-full px-4 py-2 border rounded-lg focus:ring focus:ring-blue-300 focus:outline-none" value="1" min="1">
             </div>
             <ul id="recipeModalIngredients" class="mb-4"></ul>
             <h3 class="mt-4 mb-2 text-lg font-bold">Preparación:</h3>
-            <p id="recipeModalDescription" class="mb-4 text-gray-600" style="white-space: pre-wrap;"></p>
-
-            <!-- Botón Elaborar -->
-            <button id="elaborarBtn" class="w-full px-4 py-2 text-white bg-white rounded-lg pointer-events-none ">Elaborar</button>
+            <p id="recipeModalDescription" class="mb-4 text-gray-600"></p>
+            <button id="elaborarBtn" class="w-full px-4 py-2 text-white bg-white rounded-lg">Elaborar</button>
         </div>
     </div>
 
@@ -115,27 +112,9 @@
     </div>
 </div>
 
-<!-- Estilos para las animaciones del modal -->
-<style>
-    /* Animación de desvanecido */
-    .modal-fade-enter {
-        opacity: 0;
-    }
-
-    .modal-fade-enter-active {
-        opacity: 1;
-        transition: opacity 0.3s ease-out;
-    }
-
-    .modal-fade-leave-active {
-        opacity: 0;
-        transition: opacity 0.3s ease-in;
-    }
-</style>
-
 <!-- Script de manejo de modales y AJAX -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
     let currentRecipeId = null; // Variable global para almacenar el ID de la receta actual
 
     // Función para mostrar un modal con animación de desvanecido
@@ -171,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     const ingredientsList = document.getElementById('recipeModalIngredients');
                     ingredientsList.innerHTML = '';
-
+                    
                     const portionMultiplierInput = document.getElementById('portionMultiplier');
                     portionMultiplierInput.value = 1;
 
@@ -186,12 +165,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         const availableQuantity = ingredient.available;
                         const missingQuantity = Math.max(requiredQuantity - availableQuantity, 0);
 
-                        listItem.innerHTML = `${ingredient.name}: ${availableQuantity.toFixed(2)}${ingredient.unit} / ${requiredQuantity.toFixed(2)}${ingredient.unit}`;
+                        listItem.innerHTML = `${ingredient.name}: ${availableQuantity}${ingredient.unit} / ${requiredQuantity}${ingredient.unit}`;
 
                         if (missingQuantity > 0) {
                             const missingSpan = document.createElement('span');
                             missingSpan.style.color = 'red';
-                            missingSpan.innerText = ` (Faltan ${missingQuantity.toFixed(2)}${ingredient.unit})`;
+                            missingSpan.innerText = ` (Faltan ${missingQuantity}${ingredient.unit})`;
                             listItem.appendChild(missingSpan);
                         }
 
@@ -206,58 +185,54 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Añadir funcionalidad al botón "Elaborar"
     const elaborarBtn = document.getElementById('elaborarBtn');
-    if (elaborarBtn) {
-        elaborarBtn.addEventListener('click', function() {
-            if (!currentRecipeId) {
-                alert('Error: No se ha seleccionado ninguna receta.');
-                return;
-            }
+    elaborarBtn.addEventListener('click', function() {
+        if (!currentRecipeId) {
+            alert('Error: No se ha seleccionado ninguna receta.');
+            return;
+        }
 
-            const portionMultiplier = parseFloat(document.getElementById('portionMultiplier').value) || 1;
-            const ingredientsListItems = document.getElementById('recipeModalIngredients').querySelectorAll('li');
-            let suficiente = true;
+        const portionMultiplier = parseFloat(document.getElementById('portionMultiplier').value) || 1;
+        const ingredientsListItems = document.getElementById('recipeModalIngredients').querySelectorAll('li');
+        let suficiente = true;
 
-            ingredientsListItems.forEach(listItem => {
-                const requiredPerPortion = parseFloat(listItem.dataset.quantity);
-                const available = parseFloat(listItem.dataset.available);
-                const totalRequired = requiredPerPortion * portionMultiplier;
+        ingredientsListItems.forEach(listItem => {
+            const requiredPerPortion = parseFloat(listItem.dataset.quantity);
+            const available = parseFloat(listItem.dataset.available);
+            const totalRequired = requiredPerPortion * portionMultiplier;
 
-                if (available < totalRequired) {
-                    suficiente = false;
-                }
-            });
-
-            if (suficiente) {
-                fetch(`/recipes/elaborate/${currentRecipeId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({
-                        multiplier: portionMultiplier,
-                    })
-                })
-                .then(response => response.json())
-                .then(result => {
-                    if (result.success) {
-                        alert('Receta elaborada correctamente.');
-                        hideModal(document.getElementById('viewRecipeModal'));
-                    } else {
-                        alert('Error al elaborar la receta: ' + result.message);
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('Ocurrió un error al procesar la solicitud.');
-                });
-            } else {
-                alert('No hay suficientes ingredientes para elaborar esta receta.');
+            if (available < totalRequired) {
+                suficiente = false;
             }
         });
-    } else {
-        console.error('El botón Elaborar no se encontró en el DOM.');
-    }
+
+        if (suficiente) {
+            fetch(`/recipes/elaborate/${currentRecipeId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({
+                    multiplier: portionMultiplier,
+                })
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    alert('Receta elaborada correctamente.');
+                    hideModal(document.getElementById('viewRecipeModal'));
+                } else {
+                    alert('Error al elaborar la receta: ' + result.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Ocurrió un error al procesar la solicitud.');
+            });
+        } else {
+            alert('No hay suficientes ingredientes para elaborar esta receta.');
+        }
+    });
 
     document.getElementById('closeViewRecipeModal').addEventListener('click', function() {
         const modal = document.getElementById('viewRecipeModal');
@@ -353,7 +328,6 @@ document.addEventListener('DOMContentLoaded', function() {
             event.target.parentElement.parentElement.remove();
         }
     });
-    
 
     document.getElementById('portionMultiplier').addEventListener('input', function() {
         const portionMultiplier = parseFloat(this.value) || 1;
@@ -362,11 +336,11 @@ document.addEventListener('DOMContentLoaded', function() {
         ingredientsListItems.forEach(listItem => {
             const name = listItem.dataset.name;
             const unit = listItem.dataset.unit;
-            const quantityPerPortion = parseFloat(listItem.dataset.quantity).toFixed(2);
-            const available = parseFloat(listItem.dataset.available).toFixed(2);
+            const quantityPerPortion = parseFloat(listItem.dataset.quantity);
+            const available = parseFloat(listItem.dataset.available);
 
-            const totalRequired = (quantityPerPortion * portionMultiplier).toFixed(2);
-            const missing = Math.max(totalRequired - available, 0).toFixed(2);
+            const totalRequired = quantityPerPortion * portionMultiplier;
+            const missing = Math.max(totalRequired - available, 0);
 
             listItem.innerHTML = `${name}: ${available}${unit} / ${totalRequired}${unit}`;
 
@@ -379,7 +353,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
 
 </script>
 @endsection

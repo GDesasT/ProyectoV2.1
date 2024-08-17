@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 namespace App\Http\Controllers;
 
-use App\Models\Sale;
-use App\Models\Customer;
-use App\Models\Enterprise;
+use App\Models\sale;
+use App\Models\customer;
+use App\Models\enterprise;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller

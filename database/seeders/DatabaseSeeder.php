@@ -410,7 +410,7 @@ class DatabaseSeeder extends Seeder
         $faker = Faker::create();
 
         $customers = [
-            ['number' => '103665', 'name' => 'Ceciliaaaa', 'lastname' => 'Figueroa Ruiz', 'email' => $faker->unique()->userName.'@gmail.com', 'enterprise_id' => 1],
+            ['number' => '103665', 'name' => 'Cecilia', 'lastname' => 'Figueroa Ruiz', 'email' => $faker->unique()->userName.'@gmail.com', 'enterprise_id' => 1],
             ['number' => '103716', 'name' => 'Elsa', 'lastname' => 'Valenzuela Contreras', 'email' => $faker->unique()->userName.'@gmail.com', 'enterprise_id' => 1],
             ['number' => '103045', 'name' => 'Dolores', 'lastname' => 'Montiel Tapia', 'email' => $faker->unique()->userName.'@gmail.com', 'enterprise_id' => 1],
             ['number' => '103362', 'name' => 'Jeremías', 'lastname' => 'Vázquez Soto', 'email' => $faker->unique()->userName.'@gmail.com', 'enterprise_id' => 1],
@@ -467,18 +467,4 @@ class DatabaseSeeder extends Seeder
 
         DB::table('customers')->insert($customers);
     }
-    
 }
-DB::table('sales')->insert([
-    [
-        'number' => 1,  // Asegúrate de usar el ID correcto del cliente relacionado
-        'customer_id' => 1,  // Asegúrate de usar el ID correcto del cliente relacionado
-        'name' => 'Henniges Automotive',
-        'lastName' => 'Gomez Palacio - Cerca del centro trailero',
-        'total' => 50,
-        'dish_type' => 'platillo normal',
-        'created_at' => '2024-08-12 09:00:05',
-        'updated_at' => '2024-08-12 09:00:05',
-    ],
-    // Puedes agregar más registros aquí si es necesario
-]);
