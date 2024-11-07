@@ -10,62 +10,74 @@ use Illuminate\Http\Request;
 
 class SaleController extends Controller
 {
-    // Muestra la lista de ventas
     public function index(Request $request)
-    {
-        // Mostrar todos los datos enviados en la solicitud
-        $query = sale::with(['customer.enterprise']);
-    
-        // Validación del número de trabajador
-        if ($request->filled('number')) {
-            $employeeExists = customer::where('number', $request->number)->exists();
-    
-            if (!$employeeExists) {
-                return redirect()->route('PointOfSale')->with('error', 'El número de trabajador no está registrado.');
-            }
-    
-            $query->where('number', $request->number);
+{
+    $query = sale::with(['customer.enterprise']);
+
+    // Validar el número de trabajador y aplicar filtro si es válido
+    if ($request->filled('number')) {
+        if (!customer::where('number', $request->number)->exists()) {
+            return redirect()->route('PointOfSale')->with('error', 'El número de trabajador no está registrado.');
         }
-    
-        // Otros filtros
-        if ($request->filled('enterprise_id')) {
-            $query->where('enterprise_id', $request->enterprise_id);
-        }
-    
-        if ($request->filled('customer_id')) {
-            $query->where('customer_id', $request->customer_id);
-        }
-    
-        if ($request->filled('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
-        }
-    
-        if ($request->filled('lastName')) {
-            $query->where('lastName', 'like', '%' . $request->lastName . '%');
-        }
-    
-        if ($request->filled('date')) {
-        $query->whereDate('updated_at', $request->date);
-    } else {
-        $query->whereDate('updated_at', now()->toDateString());
+        $query->where('number', $request->number);
     }
-    
-        if ($request->filled('dish_type')) {
-            $query->where('dish_type', $request->dish_type);
-        }
-    
-        $sales = $query->get();
-        $enterprises = enterprise::all();
-    
-        return view('PointOfSale', compact('sales', 'enterprises'));
-    }
+
+    // Aplicar filtros simples
+    $query->when($request->filled('enterprise_id'), function ($q) use ($request) {
+        $q->where('enterprise_id', $request->enterprise_id);
+    });
+
+    $query->when($request->filled('customer_id'), function ($q) use ($request) {
+        $q->where('customer_id', $request->customer_id);
+    });
+
+    $query->when($request->filled('name'), function ($q) use ($request) {
+        $q->where('name', 'like', '%' . $request->name . '%');
+    });
+
+    $query->when($request->filled('lastName'), function ($q) use ($request) {
+        $q->where('lastName', 'like', '%' . $request->lastName . '%');
+    });
+
+    // Filtro de fecha
+    $query->whereDate('updated_at', $request->filled('date') ? $request->date : now()->toDateString());
+
+    $query->when($request->filled('dish_type'), function ($q) use ($request) {
+        $q->where('dish_type', $request->dish_type);
+    });
+
+    $sales = $query->get();
+    $enterprises = enterprise::all();
+
+    return view('PointOfSale', compact('sales', 'enterprises'));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
     // Almacena una nueva venta
     public function store(Request $request)
     {
-        // Validación inicial de los campos enviados en el formulario
+        // Validación inicial de los campos enviados en el formulario   
         $request->validate([
             'number' => 'required',
             'dish_type' => 'required|in:platillo normal,platillo ligero',
