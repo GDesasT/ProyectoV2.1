@@ -1,0 +1,763 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Inventario y Recetas",
+        "description": "Esta es la documentación de la API para gestionar inventarios y recetas.",
+        "contact": {
+            "email": "soporte@example.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Servidor local de desarrollo"
+        },
+        {
+            "url": "https://api.tu-dominio.com",
+            "description": "Servidor de producción"
+        }
+    ],
+    "paths": {
+        "/enterprise/create": {
+            "get": {
+                "tags": [
+                    "Enterprise"
+                ],
+                "summary": "Mostrar formulario para crear una empresa",
+                "description": "Devuelve la vista con el formulario para crear una nueva empresa.",
+                "operationId": "d73da7deac78784a7c5ada2c2c594086",
+                "responses": {
+                    "200": {
+                        "description": "Vista del formulario para crear una empresa"
+                    }
+                }
+            }
+        },
+        "/enterprise/store": {
+            "post": {
+                "tags": [
+                    "Enterprise"
+                ],
+                "summary": "Guardar una nueva empresa",
+                "description": "Valida y guarda los datos de una nueva empresa.",
+                "operationId": "60d697a27c7014252673a5876299a5a6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "phone",
+                                    "address"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Empresa ABC"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "empresa@abc.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "123456789"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Calle Principal 123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirige a la vista de creación con un mensaje de éxito"
+                    },
+                    "422": {
+                        "description": "Datos de entrada no válidos"
+                    }
+                }
+            }
+        },
+        "/enterprise/search": {
+            "get": {
+                "tags": [
+                    "Enterprise"
+                ],
+                "summary": "Buscar empresas",
+                "description": "Busca empresas según los filtros proporcionados (nombre, email, teléfono).",
+                "operationId": "7fe611ff3e67611cc5f554d2f20c4231",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Nombre de la empresa a buscar",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Correo electrónico de la empresa a buscar",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "email"
+                        }
+                    },
+                    {
+                        "name": "phone",
+                        "in": "query",
+                        "description": "Teléfono de la empresa a buscar",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de empresas que coinciden con los criterios de búsqueda"
+                    }
+                }
+            }
+        },
+        "/enterprise/{id}": {
+            "delete": {
+                "tags": [
+                    "Enterprise"
+                ],
+                "summary": "Eliminar una empresa",
+                "description": "Elimina una empresa con base en su ID.",
+                "operationId": "eaa45c1eb4cd5f3bf7104c35f0f5479b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la empresa a eliminar",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirige a la vista de creación con un mensaje de éxito"
+                    },
+                    "404": {
+                        "description": "Empresa no encontrada"
+                    }
+                }
+            }
+        },
+        "/recipes": {
+            "get": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Obtener todas las recetas",
+                "operationId": "d4042afb2fbbddc6df47e660bab9cea7",
+                "responses": {
+                    "200": {
+                        "description": "Lista de recetas"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Crear una nueva receta",
+                "operationId": "b8e5dc90090b088f52bf6ba8ada1a43f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "difficult",
+                                    "ingredient_name",
+                                    "ingredient_quantity",
+                                    "ingredient_unit",
+                                    "description",
+                                    "image",
+                                    "timeset",
+                                    "shortdesc"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Receta 1"
+                                    },
+                                    "difficult": {
+                                        "type": "string",
+                                        "example": "Fácil"
+                                    },
+                                    "ingredient_name": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "ingredient_quantity": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "ingredient_unit": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "url"
+                                    },
+                                    "timeset": {
+                                        "type": "string"
+                                    },
+                                    "shortdesc": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirige a la lista de recetas tras la creación"
+                    },
+                    "400": {
+                        "description": "Error en los datos enviados"
+                    }
+                }
+            }
+        },
+        "/recipes/{id}": {
+            "get": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Obtener una receta por ID",
+                "operationId": "1574c2a4ecb3074887fb892b23321b20",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la receta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Datos de la receta con ingredientes"
+                    },
+                    "404": {
+                        "description": "Receta no encontrada"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Actualizar una receta existente",
+                "operationId": "83cafcd821c9460d9d673ef89d135e9b",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la receta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "difficult",
+                                    "ingredient_name",
+                                    "ingredient_quantity",
+                                    "ingredient_unit",
+                                    "description",
+                                    "image",
+                                    "timeset",
+                                    "shortdesc"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "difficult": {
+                                        "type": "string"
+                                    },
+                                    "ingredient_name": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "ingredient_quantity": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "ingredient_unit": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "image": {
+                                        "type": "string",
+                                        "format": "url"
+                                    },
+                                    "timeset": {
+                                        "type": "string"
+                                    },
+                                    "shortdesc": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirige a la lista de recetas tras la actualización"
+                    },
+                    "404": {
+                        "description": "Receta no encontrada"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Eliminar una receta",
+                "operationId": "9bd6f67654cbd4fbfb963e15d3f0c59a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la receta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Redirige a la lista de recetas tras la eliminación"
+                    },
+                    "404": {
+                        "description": "Receta no encontrada"
+                    }
+                }
+            }
+        },
+        "/recipes/calculate-ingredients": {
+            "post": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Calcular ingredientes necesarios para la receta",
+                "operationId": "902bec3720716d77839d1389f4f65a99",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "id",
+                                    "quantity"
+                                ],
+                                "properties": {
+                                    "id": {
+                                        "type": "integer"
+                                    },
+                                    "quantity": {
+                                        "description": "Cantidad de platillos",
+                                        "type": "integer",
+                                        "example": 2
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Lista de ingredientes calculados"
+                    },
+                    "404": {
+                        "description": "Receta no encontrada"
+                    }
+                }
+            }
+        },
+        "/recipes/elaborate/{id}": {
+            "post": {
+                "tags": [
+                    "Recipes"
+                ],
+                "summary": "Elaborar la receta y actualizar inventario",
+                "operationId": "e00e5ae57728f47b62c63f0a8e568a55",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID de la receta",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "multiplier"
+                                ],
+                                "properties": {
+                                    "multiplier": {
+                                        "description": "Multiplicador de la cantidad",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Éxito en la elaboración de la receta"
+                    },
+                    "400": {
+                        "description": "Error en los ingredientes"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Mostrar el formulario de inicio de sesión",
+                "operationId": "a825e61f744d9cbbf0d7fc6c80e37863",
+                "responses": {
+                    "200": {
+                        "description": "Formulario de inicio de sesión"
+                    },
+                    "302": {
+                        "description": "Redirige al inventario si ya está autenticado"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Iniciar sesión en la aplicación",
+                "operationId": "abc53c091ac89d7a2af0892997d1ee08",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "user",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "user": {
+                                        "type": "string",
+                                        "example": "usuario123"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "contraseña"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "302": {
+                        "description": "Redirige al inventario tras iniciar sesión exitosamente"
+                    },
+                    "401": {
+                        "description": "Credenciales incorrectas"
+                    }
+                }
+            }
+        },
+        "/logout": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Cerrar sesión de la aplicación",
+                "operationId": "27282c80c923a9a2205bfbd46ab906ee",
+                "responses": {
+                    "302": {
+                        "description": "Redirige al formulario de inicio de sesión tras cerrar sesión"
+                    }
+                }
+            }
+        },
+        "/inventory": {
+            "get": {
+                "tags": [
+                    "Inventario"
+                ],
+                "summary": "Obtener la lista de inventario",
+                "operationId": "3d1aeca30d99bdbdde2328b5d7654af8",
+                "responses": {
+                    "200": {
+                        "description": "Lista de productos del inventario"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Inventario"
+                ],
+                "summary": "Crear un nuevo producto",
+                "operationId": "814873058742a2b0affbd7c1f13a857b",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "amount",
+                                    "type",
+                                    "unit"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Manzana"
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "example": 10
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "Fruta"
+                                    },
+                                    "unit": {
+                                        "type": "string",
+                                        "example": "Kg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Producto creado exitosamente"
+                    }
+                }
+            }
+        },
+        "/inventory/{id}": {
+            "put": {
+                "tags": [
+                    "Inventario"
+                ],
+                "summary": "Actualizar un producto",
+                "operationId": "c1dc4af5e91a130dfae8c5f33b8fd48c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "amount",
+                                    "type",
+                                    "unit"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Manzana"
+                                    },
+                                    "amount": {
+                                        "type": "number",
+                                        "example": 20
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "example": "Fruta"
+                                    },
+                                    "unit": {
+                                        "type": "string",
+                                        "example": "Kg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Producto actualizado correctamente"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Inventario"
+                ],
+                "summary": "Eliminar un producto",
+                "operationId": "606740e9010bbd7ad298296e5ef6cef0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Producto eliminado correctamente"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Inventory": {
+                "required": [
+                    "name",
+                    "amount",
+                    "type",
+                    "unit"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "ID del inventario",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Nombre del producto",
+                        "type": "string"
+                    },
+                    "amount": {
+                        "description": "Cantidad disponible del producto",
+                        "type": "number"
+                    },
+                    "type": {
+                        "description": "Categoría del producto (e.g., Verdura, Fruta)",
+                        "type": "string"
+                    },
+                    "unit": {
+                        "description": "Unidad de medida (e.g., Kg, L, Pz)",
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "description": "Fecha de última actualización",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "created_at": {
+                        "description": "Fecha de creación del registro",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Inventario",
+            "description": "Endpoints relacionados con la gestión de inventarios."
+        },
+        {
+            "name": "Enterprise",
+            "description": "Gestión de empresas (Enterprise)"
+        },
+        {
+            "name": "Recipes",
+            "description": "Recipes"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        }
+    ]
+}

@@ -25,12 +25,10 @@ Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
 
-    Route::get('/inventory', [inventoryController::class, 'index'])->name('inventory');
-        Route::post('/inventory', [inventoryController::class, 'store'])->name('inventory.store');
-        Route::get('/inventory/{id}/edit', [inventoryController::class, 'edit'])->name('inventory.edit');
-        Route::put('/inventory/{id}', [inventoryController::class, 'update'])->name('inventory.update');
-        Route::delete('/inventory/{id}', [inventoryController::class, 'destroy'])->name('inventory.destroy');
-
+    Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory.index');
+    Route::post('/inventory', [InventoryController::class, 'store'])->name('inventory.store');
+    Route::put('/inventory/{id}', [InventoryController::class, 'update'])->name('inventory.update');
+    Route::delete('/inventory/{id}', [InventoryController::class, 'destroy'])->name('inventory.destroy');
 
     Route::get('/PointOfSale', [SaleController::class, 'index'])->name('PointOfSale');
     Route::post('/PointOfSale', [SaleController::class, 'store'])->name('sales.store');
