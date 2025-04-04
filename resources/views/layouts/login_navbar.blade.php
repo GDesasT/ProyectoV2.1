@@ -15,9 +15,7 @@
                 <li>
                     <a href="{{ route('recipes.index') }}" class="block py-2 px-3 rounded {{ request()->routeIs('recipes.index') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}" aria-current="{{ request()->routeIs('recipes.index') ? 'page' : '' }}">Recetario</a>
                 </li>
-                <li>
-                    <a href="{{ route('inventory') }}" class="block py-2 px-3 rounded {{ request()->routeIs('inventory') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}" aria-current="{{ request()->routeIs('inventory') ? 'page' : '' }}">Inventario</a>
-                </li>
+
                 <li>
                     <a href="{{ route('PointOfSale') }}" class="block py-2 px-3 rounded {{ request()->routeIs('PointOfSale') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Punto de venta</a>
                 </li>

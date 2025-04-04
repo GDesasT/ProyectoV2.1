@@ -14,7 +14,6 @@
             <ul>
                 <li><a href="{{ route('home') }}">Home</a></li>
                 <li><a href="{{ route('menu') }}">Menu</a></li>
-                <li><a href="{{ route('inventory') }}">Login</a></li>
             </ul>
         </div>
         <div class="footer-section contact">
@@ -80,6 +79,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 50px; 
+        height: 50px;
     }
 </style>

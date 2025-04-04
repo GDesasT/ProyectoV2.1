@@ -24,9 +24,7 @@
                 <li>
                     <a href="{{ route('sales.history') }}" class="block py-2 px-3 rounded {{ request()->routeIs('salehistory') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Historial de Ventas</a>
                 </li>
-                <li>
-                    <a href="{{ route('inventory') }}" class="block py-2 px-3 rounded {{ request()->routeIs('inventory') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}" aria-current="{{ request()->routeIs('inventory') ? 'page' : '' }}">Volver</a>
-                </li>
+
                 <li>
                     <a href="{{ route('logout') }}" class="block py-2 px-3 rounded {{ request()->routeIs('logout') ? 'text-white bg-blue-200 md:bg-transparent md:text-blue-500' : 'text-white hover:bg-gray-400 md:hover:bg-transparent md:border-0 md:hover:text-blue-500' }}">Logout</a>
                 </li>
