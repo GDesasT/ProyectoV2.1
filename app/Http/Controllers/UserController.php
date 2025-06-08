@@ -26,9 +26,9 @@ class UserController extends Controller
     public function showLoginForm()
     {
         if (Auth::check()) {
-            return redirect('/inventory');
+            return redirect('/recipes');
         }
-    
+
         return view('login');
     }
 
@@ -61,7 +61,7 @@ class UserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/inventory');
+            return redirect()->intended('/recipes');
         }
 
         return back()->withErrors([
